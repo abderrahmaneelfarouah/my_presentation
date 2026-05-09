@@ -6,7 +6,7 @@ import { pageStructuredData } from '../utils/structuredData';
 // ─── Config ───────────────────────────────────
 
 const BASE_URL = 'https://www.abderrahmane-elfarouahfreelance.com';
-const SITE_NAME = 'Abderrahmane El Farouah';
+const SITE_NAME = 'Développeur Web Freelance Angular & Laravel';
 const TWITTER_HANDLE = '@abdeelfarouah';
 const DEFAULT_IMAGE = `${BASE_URL}/og-image.png`;
 
@@ -53,6 +53,11 @@ const pageSEO: Record<string, PageSEOMeta> = {
     description:
       "Découvrez des projets web Angular et Laravel réalisés pour entreprises et startups.",
   },
+  '/blog': {
+    title: 'Blog Développement Web | Angular, Laravel & React',
+    description:
+      "Blog technique sur Angular, Laravel, React et le développement web. Articles, tutoriels et conseils SEO pour entreprises et startups.",
+  },
   '/experience': {
     title: 'Expérience Développeur Fullstack Freelance Angular Laravel',
     description:
@@ -69,14 +74,14 @@ const pageSEO: Record<string, PageSEOMeta> = {
       "Développeur Angular freelance intervenant à Mantes-la-Jolie, Versailles, Saint-Germain-en-Laye et toute l'Île-de-France. Télétravail ou déplacements.",
   },
   '/contact': {
-    title: 'Contact Développeur Freelance Angular Laravel',
+    title: 'Contactez un développeur web freelance pour vos projets sur mesure',
     description:
-      "Contactez un développeur web freelance disponible pour vos projets sur mesure.",
+      "Besoin d'un développeur web freelance pour votre projet ? Contactez-moi pour discuter de vos besoins et obtenir un devis gratuit.",
   },
   '/mentions-legales': {
-    title: 'Mentions Légales | Abderrahmane El Farouah',
+    title: `${SITE_NAME} | Abderrahmane El Farouah`,
     description:
-      "Mentions légales du site portfolio d'Abderrahmane El Farouah, développeur web freelance.",
+      "Développeur web freelance Angular & Laravel à Mantes-la-Jolie. Création d'applications web performantes, sites sur mesure et SEO pour entreprises et startups.",
   },
   '/cgv': {
     title: 'Conditions Générales de Vente | Développeur Web Freelance',
@@ -97,6 +102,7 @@ const breadcrumbMap: Record<string, Array<{ name: string; path: string }>> = {
   '/': [{ name: 'Accueil', path: '/' }],
   '/services': [{ name: 'Accueil', path: '/' }, { name: 'Services', path: '/services' }],
   '/projects': [{ name: 'Accueil', path: '/' }, { name: 'Réalisations', path: '/projects' }],
+  '/blog': [{ name: 'Accueil', path: '/' }, { name: 'Blog', path: '/blog' }],
   '/faq': [{ name: 'Accueil', path: '/' }, { name: 'FAQ', path: '/faq' }],
   '/zones-intervention': [{ name: 'Accueil', path: '/' }, { name: 'Zones d\'intervention', path: '/zones-intervention' }],
   '/about': [{ name: 'Accueil', path: '/' }, { name: 'À propos', path: '/about' }],
@@ -104,6 +110,10 @@ const breadcrumbMap: Record<string, Array<{ name: string; path: string }>> = {
   '/contact': [{ name: 'Accueil', path: '/' }, { name: 'Contact', path: '/contact' }],
   '/mentions-legales': [{ name: 'Accueil', path: '/' }, { name: 'Mentions légales', path: '/mentions-legales' }],
   '/cgv': [{ name: 'Accueil', path: '/' }, { name: 'CGV', path: '/cgv' }],
+  '/developpeur-angular-freelance': [{ name: 'Accueil', path: '/' }, { name: 'Angular Freelance', path: '/developpeur-angular-freelance' }],
+  '/developpeur-laravel-freelance': [{ name: 'Accueil', path: '/' }, { name: 'Laravel Freelance', path: '/developpeur-laravel-freelance' }],
+  '/creation-site-web-yvelines': [{ name: 'Accueil', path: '/' }, { name: 'Site Web Yvelines', path: '/creation-site-web-yvelines' }],
+  '/applications-web-sur-mesure': [{ name: 'Accueil', path: '/' }, { name: 'Applications Sur Mesure', path: '/applications-web-sur-mesure' }],
 };
 
 function buildBreadcrumbStructuredData(pathname: string) {

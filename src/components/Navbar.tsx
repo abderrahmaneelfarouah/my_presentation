@@ -22,6 +22,7 @@ export default function Navbar({ activeTab: activeTabProp }: NavbarProps) {
     { id: 'home', label: 'Accueil', path: '/' },
     { id: 'services', label: 'Services', path: '/services' },
     { id: 'realisations', label: 'Réalisations', path: '/projects' },
+    { id: 'blog', label: 'Blog', path: '/blog' },
     { id: 'faq', label: 'FAQ', path: '/faq' },
     { id: 'zones', label: 'Zones', path: '/zones-intervention' },
     { id: 'contact', label: 'Contact', path: '/contact' },

@@ -15,10 +15,16 @@ import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ExperienceRouteImport } from './routes/experience'
+import { Route as DeveloppeurLaravelFreelanceRouteImport } from './routes/developpeur-laravel-freelance'
+import { Route as DeveloppeurAngularFreelanceRouteImport } from './routes/developpeur-angular-freelance'
+import { Route as CreationSiteWebYvelinesRouteImport } from './routes/creation-site-web-yvelines'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CgvRouteImport } from './routes/cgv'
+import { Route as BlogRouteImport } from './routes/blog'
+import { Route as ApplicationsWebSurMesureRouteImport } from './routes/applications-web-sur-mesure'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
 const ZonesInterventionRoute = ZonesInterventionRouteImport.update({
   id: '/zones-intervention',
@@ -50,6 +56,23 @@ const ExperienceRoute = ExperienceRouteImport.update({
   path: '/experience',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DeveloppeurLaravelFreelanceRoute =
+  DeveloppeurLaravelFreelanceRouteImport.update({
+    id: '/developpeur-laravel-freelance',
+    path: '/developpeur-laravel-freelance',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const DeveloppeurAngularFreelanceRoute =
+  DeveloppeurAngularFreelanceRouteImport.update({
+    id: '/developpeur-angular-freelance',
+    path: '/developpeur-angular-freelance',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CreationSiteWebYvelinesRoute = CreationSiteWebYvelinesRouteImport.update({
+  id: '/creation-site-web-yvelines',
+  path: '/creation-site-web-yvelines',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -60,6 +83,17 @@ const CgvRoute = CgvRouteImport.update({
   path: '/cgv',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApplicationsWebSurMesureRoute =
+  ApplicationsWebSurMesureRouteImport.update({
+    id: '/applications-web-sur-mesure',
+    path: '/applications-web-sur-mesure',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -70,88 +104,134 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/applications-web-sur-mesure': typeof ApplicationsWebSurMesureRoute
+  '/blog': typeof BlogRouteWithChildren
   '/cgv': typeof CgvRoute
   '/contact': typeof ContactRoute
+  '/creation-site-web-yvelines': typeof CreationSiteWebYvelinesRoute
+  '/developpeur-angular-freelance': typeof DeveloppeurAngularFreelanceRoute
+  '/developpeur-laravel-freelance': typeof DeveloppeurLaravelFreelanceRoute
   '/experience': typeof ExperienceRoute
   '/faq': typeof FaqRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/projects': typeof ProjectsRoute
   '/services': typeof ServicesRoute
   '/zones-intervention': typeof ZonesInterventionRoute
+  '/blog/$slug': typeof BlogSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/applications-web-sur-mesure': typeof ApplicationsWebSurMesureRoute
+  '/blog': typeof BlogRouteWithChildren
   '/cgv': typeof CgvRoute
   '/contact': typeof ContactRoute
+  '/creation-site-web-yvelines': typeof CreationSiteWebYvelinesRoute
+  '/developpeur-angular-freelance': typeof DeveloppeurAngularFreelanceRoute
+  '/developpeur-laravel-freelance': typeof DeveloppeurLaravelFreelanceRoute
   '/experience': typeof ExperienceRoute
   '/faq': typeof FaqRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/projects': typeof ProjectsRoute
   '/services': typeof ServicesRoute
   '/zones-intervention': typeof ZonesInterventionRoute
+  '/blog/$slug': typeof BlogSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/applications-web-sur-mesure': typeof ApplicationsWebSurMesureRoute
+  '/blog': typeof BlogRouteWithChildren
   '/cgv': typeof CgvRoute
   '/contact': typeof ContactRoute
+  '/creation-site-web-yvelines': typeof CreationSiteWebYvelinesRoute
+  '/developpeur-angular-freelance': typeof DeveloppeurAngularFreelanceRoute
+  '/developpeur-laravel-freelance': typeof DeveloppeurLaravelFreelanceRoute
   '/experience': typeof ExperienceRoute
   '/faq': typeof FaqRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/projects': typeof ProjectsRoute
   '/services': typeof ServicesRoute
   '/zones-intervention': typeof ZonesInterventionRoute
+  '/blog/$slug': typeof BlogSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
+    | '/applications-web-sur-mesure'
+    | '/blog'
     | '/cgv'
     | '/contact'
+    | '/creation-site-web-yvelines'
+    | '/developpeur-angular-freelance'
+    | '/developpeur-laravel-freelance'
     | '/experience'
     | '/faq'
     | '/mentions-legales'
     | '/projects'
     | '/services'
     | '/zones-intervention'
+    | '/blog/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
+    | '/applications-web-sur-mesure'
+    | '/blog'
     | '/cgv'
     | '/contact'
+    | '/creation-site-web-yvelines'
+    | '/developpeur-angular-freelance'
+    | '/developpeur-laravel-freelance'
     | '/experience'
     | '/faq'
     | '/mentions-legales'
     | '/projects'
     | '/services'
     | '/zones-intervention'
+    | '/blog/$slug'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/applications-web-sur-mesure'
+    | '/blog'
     | '/cgv'
     | '/contact'
+    | '/creation-site-web-yvelines'
+    | '/developpeur-angular-freelance'
+    | '/developpeur-laravel-freelance'
     | '/experience'
     | '/faq'
     | '/mentions-legales'
     | '/projects'
     | '/services'
     | '/zones-intervention'
+    | '/blog/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  ApplicationsWebSurMesureRoute: typeof ApplicationsWebSurMesureRoute
+  BlogRoute: typeof BlogRouteWithChildren
   CgvRoute: typeof CgvRoute
   ContactRoute: typeof ContactRoute
+  CreationSiteWebYvelinesRoute: typeof CreationSiteWebYvelinesRoute
+  DeveloppeurAngularFreelanceRoute: typeof DeveloppeurAngularFreelanceRoute
+  DeveloppeurLaravelFreelanceRoute: typeof DeveloppeurLaravelFreelanceRoute
   ExperienceRoute: typeof ExperienceRoute
   FaqRoute: typeof FaqRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
@@ -204,6 +284,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExperienceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/developpeur-laravel-freelance': {
+      id: '/developpeur-laravel-freelance'
+      path: '/developpeur-laravel-freelance'
+      fullPath: '/developpeur-laravel-freelance'
+      preLoaderRoute: typeof DeveloppeurLaravelFreelanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/developpeur-angular-freelance': {
+      id: '/developpeur-angular-freelance'
+      path: '/developpeur-angular-freelance'
+      fullPath: '/developpeur-angular-freelance'
+      preLoaderRoute: typeof DeveloppeurAngularFreelanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/creation-site-web-yvelines': {
+      id: '/creation-site-web-yvelines'
+      path: '/creation-site-web-yvelines'
+      fullPath: '/creation-site-web-yvelines'
+      preLoaderRoute: typeof CreationSiteWebYvelinesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -216,6 +317,20 @@ declare module '@tanstack/react-router' {
       path: '/cgv'
       fullPath: '/cgv'
       preLoaderRoute: typeof CgvRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/applications-web-sur-mesure': {
+      id: '/applications-web-sur-mesure'
+      path: '/applications-web-sur-mesure'
+      fullPath: '/applications-web-sur-mesure'
+      preLoaderRoute: typeof ApplicationsWebSurMesureRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -232,14 +347,36 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
+    }
   }
 }
+
+interface BlogRouteChildren {
+  BlogSlugRoute: typeof BlogSlugRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogSlugRoute: BlogSlugRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  ApplicationsWebSurMesureRoute: ApplicationsWebSurMesureRoute,
+  BlogRoute: BlogRouteWithChildren,
   CgvRoute: CgvRoute,
   ContactRoute: ContactRoute,
+  CreationSiteWebYvelinesRoute: CreationSiteWebYvelinesRoute,
+  DeveloppeurAngularFreelanceRoute: DeveloppeurAngularFreelanceRoute,
+  DeveloppeurLaravelFreelanceRoute: DeveloppeurLaravelFreelanceRoute,
   ExperienceRoute: ExperienceRoute,
   FaqRoute: FaqRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,

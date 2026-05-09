@@ -266,11 +266,11 @@ const Home = () => {
               <span>Premier rendez-vous gratuit</span>
             </div>
             
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 text-white tracking-tight leading-tight">
-              Prêt à booster<br />votre performance ?
-            </h2>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 text-white tracking-tight leading-tight">
+              Développeur Web Freelance Angular & Laravel<br />à Mantes-la-Jolie
+            </h1>
             <p className="text-xl md:text-2xl mb-10 text-gray-200 font-medium max-w-xl mx-auto leading-relaxed">
-              Discutons de vos objectifs et identifions ensemble les leviers pour augmenter votre productivité
+              Création d'applications web performantes, sites sur mesure et SEO pour entreprises et startups à Mantes-la-Jolie et dans toute l'Île-de-France.
             </p>
             
             {/* Prominent CTA Button with pulse */}
