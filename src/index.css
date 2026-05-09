@@ -192,6 +192,14 @@
     box-shadow: var(--shadow-3d), 0 0 40px oklch(0.7 0.1 220 / 0.25);
   }
 
+  .dark .card {
+    background: oklch(0.2 0.035 265 / 0.72);
+    border-color: oklch(1 0 0 / 0.12);
+    box-shadow:
+      0 2px 4px -1px oklch(0 0 0 / 0.25),
+      0 16px 28px -12px oklch(0 0 0 / 0.45);
+  }
+
   /* Bento Grid Card Variant */
   .card-bento {
     background: linear-gradient(
@@ -216,6 +224,18 @@
     box-shadow: 
       0 20px 40px -10px oklch(0.62 0.14 250 / 0.2),
       inset 0 1px 0 0 oklch(1 0 0 / 0.4);
+  }
+
+  .dark .card-bento {
+    background: linear-gradient(
+      145deg,
+      oklch(0.22 0.035 265 / 0.86),
+      oklch(0.16 0.035 265 / 0.72)
+    );
+    border-color: oklch(1 0 0 / 0.12);
+    box-shadow:
+      0 18px 34px -18px oklch(0 0 0 / 0.65),
+      inset 0 1px 0 0 oklch(1 0 0 / 0.08);
   }
 
   /* Modern Buttons with gradient animation */
@@ -291,6 +311,15 @@
     border: 1px solid oklch(1 0 0 / 0.3);
   }
 
+  .dark .glass {
+    background: linear-gradient(
+      135deg,
+      oklch(0.2 0.035 265 / 0.82),
+      oklch(0.14 0.035 265 / 0.68)
+    );
+    border-color: oklch(1 0 0 / 0.12);
+  }
+
   .glass-strong {
     background: linear-gradient(
       135deg,
@@ -299,6 +328,15 @@
     );
     backdrop-filter: blur(40px) saturate(200%);
     border: 1px solid oklch(1 0 0 / 0.4);
+  }
+
+  .dark .glass-strong {
+    background: linear-gradient(
+      135deg,
+      oklch(0.22 0.035 265 / 0.9),
+      oklch(0.16 0.035 265 / 0.78)
+    );
+    border-color: oklch(1 0 0 / 0.14);
   }
 
   /* Container query ready wrapper */

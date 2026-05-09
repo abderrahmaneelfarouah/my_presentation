@@ -79,6 +79,30 @@
       "dest": "/sitemap.xml"
     },
     {
+      "src": "/geo-sitemap\\.xml$",
+      "dest": "/geo-sitemap.xml"
+    },
+    {
+      "src": "/site-version\\.txt$",
+      "dest": "/site-version.txt"
+    },
+    {
+      "src": "/site-version\\.json$",
+      "dest": "/site-version.json"
+    },
+    {
+      "src": "/manifest\\.json$",
+      "dest": "/manifest.json"
+    },
+    {
+      "src": "/local-business\\.json$",
+      "dest": "/local-business.json"
+    },
+    {
+      "src": "/og-image\\.png$",
+      "dest": "/og-image.png"
+    },
+    {
       "src": "/favicon\\.png$",
       "dest": "/favicon.png"
     },

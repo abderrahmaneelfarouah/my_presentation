@@ -225,13 +225,13 @@ const Home = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 whileHover={{ y: -4, scale: 1.02 }}
-                className="card-bento flex items-center gap-4 group cursor-pointer"
+                className="card-bento flex items-center gap-4 group cursor-pointer min-w-0"
               >
                 <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-accent/20 to-primary/10 flex items-center justify-center text-accent group-hover:scale-110 transition-transform duration-300">
                   {item.icon}
                 </div>
-                <div>
-                  <span className="block text-text-main font-semibold">{item.label}</span>
+                <div className="min-w-0">
+                  <span className="block text-text-main font-semibold break-words">{item.label}</span>
                   <span className="text-sm text-text-secondary">{item.sublabel}</span>
                 </div>
               </motion.div>

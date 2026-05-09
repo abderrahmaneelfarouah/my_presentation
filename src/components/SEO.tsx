@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { useRouterState } from '@tanstack/react-router';
 import { useMemo } from 'react';
 import { pageStructuredData } from '../utils/structuredData';
+import { siteBuildInfo } from '../buildInfo';
 
 // ─── Config ───────────────────────────────────
 
@@ -88,6 +89,26 @@ const pageSEO: Record<string, PageSEOMeta> = {
     description:
       "Conditions générales de vente pour les prestations de développement web freelance d'Abderrahmane El Farouah.",
   },
+  '/developpeur-angular-freelance': {
+    title: 'Développeur Angular Freelance | Abderrahmane El Farouah',
+    description:
+      "Développeur Angular freelance à Mantes-la-Jolie et en Île-de-France pour applications web sur mesure, maintenance et refonte front-end.",
+  },
+  '/developpeur-laravel-freelance': {
+    title: 'Développeur Laravel Freelance | Abderrahmane El Farouah',
+    description:
+      "Développeur Laravel freelance pour API, backends métier, applications web et intégrations sur mesure.",
+  },
+  '/creation-site-web-yvelines': {
+    title: 'Création Site Web Yvelines | Abderrahmane El Farouah',
+    description:
+      "Création de sites web professionnels dans les Yvelines pour artisans, PME, indépendants et entreprises locales.",
+  },
+  '/applications-web-sur-mesure': {
+    title: 'Applications Web Sur Mesure | Abderrahmane El Farouah',
+    description:
+      "Développement d'applications web sur mesure pour automatiser vos processus métier et centraliser vos outils.",
+  },
 };
 
 // ─── Helpers ──────────────────────────────────
@@ -160,8 +181,8 @@ export default function SEO({
 
   const pageSpecific = pageSEO[pathname] ?? {};
 
-  const finalTitle       = title       || pageSpecific.title;
-  const finalDescription = description || pageSpecific.description;
+  const finalTitle       = title       || pageSpecific.title || SITE_NAME;
+  const finalDescription = description || pageSpecific.description || "Développeur web freelance Angular, Laravel et React basé à Mantes-la-Jolie.";
   const finalImage       = toAbsoluteImageUrl(image || DEFAULT_IMAGE);
   const finalType        = type || 'website';
   const finalNoIndex     = noIndex || pageSpecific.noIndex || false;
@@ -323,7 +344,9 @@ export default function SEO({
       "@context": "https://schema.org",
       "@type": "WebSite",
       url: BASE_URL,
-      name: SITE_NAME
+      name: SITE_NAME,
+      identifier: siteBuildInfo.version,
+      dateModified: siteBuildInfo.builtAt
     };
 
     const breadcrumb = buildBreadcrumbStructuredData(pathname);
@@ -351,9 +374,16 @@ export default function SEO({
       <title>{finalTitle}</title>
       <meta name="description" content={finalDescription} />
       <meta name="robots" content={robotsContent} />
+      <meta name="site-version" content={siteBuildInfo.version} />
+      <meta name="site-package-version" content={siteBuildInfo.packageVersion} />
+      <meta name="site-build-commit" content={siteBuildInfo.commit} />
+      <meta name="site-build-branch" content={siteBuildInfo.branch} />
+      <meta name="site-build-date" content={siteBuildInfo.builtAt} />
 
       {/* CANONICAL */}
       <link rel="canonical" href={canonicalUrl} />
+      <link rel="alternate" type="application/json" href="/site-version.json" />
+      <link rel="version-history" href="/site-version.txt" />
 
       {/* OPEN GRAPH */}
       <meta property="og:type" content={finalType} />
