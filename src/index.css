@@ -424,13 +424,66 @@
     color: var(--foreground);
   }
 
-  /* Focus visible improvements */
+  /* Focus visible improvements - WCAG 2.4.7 */
   .focus-ring {
-    outline: none;
-    transition: box-shadow 0.2s ease;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    transition: outline-color 0.2s ease, box-shadow 0.2s ease;
   }
 
   .focus-ring:focus-visible {
-    box-shadow: 0 0 0 3px oklch(0.62 0.14 250 / 0.4);
+    outline-color: oklch(0.62 0.14 250);
+    box-shadow: 0 0 0 3px oklch(0.62 0.14 250 / 0.3);
+  }
+
+  /* Skip link for keyboard navigation - WCAG 2.4.1 */
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    padding: 8px 16px;
+    text-decoration: none;
+    z-index: 9999;
+    border-radius: 0 0 8px 0;
+    font-weight: 500;
+  }
+
+  .skip-link:focus {
+    top: 0;
+  }
+
+  /* Ensure touch targets are at least 44x44px - WCAG 2.5.5 */
+  .touch-area {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Screen reader only content */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .card {
+      border-width: 2px;
+    }
+    
+    .btn {
+      border-width: 2px;
+    }
   }
 }

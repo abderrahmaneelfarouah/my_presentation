@@ -124,8 +124,8 @@ export default function Contact() {
   return (
     <main id="contact" className="min-h-screen py-16 px-4 relative overflow-hidden">
       {/* Background gradient orbs */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-accent/20 rounded-full blur-[100px] -z-10" />
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary/10 rounded-full blur-[120px] -z-10" />
+      <div className="absolute top-20 left-10 w-72 h-72 bg-accent/20 rounded-full blur-[100px] -z-10" aria-hidden="true" />
+      <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary/10 rounded-full blur-[120px] -z-10" aria-hidden="true" />
       
       <div className="max-w-5xl mx-auto">
         <motion.header 
@@ -200,13 +200,29 @@ export default function Contact() {
             
             {/* Social Links */}
             <div className="flex justify-center gap-3">
-              <a href={SOCIAL_LINKS.GITHUB} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-text-main hover:text-accent hover:border-accent/50 transition-all">
+              <a 
+                href={SOCIAL_LINKS.GITHUB} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="touch-area focus-ring w-12 h-12 rounded-2xl glass flex items-center justify-center text-text-main hover:text-accent hover:border-accent/50 transition-all"
+                aria-label="Visiter mon profil GitHub"
+              >
                 <Github className="w-6 h-6" />
               </a>
-              <a href={SOCIAL_LINKS.LINKEDIN} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-text-main hover:text-accent hover:border-accent/50 transition-all">
+              <a 
+                href={SOCIAL_LINKS.LINKEDIN} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="touch-area focus-ring w-12 h-12 rounded-2xl glass flex items-center justify-center text-text-main hover:text-accent hover:border-accent/50 transition-all"
+                aria-label="Visiter mon profil LinkedIn"
+              >
                 <Linkedin className="w-6 h-6" />
               </a>
-              <a href="mailto:abde.elfarouah@gmail.com" className="w-12 h-12 rounded-2xl btn-primary flex items-center justify-center">
+              <a 
+                href="mailto:abde.elfarouah@gmail.com" 
+                className="touch-area focus-ring w-12 h-12 rounded-2xl btn-primary flex items-center justify-center"
+                aria-label="M'envoyer un email"
+              >
                 <Mail className="w-6 h-6" />
               </a>
             </div>
@@ -330,36 +346,48 @@ export default function Contact() {
           <p className="text-sm text-gray-400 mb-2">Accès réservé</p>
           <button
             onClick={() => setShowAdminLogin(!showAdminLogin)}
-            className="opacity-20 hover:opacity-100 transition-opacity duration-300"
-            title="Admin"
+            className="touch-area focus-ring opacity-20 hover:opacity-100 transition-opacity duration-300"
+            aria-label="Ouvrir l'accès administrateur"
           >
             <img 
               src="/images/pic-icon.png" 
-              alt="Accès administrateur" 
+              alt="" 
               className="w-10 h-10"
               onError={(e) => { e.currentTarget.style.display = 'none'; }}
+              aria-hidden="true"
             />
           </button>
         </div>
 
         {/* Admin modal */}
         {showAdminLogin && !isAdmin && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setShowAdminLogin(false)}>
+          <div 
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" 
+            onClick={() => setShowAdminLogin(false)}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="admin-dialog-title"
+          >
             <div className="card-bento p-6 w-full max-w-md" onClick={(e) => e.stopPropagation()}>
-              <h3 className="text-xl font-semibold mb-4">Accès Admin</h3>
+              <h3 id="admin-dialog-title" className="text-xl font-semibold mb-4">Accès Admin</h3>
               <form onSubmit={handleAdminLogin} className="space-y-4">
-                <input
-                  type="password"
-                  value={adminCode}
-                  onChange={(e) => setAdminCode(e.target.value)}
-                  placeholder="Code admin"
-                  className="w-full px-4 py-3 rounded-xl bg-white/50 border border-border-color focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all"
-                  required
-                />
-                {adminError && <p className="text-red-500 text-sm">{adminError}</p>}
+                <div>
+                  <label htmlFor="admin-code" className="sr-only">Code administrateur</label>
+                  <input
+                    type="password"
+                    id="admin-code"
+                    value={adminCode}
+                    onChange={(e) => setAdminCode(e.target.value)}
+                    placeholder="Code admin"
+                    className="w-full px-4 py-3 rounded-xl bg-white/50 border border-border-color focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all"
+                    required
+                    aria-required="true"
+                  />
+                </div>
+                {adminError && <p className="text-red-500 text-sm" role="alert">{adminError}</p>}
                 <div className="flex gap-3">
-                  <button type="submit" className="flex-1 btn btn-primary py-3">Connexion</button>
-                  <button type="button" onClick={() => setShowAdminLogin(false)} className="flex-1 btn btn-secondary py-3">Annuler</button>
+                  <button type="submit" className="flex-1 btn btn-primary py-3 touch-area focus-ring">Connexion</button>
+                  <button type="button" onClick={() => setShowAdminLogin(false)} className="flex-1 btn btn-secondary py-3 touch-area focus-ring">Annuler</button>
                 </div>
               </form>
             </div>
@@ -368,19 +396,35 @@ export default function Contact() {
 
         {/* Admin panel */}
         {isAdmin && (
-          <div className="card-bento mt-8 p-6">
+          <div className="card-bento mt-8 p-6" role="region" aria-label="Panneau d'administration">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-bold text-text-main">Rendez-vous ({appointments.length})</h3>
-              <button onClick={() => setIsAdmin(false)} className="text-text-secondary hover:text-accent transition-colors">Fermer</button>
+              <button 
+                onClick={() => setIsAdmin(false)} 
+                className="touch-area focus-ring text-text-secondary hover:text-accent transition-colors"
+                aria-label="Fermer le panneau d'administration"
+              >
+                Fermer
+              </button>
             </div>
-            {appointments.map((apt) => (
-              <div key={apt.id} className="p-4 bg-accent/5 rounded-xl mb-2 flex justify-between border border-accent/10">
-                <div>
-                  <p className="font-semibold text-text-main">{apt.name}</p>
-                  <p className="text-sm text-text-secondary">{new Date(apt.date).toLocaleString('fr-FR')}</p>
-                </div>
-              </div>
-            ))}
+            {appointments.length === 0 ? (
+              <p className="text-text-secondary text-center py-4">Aucun rendez-vous</p>
+            ) : (
+              <ul className="space-y-2">
+                {appointments.map((apt) => (
+                  <li key={apt.id} className="p-4 bg-accent/5 rounded-xl flex justify-between border border-accent/10">
+                    <div>
+                      <p className="font-semibold text-text-main">{apt.name}</p>
+                      <p className="text-sm text-text-secondary">
+                        <time dateTime={apt.date}>
+                          {new Date(apt.date).toLocaleString('fr-FR')}
+                        </time>
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         )}
 
