@@ -10,21 +10,36 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// SEO generation hook
+// SEO generation hook - improved with better error handling
 function generateSEOFiles() {
   try {
+    // Create dist directory if it doesn't exist
+    const distDir = path.join(__dirname, 'dist');
+    if (!fs.existsSync(distDir)) {
+      fs.mkdirSync(distDir, { recursive: true });
+    }
+
     // Import SEO utilities dynamically
-    import('./src/utils/seo.ts').then(({ generateSitemap, generateRobotsTxt }) => {
-      const sitemap = generateSitemap();
-      const robots = generateRobotsTxt();
-      
-      fs.writeFileSync(path.join(__dirname, 'dist/sitemap.xml'), sitemap);
-      fs.writeFileSync(path.join(__dirname, 'dist/robots.txt'), robots);
-      
-      console.log('✅ SEO files updated automatically!');
-    }).catch(err => console.error('❌ SEO generation error:', err));
+    import('./src/utils/seo.ts')
+      .then(({ generateSitemap, generateRobotsTxt }) => {
+        try {
+          const sitemap = generateSitemap();
+          const robots = generateRobotsTxt();
+          
+          fs.writeFileSync(path.join(distDir, 'sitemap.xml'), sitemap);
+          fs.writeFileSync(path.join(distDir, 'robots.txt'), robots);
+          
+          console.log('✅ SEO files updated automatically!');
+        } catch (writeError) {
+          console.warn('⚠️ Warning: Could not write SEO files:', writeError instanceof Error ? writeError.message : String(writeError));
+        }
+      })
+      .catch(importError => {
+        console.warn('⚠️ Warning: SEO generation module not found or failed to import:', importError instanceof Error ? importError.message : String(importError));
+      });
   } catch (error) {
-    console.error('❌ SEO files error:', error);
+    console.warn('⚠️ Warning: SEO generation setup failed:', error instanceof Error ? error.message : String(error));
+    // Continue build even if SEO generation fails
   }
 }
 
