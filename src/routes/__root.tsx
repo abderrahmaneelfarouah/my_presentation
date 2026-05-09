@@ -4,7 +4,8 @@ import Navbar from '../components/Navbar'
 import SEO from '../components/SEO'
 import WhatsAppFloat from '../components/WhatsAppFloat'
 import { ThemeProvider } from '../contexts/ThemeContext'
-import { MenuProvider, useMenu } from '../contexts/MenuContext'
+import { MenuProvider } from '../contexts/MenuContext'
+import { useMenu } from '../hooks/useMenu'
 
 // Composant NotFound pour les erreurs 404
 function NotFound() {

@@ -338,7 +338,7 @@ export default function SEO({
       pageStructuredData[pathname as keyof typeof pageStructuredData]
     ].filter(Boolean);
 
-  }, [finalDescription, finalImage, finalTitle, canonicalUrl, pathname, structuredData]);
+  }, [pathname, structuredData]);
 
   // ─── Render ─────────────────────────────────
 

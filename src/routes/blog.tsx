@@ -71,8 +71,19 @@ const ArticleCard = React.memo(function ArticleCard({ article, index }: { articl
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.08 }}
-      onClick={() => navigate({ to: `/blog/${article.slug}` as any })}
-      onKeyDown={(e: React.KeyboardEvent) => e.key === 'Enter' && navigate({ to: `/blog/${article.slug}` as any })}
+      onClick={() =>
+        navigate({
+          to: '/blog/$slug',
+          params: { slug: article.slug },
+        })
+      }
+      onKeyDown={(e: React.KeyboardEvent) =>
+        e.key === 'Enter' &&
+        navigate({
+          to: '/blog/$slug',
+          params: { slug: article.slug },
+        })
+      }
       className="card-bento p-6 cursor-pointer hover:shadow-md transition-shadow duration-200"
       style={{ willChange: 'transform', contain: 'layout style paint' }}
       tabIndex={0}

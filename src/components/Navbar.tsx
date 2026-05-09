@@ -3,7 +3,7 @@ import { useMemo, useState, useEffect } from 'react';
 import { Link, useRouterState } from '@tanstack/react-router';
 import ThemeToggle from './ThemeToggle';
 import { NAV_IMAGE } from '../utils/images';
-import { useMenu } from '../contexts/MenuContext';
+import { useMenu } from '../hooks/useMenu';
 
 type NavbarProps = {
   activeTab?: string;
