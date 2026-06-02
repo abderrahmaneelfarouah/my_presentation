@@ -1,5 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { Helmet } from 'react-helmet-async';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Calendar, User } from 'lucide-react';
 import Container from '../components/shared/Container';
@@ -212,39 +211,24 @@ function BlogArticle() {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-text-main mb-4">Article non trouvé</h1>
           <p className="text-text-secondary mb-6">Cet article n'existe pas ou a été déplacé.</p>
-          <a href="/blog" className="text-accent hover:underline">Retour au blog</a>
+          <Link to="/blog" className="text-accent hover:underline">
+            Retour au blog
+          </Link>
         </div>
       </Container>
     );
   }
 
   return (
-    <>
-      <Helmet>
-        <title>{article.title} | Blog Abderrahmane El Farouah</title>
-        <meta name="description" content={article.excerpt} />
-        <meta name="keywords" content={`${article.category.toLowerCase()}, développement web, freelance Yvelines`} />
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content={article.title} />
-        <meta property="og:description" content={article.excerpt} />
-        <meta property="og:image" content="https://www.abderrahmane-elfarouahfreelance.com/og-image.png" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={article.title} />
-        <meta name="twitter:description" content={article.excerpt} />
-      </Helmet>
-
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen page-shell prose-premium">
         <Container className="py-12 md:py-16 max-w-3xl">
-          <motion.a
-            href="/blog"
-            className="inline-flex items-center gap-2 text-accent hover:underline mb-8"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
+          <Link
+            to="/blog"
+            className="inline-flex items-center gap-2 text-accent hover:underline mb-8 touch-area focus-visible"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Retour au blog</span>
-          </motion.a>
+          </Link>
 
           <motion.header
             className="mb-12 border-b border-black/10 pb-10 dark:border-white/10"
@@ -315,7 +299,7 @@ function BlogArticle() {
               ))}
             </div>
 
-            <div className="mt-14 rounded-lg border-l-4 border-accent bg-white/60 p-6 shadow-sm dark:bg-white/5">
+            <div className="article-callout mt-14 p-6">
               <p className="text-lg text-text-main leading-8">
                 {article.conclusion}
               </p>
@@ -323,7 +307,7 @@ function BlogArticle() {
           </motion.article>
 
           <motion.div
-            className="mt-16 p-8 bg-gradient-to-r from-accent/10 to-primary/10 rounded-2xl"
+            className="mt-16 p-8 card-bento"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
@@ -334,18 +318,15 @@ function BlogArticle() {
             <p className="text-text-secondary mb-6">
               Discutons de votre projet et obtenez un devis personnalisé gratuitement.
             </p>
-            <motion.a
-              href="/contact"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-accent text-white rounded-lg font-semibold hover:bg-accent/90 transition-all duration-300 group"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <Link
+              to="/contact"
+              className="btn btn-premium inline-flex items-center gap-3 px-8 py-4 rounded-lg font-semibold transition-all duration-300"
             >
               <span>Me contacter</span>
-            </motion.a>
+            </Link>
           </motion.div>
         </Container>
       </div>
-    </>
   );
 }
 

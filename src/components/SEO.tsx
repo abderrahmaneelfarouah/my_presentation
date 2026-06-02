@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { useRouterState } from '@tanstack/react-router';
 import { useMemo } from 'react';
+import { getBlogArticleBySlug } from '../data/blog-articles';
 import { pageStructuredData } from '../utils/structuredData';
 import { siteBuildInfo } from '../buildInfo';
 
@@ -111,6 +112,29 @@ const pageSEO: Record<string, PageSEOMeta> = {
   },
 };
 
+function resolvePageSEO(pathname: string): PageSEOMeta {
+  const staticPage = pageSEO[pathname];
+  if (staticPage) return staticPage;
+
+  const blogSlugMatch = pathname.match(/^\/blog\/([^/]+)$/);
+  if (blogSlugMatch) {
+    const article = getBlogArticleBySlug(blogSlugMatch[1]);
+    if (article) {
+      return {
+        title: `${article.title} | Blog Développement Web`,
+        description: article.excerpt,
+      };
+    }
+    return {
+      title: 'Article non trouvé | Blog',
+      description: 'Cet article de blog est introuvable ou a été déplacé.',
+      noIndex: true,
+    };
+  }
+
+  return {};
+}
+
 // ─── Helpers ──────────────────────────────────
 
 function buildCanonical(pathname: string): string {
@@ -138,6 +162,26 @@ const breadcrumbMap: Record<string, Array<{ name: string; path: string }>> = {
 };
 
 function buildBreadcrumbStructuredData(pathname: string) {
+  const blogSlugMatch = pathname.match(/^\/blog\/([^/]+)$/);
+  if (blogSlugMatch) {
+    const article = getBlogArticleBySlug(blogSlugMatch[1]);
+    const crumbs = [
+      { name: 'Accueil', path: '/' },
+      { name: 'Blog', path: '/blog' },
+      { name: article?.title ?? 'Article', path: pathname },
+    ];
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: crumbs.map((crumb, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: crumb.name,
+        item: crumb.path === '/' ? BASE_URL : `${BASE_URL}${crumb.path}`,
+      })),
+    };
+  }
+
   const crumbs = breadcrumbMap[pathname] || [{ name: 'Accueil', path: '/' }, { name: 'Page', path: pathname }];
   
   return {
@@ -179,12 +223,14 @@ export default function SEO({
   const { location } = useRouterState();
   const pathname = location.pathname;
 
-  const pageSpecific = pageSEO[pathname] ?? {};
+  const pageSpecific = resolvePageSEO(pathname);
+  const blogSlugMatch = pathname.match(/^\/blog\/([^/]+)$/);
+  const blogArticle = blogSlugMatch ? getBlogArticleBySlug(blogSlugMatch[1]) : undefined;
 
   const finalTitle       = title       || pageSpecific.title || SITE_NAME;
   const finalDescription = description || pageSpecific.description || "Développeur web freelance Angular, Laravel et React basé à Mantes-la-Jolie.";
   const finalImage       = toAbsoluteImageUrl(image || DEFAULT_IMAGE);
-  const finalType        = type || 'website';
+  const finalType        = type || (blogArticle ? 'article' : 'website');
   const finalNoIndex     = noIndex || pageSpecific.noIndex || false;
 
   const canonicalUrl = buildCanonical(pathname);
@@ -352,16 +398,32 @@ export default function SEO({
     const breadcrumb = buildBreadcrumbStructuredData(pathname);
     const speakable = buildSpeakableSpecification();
 
+    const blogPosting = blogArticle
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'BlogPosting',
+          headline: blogArticle.title,
+          description: blogArticle.excerpt,
+          datePublished: blogArticle.date,
+          author: {
+            '@type': 'Person',
+            name: 'Abderrahmane El Farouah',
+          },
+          mainEntityOfPage: canonicalUrl,
+        }
+      : null;
+
     return [
       structuredData ?? professionalService,
       person,
       website,
       breadcrumb,
       speakable,
-      pageStructuredData[pathname as keyof typeof pageStructuredData]
+      pageStructuredData[pathname as keyof typeof pageStructuredData],
+      blogPosting,
     ].filter(Boolean);
 
-  }, [pathname, structuredData]);
+  }, [pathname, structuredData, blogArticle, canonicalUrl]);
 
   // ─── Render ─────────────────────────────────
 

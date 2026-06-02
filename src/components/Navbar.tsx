@@ -30,20 +30,30 @@ export default function Navbar({ activeTab: activeTabProp }: NavbarProps) {
 
   const activeTab = useMemo(() => {
     if (activeTabProp) return activeTabProp;
-    const path = location.pathname.split('/').filter(Boolean)[0] || 'home';
-    // Map special paths to nav item ids
-    if (path === 'zones-intervention') return 'zones';
-    return path;
+    const segments = location.pathname.split('/').filter(Boolean);
+    const first = segments[0] || 'home';
+
+    const pathToNavId: Record<string, string> = {
+      home: 'home',
+      services: 'services',
+      projects: 'realisations',
+      blog: 'blog',
+      faq: 'faq',
+      'zones-intervention': 'zones',
+      contact: 'contact',
+    };
+
+    return pathToNavId[first] ?? '';
   }, [activeTabProp, location.pathname]);
 
   return (
     <>
-      <nav role="navigation" aria-label="Navigation principale" className={`glass sticky top-0 border-b border-border-color/50 ${isOpen ? 'z-[1000]' : ''}`}>
+      <nav role="navigation" aria-label="Navigation principale" className={`glass-strong sticky top-0 z-50 border-b border-border-color/50 shadow-[0_4px_24px_rgb(0_0_0/0.08)] dark:shadow-[0_4px_32px_rgb(0_0_0/0.35)] ${isOpen ? 'z-[1000]' : ''}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo + titre */}
             <div className="flex items-center space-x-4">
-              <div className="flex-shrink-0">
+              <Link to="/" className="flex-shrink-0 touch-area focus-visible rounded-lg" aria-label="Retour à l'accueil">
                 <img 
                   src={NAV_IMAGE} 
                   alt="Abderrahmane El Farouah" 
@@ -51,7 +61,7 @@ export default function Navbar({ activeTab: activeTabProp }: NavbarProps) {
                   height="48"
                   className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg object-cover shadow-md border border-border-color/20 hover:shadow-lg transition-all duration-200"
                 />
-              </div>
+              </Link>
               <div className="hidden sm:block">
                 <div className="text-sm md:text-base lg:text-lg font-semibold text-text-main leading-tight">
                   Abderrahmane <span className="text-text-secondary">El Farouah</span>

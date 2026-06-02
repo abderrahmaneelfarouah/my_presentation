@@ -1,6 +1,44 @@
-import { Code, Database, Globe, Zap, MapPin, Phone, Mail, ArrowRight, Sparkles, CheckCircle, Calendar } from 'lucide-react';
+import { Code, Database, Globe, MapPin, Phone, Mail, ArrowRight, Sparkles, CheckCircle, Calendar } from 'lucide-react';
 import { PROFILE_IMAGE } from '../utils/images';
+import { CONTACT } from '../utils/constants';
 import { motion } from 'framer-motion';
+import type { ReactNode } from 'react';
+
+type LocalContactItem = {
+  icon: ReactNode;
+  label: string;
+  sublabel: string;
+  href?: string;
+  ariaLabel?: string;
+  /** Numéro court : une seule ligne */
+  keepIntact?: boolean;
+  /** Plus de largeur en grille (ex. email) */
+  gridClass?: string;
+};
+
+const localContactItems: LocalContactItem[] = [
+  {
+    icon: <MapPin className="w-6 h-6" />,
+    label: 'Mantes-la-Jolie',
+    sublabel: 'Yvelines (78)',
+  },
+  {
+    icon: <Phone className="w-6 h-6" />,
+    label: CONTACT.PHONE_DISPLAY,
+    sublabel: 'Disponible 7j/7',
+    href: `tel:${CONTACT.PHONE_TEL}`,
+    ariaLabel: `Appeler le ${CONTACT.PHONE_DISPLAY}, disponible 7j sur 7`,
+    keepIntact: true,
+  },
+  {
+    icon: <Mail className="w-6 h-6" />,
+    label: CONTACT.EMAIL,
+    sublabel: 'Réponse sous 24h',
+    href: `mailto:${CONTACT.EMAIL}`,
+    ariaLabel: `Envoyer un email à ${CONTACT.EMAIL}, réponse sous 24 heures`,
+    gridClass: 'sm:col-span-2 lg:col-span-1',
+  },
+];
 
 const fadeInUp = {
   initial: { opacity: 0, y: 30 },
@@ -19,10 +57,10 @@ const Home = () => {
   return (
     <div className="min-h-screen selection-accent">
       {/* Hero Section */}
-      <section id="hero" className="min-h-screen flex items-center justify-center px-4 py-20 relative overflow-hidden">
+      <section id="hero" className="hero-depth section-premium min-h-screen flex items-center justify-center px-4 py-20 relative overflow-hidden">
         {/* Background gradient orbs */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-accent/20 rounded-full blur-[100px] -z-10" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary/10 rounded-full blur-[120px] -z-10" />
+        <div className="absolute top-20 left-10 w-72 h-72 bg-accent/25 rounded-full blur-[100px] -z-10 motion-reduce:hidden" aria-hidden="true" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent-secondary/20 rounded-full blur-[120px] -z-10 motion-reduce:hidden" aria-hidden="true" />
         
         <motion.div 
           className="text-center max-w-4xl"
@@ -77,7 +115,7 @@ const Home = () => {
           >
             <motion.a
               href="/contact"
-              className="relative inline-flex items-center gap-3 px-12 py-6 text-xl font-bold bg-white dark:bg-gray-900 text-accent rounded-2xl shadow-[0_0_40px_rgba(255,255,255,0.3)] dark:shadow-[0_0_40px_rgba(0,0,0,0.3)] hover:shadow-[0_0_60px_rgba(255,255,255,0.5)] dark:hover:shadow-[0_0_60px_rgba(0,0,0,0.5)] border-2 border-white/50 dark:border-gray-700 hover:border-white dark:hover:border-gray-600 transition-all duration-300 group overflow-hidden"
+              className="btn-premium relative inline-flex items-center gap-3 px-12 py-6 text-xl font-bold rounded-2xl shadow-btn-glow transition-all duration-300 group overflow-hidden focus-ring"
               whileHover={{ scale: 1.08, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -98,57 +136,10 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* Services Bento Section */}
-      <section id="services" className="py-24 px-4">
-        <div className="max-w-7xl mx-auto">
-          <motion.div 
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm font-medium mb-6">
-              <Zap className="w-4 h-4 text-accent" />
-              <span>Compétences</span>
-            </span>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-text-main">
-              Mes <span className="text-gradient">Services</span>
-            </h2>
-            <p className="text-xl max-w-2xl mx-auto text-text-secondary">
-              Des solutions sur mesure pour votre transformation digitale
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 perspective-1000">
-            {[
-              { icon: <Code className="w-8 h-8" />, title: "Outils Métiers sur Mesure", desc: "Applications web personnalisées pour automatiser vos tâches et gagner du temps au quotidien", color: "from-blue-500 to-cyan-500" },
-              { icon: <Database className="w-8 h-8" />, title: "Gestion & Stock", desc: "Systèmes de gestion clients, stocks, devis et facturation adaptés à votre activité", color: "from-purple-500 to-pink-500" },
-              { icon: <Globe className="w-8 h-8" />, title: "Site Web & Boutique", desc: "Site vitrine professionnel ou boutique en ligne pour vendre sur internet 24h/24", color: "from-green-500 to-emerald-500" },
-              { icon: <Zap className="w-8 h-8" />, title: "Référencement Local", desc: "Apparaître sur Google dans votre région et attirer plus de clients près de chez vous", color: "from-orange-500 to-yellow-500" }
-            ].map((service, index) => (
-              <motion.div 
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -8, scale: 1.02 }}
-                className="card-bento group cursor-pointer"
-              >
-                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center text-white mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                  {service.icon}
-                </div>
-                <h3 className="text-xl font-bold text-text-main mb-3 group-hover:text-accent transition-colors">{service.title}</h3>
-                <p className="text-text-secondary leading-relaxed">{service.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <div className="section-divider mx-4" aria-hidden="true" />
 
       {/* About Bento Section */}
-      <section id="about" className="py-24 px-4">
+      <section id="about" className="section-premium py-24 px-4">
         <div className="max-w-6xl mx-auto">
           <motion.div 
             className="text-center mb-16"
@@ -190,9 +181,11 @@ const Home = () => {
         </div>
       </section>
 
+      <div className="section-divider mx-4" aria-hidden="true" />
+
       {/* Location Bento Section */}
-      <section id="local" className="py-24 px-4">
-        <div className="max-w-5xl mx-auto">
+      <section id="local" className="section-premium py-24 px-4">
+        <div className="max-w-6xl mx-auto">
           <motion.div 
             className="text-center mb-12"
             initial={{ opacity: 0, y: 20 }}
@@ -212,30 +205,64 @@ const Home = () => {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { icon: <MapPin className="w-6 h-6" />, label: "Mantes-la-Jolie", sublabel: "Yvelines (78)" },
-              { icon: <Phone className="w-6 h-6" />, label: "07 60 75 13 50", sublabel: "Disponible 7j/7" },
-              { icon: <Mail className="w-6 h-6" />, label: "abde.elfarouah@gmail.com", sublabel: "Réponse sous 24h" }
-            ].map((item, index) => (
-              <motion.div 
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -4, scale: 1.02 }}
-                className="card-bento flex items-center gap-4 group cursor-pointer min-w-0"
-              >
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-accent/20 to-primary/10 flex items-center justify-center text-accent group-hover:scale-110 transition-transform duration-300">
-                  {item.icon}
-                </div>
-                <div className="min-w-0">
-                  <span className="block text-text-main font-semibold break-words">{item.label}</span>
-                  <span className="text-sm text-text-secondary">{item.sublabel}</span>
-                </div>
-              </motion.div>
-            ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {localContactItems.map((item, index) => {
+              const cardClassName =
+                'card-bento flex items-center gap-4 group min-w-0 transition-colors duration-200 p-5 sm:p-6';
+              const content = (
+                <>
+                  <div className="w-14 h-14 shrink-0 rounded-xl bg-gradient-to-br from-accent/20 to-primary/10 flex items-center justify-center text-accent group-hover:scale-110 transition-transform duration-300">
+                    {item.icon}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <span
+                      className={`block text-text-main font-semibold group-hover:text-accent transition-colors leading-snug ${
+                        item.keepIntact
+                          ? 'whitespace-nowrap'
+                          : 'text-sm sm:text-base break-words'
+                      }`}
+                    >
+                      {item.label}
+                    </span>
+                    <span className="text-sm text-text-secondary mt-0.5 block">
+                      {item.sublabel}
+                    </span>
+                  </div>
+                </>
+              );
+
+              if (item.href) {
+                return (
+                  <motion.a
+                    key={item.href}
+                    href={item.href}
+                    aria-label={item.ariaLabel}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    whileHover={{ y: -4, scale: 1.02 }}
+                    className={`${cardClassName} ${item.gridClass ?? ''} touch-area focus-visible hover:border-accent/40 no-underline`}
+                  >
+                    {content}
+                  </motion.a>
+                );
+              }
+
+              return (
+                <motion.div
+                  key={item.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={{ y: -4, scale: 1.02 }}
+                  className={`${cardClassName} ${item.gridClass ?? ''}`}
+                >
+                  {content}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -259,17 +286,17 @@ const Home = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <div className="relative bg-gray-900/80 backdrop-blur-xl rounded-3xl p-10 md:p-14 text-center border border-white/20 shadow-2xl">
+          <div className="relative glass-strong rounded-3xl p-10 md:p-14 text-center border border-border-color/40 dark:border-white/20 shadow-card-elevated">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/20 text-white text-sm font-medium mb-6 border border-accent/30">
-              <Sparkles className="w-4 h-4 text-accent" />
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/15 text-accent dark:bg-accent/20 dark:text-white text-sm font-medium mb-6 border border-accent/30">
+              <Sparkles className="w-4 h-4 text-accent dark:text-accent" />
               <span>Premier rendez-vous gratuit</span>
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 text-white tracking-tight leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 text-text-main dark:text-white tracking-tight leading-tight">
               Développeur Web Freelance Angular & Laravel<br />à Mantes-la-Jolie
             </h1>
-            <p className="text-xl md:text-2xl mb-10 text-gray-200 font-medium max-w-xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl mb-10 text-text-secondary dark:text-gray-200 font-medium max-w-xl mx-auto leading-relaxed">
               Création d'applications web performantes, sites sur mesure et SEO pour entreprises et startups à Mantes-la-Jolie et dans toute l'Île-de-France.
             </p>
             
@@ -291,17 +318,17 @@ const Home = () => {
             </div>
             
             {/* Trust indicators */}
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-white/80 text-sm">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-text-secondary dark:text-white/80 text-sm">
               <span className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4" />
+                <CheckCircle className="w-4 h-4 text-success shrink-0" />
                 Sans engagement
               </span>
               <span className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4" />
+                <CheckCircle className="w-4 h-4 text-success shrink-0" />
                 Réponse sous 24h
               </span>
               <span className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4" />
+                <CheckCircle className="w-4 h-4 text-success shrink-0" />
                 Disponible Île-de-France
               </span>
             </div>

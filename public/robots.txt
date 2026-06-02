@@ -43,12 +43,9 @@ Disallow: /vite.config.*
 Disallow: /admin/
 Disallow: /.well-known/
 Disallow: /api/
-Disallow: /*.json$
-Disallow: /*.xml$
-Disallow: /*.txt$
 Disallow: /404.html
 
-# Autoriser les fichiers SEO importants
+# Fichiers SEO
 Allow: /sitemap.xml
 Allow: /robots.txt
 Allow: /manifest.json
