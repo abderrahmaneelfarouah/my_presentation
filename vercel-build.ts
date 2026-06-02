@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { generateSitemap, generateRobotsTxt } from './src/utils/seo';
+import { generateSitemap, generateRobotsTxt } from './src/utils/seo.js';
 
 async function generateSEOFiles() {
   try {
