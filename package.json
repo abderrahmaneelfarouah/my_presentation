@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && tsx vercel-build.ts",
+    "build": "vite build && node vercel-build.ts",
     "build:seo": "tsx build.ts",
     "preview": "vite preview",
     "lint": "eslint .",
