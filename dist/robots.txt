@@ -26,11 +26,13 @@ Disallow: /
 
 # Fichiers à ne pas indexer
 Disallow: /admin/
-Disallow: /*.json$
-Disallow: /*.xml$
 Disallow: /api/
 
-# Fichiers spéciaux
+# Fichiers SEO (explicitement autorisés)
+Allow: /sitemap.xml
+Allow: /geo-sitemap.xml
+Allow: /robots.txt
+
 Sitemap: https://www.abderrahmane-elfarouahfreelance.com/sitemap.xml
 Sitemap: https://www.abderrahmane-elfarouahfreelance.com/geo-sitemap.xml
 
