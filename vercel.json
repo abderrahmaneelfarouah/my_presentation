@@ -41,90 +41,86 @@
       ]
     }
   ],
-    "routes": [
+  "rewrites": [
     {
-      "src": "/api/check-digicode",
-      "dest": "/api/check-digicode.js"
+      "source": "/api/check-digicode",
+      "destination": "/api/check-digicode.js"
     },
     {
-      "src": "/api/appointments",
-      "dest": "/api/appointments.js"
+      "source": "/api/appointments",
+      "destination": "/api/appointments.js"
     },
     {
-      "src": "/api/resend",
-      "dest": "/api/send-email.js"
+      "source": "/api/resend",
+      "destination": "/api/send-email.js"
     },
     {
-      "src": "/api/send-email",
-      "dest": "/api/send-email.js"
+      "source": "/api/send-email",
+      "destination": "/api/send-email.js"
     },
     {
-      "src": "/api/test-email",
-      "dest": "/api/test-email.js"
+      "source": "/api/test-email",
+      "destination": "/api/test-email.js"
     },
     {
-      "src": "/api/(.*)",
-      "status": 404
+      "source": "/site\\.webmanifest$",
+      "destination": "/site.webmanifest"
     },
     {
-      "src": "/site\\.webmanifest$",
-      "dest": "/site.webmanifest"
+      "source": "/robots\\.txt$",
+      "destination": "/robots.txt"
     },
     {
-      "src": "/robots\\.txt$",
-      "dest": "/robots.txt"
+      "source": "/sitemap\\.xml$",
+      "destination": "/sitemap.xml"
     },
     {
-      "src": "/sitemap\\.xml$",
-      "dest": "/sitemap.xml"
+      "source": "/geo-sitemap\\.xml$",
+      "destination": "/geo-sitemap.xml"
     },
     {
-      "src": "/geo-sitemap\\.xml$",
-      "dest": "/geo-sitemap.xml"
+      "source": "/site-version\\.txt$",
+      "destination": "/site-version.txt"
     },
     {
-      "src": "/site-version\\.txt$",
-      "dest": "/site-version.txt"
+      "source": "/site-version\\.json$",
+      "destination": "/site-version.json"
     },
     {
-      "src": "/site-version\\.json$",
-      "dest": "/site-version.json"
+      "source": "/manifest\\.json$",
+      "destination": "/manifest.json"
     },
     {
-      "src": "/manifest\\.json$",
-      "dest": "/manifest.json"
+      "source": "/local-business\\.json$",
+      "destination": "/local-business.json"
     },
     {
-      "src": "/local-business\\.json$",
-      "dest": "/local-business.json"
+      "source": "/og-image\\.png$",
+      "destination": "/og-image.png"
     },
     {
-      "src": "/og-image\\.png$",
-      "dest": "/og-image.png"
+      "source": "/favicon\\.png$",
+      "destination": "/favicon.png"
     },
     {
-      "src": "/favicon\\.png$",
-      "dest": "/favicon.png"
+      "source": "/apple-touch-icon\\.png$",
+      "destination": "/apple-touch-icon.png"
     },
     {
-      "src": "/apple-touch-icon\\.png$",
-      "dest": "/apple-touch-icon.png"
+      "source": "/images/(.*)",
+      "destination": "/images/$1"
     },
     {
-      "src": "/images/(.*)",
-      "dest": "/images/$1"
+      "source": "/assets/(.*)",
+      "destination": "/assets/$1"
     },
     {
-      "src": "/assets/(.*)",
-      "dest": "/assets/$1"
+      "source": "/404",
+      "destination": "/404.html"
     },
     {
-      "src": "/404",
-      "dest": "/404.html"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
