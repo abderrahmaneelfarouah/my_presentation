@@ -26,7 +26,7 @@ function DeveloppeurAngularFreelance() {
         <meta name="twitter:image" content="https://www.abderrahmane-elfarouahfreelance.com/og-image.png" />
       </Helmet>
 
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+      <div className="min-h-screen page-shell">
         <Container className="py-12">
           {/* Header */}
           <header className="text-center mb-12">

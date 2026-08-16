@@ -1,7 +1,14 @@
+export const CONTACT = {
+  PHONE_DISPLAY: '07 60 75 13 50',
+  PHONE_TEL: '+33760751350',
+  EMAIL: 'abde.elfarouah@gmail.com',
+  WHATSAPP: 'https://wa.me/33760751350',
+} as const;
+
 export const SOCIAL_LINKS = {
   GITHUB: 'https://github.com/abderrahmaneelfarouah/',
   LINKEDIN: 'https://fr.linkedin.com/in/abderrahmaneelfarouah',
-  EMAIL: 'abde.elfarouah@gmail.com',
+  EMAIL: CONTACT.EMAIL,
 };
 export const NAV_ITEMS = [
   { href: '#home', label: 'Accueil' },

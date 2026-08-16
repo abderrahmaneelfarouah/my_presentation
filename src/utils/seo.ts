@@ -1,8 +1,7 @@
 const baseUrl = 'https://www.abderrahmane-elfarouahfreelance.com';
 
-// Routes avec priorités SEO ajustées selon la navigation principale
-// Accueil (1.0) > Services, Réalisations, Contact (0.9) > About (0.6) > Légales (0.3)
-const routes = [
+/** Routes du sitemap — source unique (build Vercel aligné) */
+export const SITEMAP_ROUTES = [
   { path: '/', priority: '1.0', changeFreq: 'weekly' },
   { path: '/services', priority: '0.9', changeFreq: 'weekly' },
   { path: '/projects', priority: '0.9', changeFreq: 'weekly' },
@@ -13,7 +12,19 @@ const routes = [
   { path: '/experience', priority: '0.5', changeFreq: 'monthly' },
   { path: '/mentions-legales', priority: '0.3', changeFreq: 'yearly' },
   { path: '/cgv', priority: '0.3', changeFreq: 'yearly' },
-];
+  { path: '/developpeur-angular-freelance', priority: '0.8', changeFreq: 'monthly' },
+  { path: '/developpeur-laravel-freelance', priority: '0.8', changeFreq: 'monthly' },
+  { path: '/creation-site-web-yvelines', priority: '0.8', changeFreq: 'monthly' },
+  { path: '/applications-web-sur-mesure', priority: '0.8', changeFreq: 'monthly' },
+  { path: '/blog', priority: '0.8', changeFreq: 'monthly' },
+  { path: '/blog/pourquoi-angular-application-metier', priority: '0.7', changeFreq: 'monthly' },
+  { path: '/blog/laravel-vs-nodejs-quel-choisir', priority: '0.7', changeFreq: 'monthly' },
+  { path: '/blog/combien-coute-developpeur-freelance', priority: '0.7', changeFreq: 'monthly' },
+  { path: '/blog/creer-application-web-sur-mesure', priority: '0.7', changeFreq: 'monthly' },
+  { path: '/blog/seo-technique-optimiser-react', priority: '0.7', changeFreq: 'monthly' },
+] as const;
+
+const routes = SITEMAP_ROUTES;
 
 export function generateSitemap() {
   const currentDate = new Date().toISOString().split('T')[0];
@@ -34,13 +45,19 @@ ${routes.map(route => `  <url>
 export function generateRobotsTxt() {
   return `User-agent: *
 Allow: /
+Allow: /site-version.txt
+Allow: /site-version.json
 
 # Priorité pour les moteurs de recherche importants
 User-agent: Googlebot
 Allow: /
+Allow: /site-version.txt
+Allow: /site-version.json
 
 User-agent: Bingbot
 Allow: /
+Allow: /site-version.txt
+Allow: /site-version.json
 
 # Bloquer les bots non désirés
 User-agent: AhrefsBot
@@ -54,12 +71,15 @@ Disallow: /
 
 # Fichiers à ne pas indexer
 Disallow: /admin/
-Disallow: /*.json$
-Disallow: /*.xml$
 Disallow: /api/
 
-# Fichiers spéciaux
+# Fichiers SEO (explicitement autorisés)
+Allow: /sitemap.xml
+Allow: /geo-sitemap.xml
+Allow: /robots.txt
+
 Sitemap: ${baseUrl}/sitemap.xml
+Sitemap: ${baseUrl}/geo-sitemap.xml
 
 # Délai de crawl (crawl-delay)
 Crawl-delay: 1`;

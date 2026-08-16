@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 export default function Hero() {
 
   return (
-    <header className="h-full py-4 sm:py-8 md:py-16 px-4 w-full max-w-full mx-auto">
+    <header className="hero-depth section-premium h-full py-4 sm:py-8 md:py-16 px-4 w-full max-w-full mx-auto">
       <Container className="flex flex-col justify-between text-center space-y-5 sm:space-y-7 md:space-y-10">
         {/* Profile Image with 3D float */}
         <motion.div 

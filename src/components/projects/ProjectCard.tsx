@@ -10,7 +10,7 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ title, description, link, github, image }: ProjectCardProps) {
   return (
-    <div className="group card overflow-hidden transition-all duration-300 flex flex-col h-full transform hover:-translate-y-1 w-full p-4 sm:p-6">
+    <div className="group card-project flex flex-col h-full w-full p-4 sm:p-6">
       <div className="relative overflow-hidden aspect-video rounded-design">
         <img
           src={image}

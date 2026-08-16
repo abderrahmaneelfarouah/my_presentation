@@ -1,250 +1,204 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { Helmet } from 'react-helmet-async';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Calendar, Clock, User } from 'lucide-react';
+import { ArrowLeft, Calendar, User } from 'lucide-react';
 import Container from '../components/shared/Container';
 
-// Données des articles (en pratique, ces données viendraient d'une API ou d'un CMS)
-const articlesData: Record<string, {
+interface ArticleSection {
+  heading: string;
+  paragraphs?: string[];
+  bullets?: string[];
+}
+
+interface BlogArticleData {
   title: string;
   excerpt: string;
-  content: string;
+  intro: string;
+  sections: ArticleSection[];
+  conclusion: string;
   date: string;
-  readTime: string;
   category: string;
   author: string;
-}> = {
+}
+
+const articlesData: Record<string, BlogArticleData> = {
   'pourquoi-angular-application-metier': {
     title: 'Pourquoi choisir Angular pour votre application métier ?',
-    excerpt: 'Découvrez les avantages d\'Angular pour le développement d\'applications web robustes et maintenables pour les entreprises.',
+    excerpt: 'Un retour concret sur les cas où Angular reste un très bon choix pour les applications métier durables.',
+    intro:
+      "Angular n'est pas toujours le framework le plus léger ni le plus rapide à prendre en main. En revanche, pour une application métier qui doit vivre plusieurs années, être reprise par plusieurs développeurs et garder une base de code stable, il a encore de vrais arguments.",
     date: '2026-04-15',
-    readTime: '5 min',
     category: 'Angular',
     author: 'Abderrahmane El Farouah',
-    content: `
-## Introduction
-
-Angular est un framework développé par Google qui offre une solution complète pour la création d'applications web d'entreprise. Dans cet article, nous explorerons pourquoi Angular reste un choix privilégié pour les applications métier en 2026.
-
-## Les avantages d'Angular
-
-### 1. Architecture robuste
-Angular propose une architecture MVC (Model-View-Controller) bien définie qui facilite la maintenance et l'évolution des applications à long terme.
-
-### 2. TypeScript natif
-Développé avec TypeScript, Angular offre un typage fort qui réduit les erreurs et améliore la qualité du code.
-
-### 3. Ecosystème complet
-Avec Angular, vous avez accès à :
-- Un router puissant
-- Des formulaires réactifs
-- Un client HTTP intégré
-- Des animations performantes
-
-### 4. Performance optimale
-Le rendu côté serveur (SSR) avec Angular Universal améliore le SEO et les temps de chargement initiaux.
-
-## Conclusion
-
-Pour les applications métier complexes nécessitant une maintenance à long terme, Angular reste un excellent choix grâce à sa structure rigoureuse et son écosystème mature.
-    `
+    sections: [
+      {
+        heading: 'Quand Angular devient intéressant',
+        paragraphs: [
+          "Je le recommande surtout lorsque le projet dépasse le simple site vitrine : formulaires complexes, droits utilisateurs, tableaux de bord, workflows internes, gestion d'états et appels API nombreux.",
+          "Dans ce contexte, Angular impose une structure. C'est parfois contraignant au début, mais très confortable quand le projet grandit.",
+        ],
+      },
+      {
+        heading: 'Ce que l’on gagne au quotidien',
+        bullets: [
+          'Une architecture claire pour organiser les composants, services et routes.',
+          'TypeScript partout, ce qui limite beaucoup d’erreurs avant la mise en production.',
+          'Des outils intégrés pour les formulaires, le routing, les requêtes HTTP et les tests.',
+          'Une base cohérente pour les équipes qui doivent maintenir le projet dans la durée.',
+        ],
+      },
+      {
+        heading: 'Ce qu’il faut surveiller',
+        paragraphs: [
+          "Angular peut être excessif pour une petite page marketing ou un prototype très court. Il faut aussi accepter une discipline de code : nommage, modules, séparation des responsabilités et composants bien découpés.",
+          "Le bon choix dépend donc moins de la popularité du framework que de la durée de vie prévue de l'application.",
+        ],
+      },
+    ],
+    conclusion:
+      "Pour une application métier sérieuse, Angular reste un choix solide. Pas parce qu’il est à la mode, mais parce qu’il aide à construire proprement, à maintenir et à faire évoluer sans repartir de zéro.",
   },
   'laravel-vs-nodejs-quel-choisir': {
     title: 'Laravel vs Node.js : quel framework choisir en 2026 ?',
-    excerpt: 'Comparatif technique et stratégique entre Laravel et Node.js pour vos projets web backend.',
+    excerpt: 'Laravel et Node.js peuvent tous les deux faire le travail. Le bon choix dépend surtout du projet, de l’équipe et de la maintenance.',
+    intro:
+      "La question n'est pas vraiment de savoir lequel est “meilleur”. Laravel et Node.js ont chacun leur terrain naturel. Ce qui compte, c'est de choisir celui qui rend le projet plus simple à livrer, à sécuriser et à maintenir.",
     date: '2026-04-22',
-    readTime: '7 min',
     category: 'Backend',
     author: 'Abderrahmane El Farouah',
-    content: `
-## Introduction
-
-Le choix entre Laravel (PHP) et Node.js (JavaScript) pour le backend est une décision cruciale pour tout projet web. Analysons les forces de chaque technologie.
-
-## Laravel : le framework PHP mature
-
-### Avantages
-- **Ecosystème riche** : Eloquent ORM, Blade templating, queues
-- **Documentation exhaustive** et communauté active
-- **Sécurité intégrée** : Protection CSRF, XSS, SQL injection
-- **Déploiement simple** sur la plupart des hébergeurs
-
-### Idéal pour
-- Applications CRM/ERP
-- Sites e-commerce
-- APIs REST complexes
-
-## Node.js : la performance JavaScript
-
-### Avantages
-- **Performance** : Event loop non-bloquant
-- **JavaScript fullstack** : Même langage côté client et serveur
-- **NPM** : Plus grand écosystème de packages
-- **Temps réel** : WebSockets natifs
-
-### Idéal pour
-- Applications temps réel
-- Microservices
-- Streaming de données
-
-## Notre recommandation
-
-Pour les projets enterprise avec une logique métier complexe, **Laravel** offre une productivité supérieure. Pour les applications nécessitant une haute performance temps réel, **Node.js** est préférable.
-    `
+    sections: [
+      {
+        heading: 'Laravel pour aller vite sur du métier',
+        paragraphs: [
+          "Laravel est très efficace pour les applications de gestion, extranets, back-offices, CRM légers, API classiques et plateformes avec beaucoup de règles métier.",
+          "Son écosystème donne vite accès à l’authentification, aux migrations, aux jobs, aux emails, aux validations et à une structure connue par beaucoup de développeurs PHP.",
+        ],
+      },
+      {
+        heading: 'Node.js pour les usages temps réel et JavaScript partout',
+        paragraphs: [
+          "Node.js est très pertinent quand le projet repose sur du temps réel, des WebSockets, des microservices, du streaming ou une équipe déjà très orientée JavaScript/TypeScript.",
+          "Il permet aussi de partager plus facilement certaines logiques entre front et back, à condition de garder une architecture propre.",
+        ],
+      },
+      {
+        heading: 'Ma règle simple',
+        bullets: [
+          'Projet métier classique avec beaucoup de CRUD et de règles : Laravel est souvent plus direct.',
+          'Application temps réel, flux continus ou équipe full TypeScript : Node.js prend l’avantage.',
+          'Projet long terme : le choix doit aussi tenir compte des compétences disponibles pour la maintenance.',
+        ],
+      },
+    ],
+    conclusion:
+      "Dans beaucoup de projets PME, Laravel reste un excellent choix par sa productivité. Node.js devient très fort quand les contraintes techniques sortent du schéma web classique.",
   },
   'combien-coute-developpeur-freelance': {
     title: 'Combien coûte un développeur freelance à Mantes-la-Jolie ?',
-    excerpt: 'Guide des tarifs 2026 pour les prestations de développement web freelance dans les Yvelines et Île-de-France.',
+    excerpt: 'Des repères simples pour comprendre les tarifs d’un projet web freelance dans les Yvelines et en Île-de-France.',
+    intro:
+      "Le prix d’un projet web dépend rarement d’une seule page ou d’un nombre d’heures théorique. Ce qui fait varier le budget, ce sont les fonctionnalités, les intégrations, le niveau de finition attendu et l’accompagnement après livraison.",
     date: '2026-03-28',
-    readTime: '4 min',
     category: 'Tarifs',
     author: 'Abderrahmane El Farouah',
-    content: `
-## Les tarifs du développement web freelance en 2026
-
-### Site vitrine professionnel
-- **Prix** : 300€ à 400€
-- **Délai** : 3 à 5 jours
-- **Inclus** : Design responsive, formulaire de contact, optimisation SEO
-
-### Application métier sur mesure
-- **Prix** : Sur devis
-- **Délai** : 2 à 8 semaines
-- **Inclus** : Développement fullstack, formation, support 3 mois
-
-### Boutique en ligne
-- **Prix** : Sur devis
-- **Délai** : 2 à 4 semaines
-- **Inclus** : Paiement CB, gestion stocks, relances automatiques
-
-## Facteurs influençant le prix
-
-1. **Complexité fonctionnelle**
-2. **Intégrations tierces** (APIs, paiement)
-3. **Design personnalisé**
-4. **Deadlines urgentes**
-
-## Pourquoi choisir un freelance local ?
-
-- Disponibilité pour des réunions en présentiel
-- Compréhension du marché local
-- Relation de proximité et suivi personnalisé
-
-## Mon engagement
-
-Je propose des tarifs transparents et compétitifs pour les entreprises des Yvelines et d'Île-de-France, avec un accompagnement complet du projet.
-    `
+    sections: [
+      {
+        heading: 'Quelques fourchettes réalistes',
+        bullets: [
+          'Site vitrine simple : souvent entre 300 € et 900 € selon le contenu, le design et le SEO.',
+          'Site professionnel plus complet : plutôt entre 1 000 € et 3 000 €.',
+          'Application métier ou outil interne : généralement sur devis, car chaque workflow change le périmètre.',
+          'Boutique en ligne : budget variable selon paiement, catalogue, livraison, stock et automatisations.',
+        ],
+      },
+      {
+        heading: 'Ce qui fait monter ou baisser le prix',
+        paragraphs: [
+          "Un formulaire de contact n’a pas le même impact qu’un espace client, une connexion API, un tableau de bord ou un système de paiement. Le design sur mesure, les contenus à produire et les délais courts jouent aussi beaucoup.",
+          "Un devis sérieux doit donc expliquer le périmètre, les livrables, les limites et le niveau de support inclus.",
+        ],
+      },
+      {
+        heading: 'L’intérêt d’un freelance local',
+        paragraphs: [
+          "Pour une entreprise à Mantes-la-Jolie ou dans les Yvelines, la proximité facilite les échanges. On peut cadrer le besoin plus vite, comprendre le contexte local et garder une relation simple après la mise en ligne.",
+        ],
+      },
+    ],
+    conclusion:
+      "Le bon budget est celui qui correspond au résultat attendu. Mieux vaut cadrer petit et utile au départ, puis faire évoluer le site ou l’application avec de vraies priorités.",
   },
   'creer-application-web-sur-mesure': {
     title: 'Créer une application web sur mesure : le guide complet',
-    excerpt: 'Tout ce que vous devez savoir pour développer une application web personnalisée pour votre entreprise.',
+    excerpt: 'Les étapes importantes pour transformer un besoin métier en application web utile, maintenable et adoptée.',
+    intro:
+      "Une application sur mesure n’est pas seulement une addition d’écrans. C’est une façon de simplifier un processus, d’éviter les doubles saisies et de donner aux équipes un outil qui colle à leur vraie manière de travailler.",
     date: '2026-03-10',
-    readTime: '8 min',
     category: 'Guide',
     author: 'Abderrahmane El Farouah',
-    content: `
-## Les étapes clés d'un projet sur mesure
-
-### 1. Analyse des besoins
-Avant de commencer tout développement, il est essentiel de comprendre :
-- Les processus métier existants
-- Les points de douleur
-- Les objectifs de croissance
-
-### 2. Conception technique
-Cette phase inclut :
-- L'architecture de la base de données
-- Le choix des technologies
-- La planification des sprints
-
-### 3. Développement itératif
-Méthodologie agile avec :
-- Des livraisons régulières
-- Des démonstrations fréquentes
-- Une adaptation continue
-
-### 4. Tests et qualité
-- Tests unitaires automatisés
-- Tests d'intégration
-- Recette utilisateur
-
-### 5. Déploiement et formation
-- Mise en production sécurisée
-- Formation des équipes
-- Documentation technique
-
-## Technologies recommandées
-
-**Frontend** : Angular, React, Vue.js
-**Backend** : Laravel, Node.js, Symfony
-**Base de données** : PostgreSQL, MySQL, MongoDB
-
-## Budget indicatif
-
-Un projet sur mesure complet représente généralement un investissement de 5 000€ à 50 000€ selon la complexité.
-    `
+    sections: [
+      {
+        heading: 'Commencer par le terrain',
+        paragraphs: [
+          "Avant de parler technologie, il faut comprendre comment le travail se fait aujourd’hui : fichiers Excel, emails, validations manuelles, outils existants, points de blocage et tâches répétitives.",
+          "Cette étape évite de développer une belle interface qui ne résout pas le bon problème.",
+        ],
+      },
+      {
+        heading: 'Construire par versions',
+        bullets: [
+          'Version 1 : le cœur du besoin, utilisable rapidement.',
+          'Version 2 : automatisations, tableaux de bord et confort utilisateur.',
+          'Version 3 : intégrations externes, statistiques, optimisation et évolutions métier.',
+        ],
+      },
+      {
+        heading: 'Prévoir la maintenance dès le départ',
+        paragraphs: [
+          "Une application utile va évoluer. Il faut donc penser aux rôles utilisateurs, à la sécurité, aux sauvegardes, aux logs, aux tests et à une architecture compréhensible.",
+          "Le sur-mesure fonctionne bien quand il reste lisible pour la personne qui devra le maintenir dans six mois.",
+        ],
+      },
+    ],
+    conclusion:
+      "Un bon projet sur mesure avance par étapes. On livre vite une base solide, on observe l’usage réel, puis on améliore ce qui apporte vraiment du temps gagné ou moins d’erreurs.",
   },
   'seo-technique-optimiser-react': {
     title: 'SEO technique : optimiser la performance de votre site React',
-    excerpt: 'Les bonnes pratiques pour améliorer le référencement et la vitesse de votre application React ou Angular.',
+    excerpt: 'Les points techniques qui comptent vraiment pour rendre une application React ou Angular plus lisible par Google.',
+    intro:
+      "Le SEO technique n’est pas une couche magique ajoutée à la fin. Il commence dans la structure HTML, la performance, les URLs, les métadonnées et la façon dont le contenu est disponible pour les moteurs de recherche.",
     date: '2026-02-20',
-    readTime: '6 min',
     category: 'SEO',
     author: 'Abderrahmane El Farouah',
-    content: `
-## Pourquoi le SEO technique est crucial
-
-Google privilégie les sites rapides et bien structurés. Voici comment optimiser votre application React/Angular.
-
-## 1. Server-Side Rendering (SSR)
-
-Utilisez :
-- **Next.js** pour React
-- **Angular Universal** pour Angular
-
-Cela permet aux moteurs de recherche d'indexer votre contenu dynamique.
-
-## 2. Core Web Vitals
-
-Optimisez ces trois métriques :
-- **LCP** (Largest Contentful Paint) : < 2.5s
-- **FID** (First Input Delay) : < 100ms
-- **CLS** (Cumulative Layout Shift) : < 0.1
-
-## 3. Structure sémantique
-
-Utilisez correctement les balises HTML :
-- Une seule balise <h1> par page
-- Structure logique des headings
-- Attributs alt sur les images
-
-## 4. Meta tags dynamiques
-
-Implémentez des meta tags adaptatifs :
-- Title et description uniques par page
-- Open Graph pour les réseaux sociaux
-- Canonical URLs correctes
-
-## 5. Performance
-
-Techniques d'optimisation :
-- Code splitting et lazy loading
-- Compression des images (WebP)
-- Mise en cache stratégique
-- Minification des assets
-
-## 6. Schema.org
-
-Ajoutez des données structurées pour :
-- Articles de blog
-- Pages de services
-- Informations d'entreprise
-
-## Conclusion
-
-Un bon SEO technique est la fondation de tout référencement réussi. Investissez dans ces optimisations dès le début du projet.
-    `
-  }
+    sections: [
+      {
+        heading: 'Rendre le contenu accessible',
+        paragraphs: [
+          "Sur une application React ou Angular, il faut vérifier que les pages importantes ont des URLs propres, des titres uniques, des descriptions utiles et un contenu visible sans interaction complexe.",
+          "Pour les pages très stratégiques, le rendu côté serveur ou la pré-génération peut faire une vraie différence.",
+        ],
+      },
+      {
+        heading: 'Soigner les signaux techniques',
+        bullets: [
+          'Un seul H1 clair par page.',
+          'Des balises title et meta description différentes pour chaque route.',
+          'Des liens internes en vrais liens HTML quand c’est possible.',
+          'Un sitemap à jour avec les pages importantes.',
+          'Des images optimisées et correctement décrites.',
+        ],
+      },
+      {
+        heading: 'Ne pas oublier la vitesse',
+        paragraphs: [
+          "Google regarde l’expérience utilisateur. Des bundles trop lourds, des images mal compressées ou une mise en page qui saute au chargement pénalisent la page.",
+          "Le bon réflexe consiste à mesurer régulièrement : Lighthouse, Core Web Vitals, taille des assets et comportement sur mobile.",
+        ],
+      },
+    ],
+    conclusion:
+      "Un bon SEO technique rend le site plus clair pour Google et plus agréable pour les visiteurs. Les deux vont ensemble : structure propre, vitesse correcte et contenu facile à consulter.",
+  },
 };
 
 function BlogArticle() {
@@ -257,44 +211,27 @@ function BlogArticle() {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-text-main mb-4">Article non trouvé</h1>
           <p className="text-text-secondary mb-6">Cet article n'existe pas ou a été déplacé.</p>
-          <a href="/blog" className="text-accent hover:underline">Retour au blog</a>
+          <Link to="/blog" className="text-accent hover:underline">
+            Retour au blog
+          </Link>
         </div>
       </Container>
     );
   }
 
   return (
-    <>
-      <Helmet>
-        <title>{article.title} | Blog Abderrahmane El Farouah</title>
-        <meta name="description" content={article.excerpt} />
-        <meta name="keywords" content={`${article.category.toLowerCase()}, développement web, freelance Yvelines`} />
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content={article.title} />
-        <meta property="og:description" content={article.excerpt} />
-        <meta property="og:image" content="https://www.abderrahmane-elfarouahfreelance.com/og-image.png" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={article.title} />
-        <meta name="twitter:description" content={article.excerpt} />
-      </Helmet>
-
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-        <Container className="py-12 max-w-4xl">
-          {/* Back link */}
-          <motion.a
-            href="/blog"
-            className="inline-flex items-center gap-2 text-accent hover:underline mb-8"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
+    <div className="min-h-screen page-shell prose-premium">
+        <Container className="py-12 md:py-16 max-w-3xl">
+          <Link
+            to="/blog"
+            className="inline-flex items-center gap-2 text-accent hover:underline mb-8 touch-area focus-visible"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Retour au blog</span>
-          </motion.a>
+          </Link>
 
-          {/* Article header */}
           <motion.header
-            className="mb-12"
+            className="mb-12 border-b border-black/10 pb-10 dark:border-white/10"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -304,12 +241,12 @@ function BlogArticle() {
                 {article.category}
               </span>
             </div>
-            
+
             <h1 className="text-4xl md:text-5xl font-bold text-text-main mb-6">
               {article.title}
             </h1>
-            
-            <div className="flex items-center gap-6 text-sm text-text-muted">
+
+            <div className="flex flex-wrap items-center gap-6 text-sm text-text-muted">
               <span className="flex items-center gap-2">
                 <User className="w-4 h-4" />
                 {article.author}
@@ -319,38 +256,58 @@ function BlogArticle() {
                 {new Date(article.date).toLocaleDateString('fr-FR', {
                   year: 'numeric',
                   month: 'long',
-                  day: 'numeric'
+                  day: 'numeric',
                 })}
-              </span>
-              <span className="flex items-center gap-2">
-                <Clock className="w-4 h-4" />
-                {article.readTime} de lecture
               </span>
             </div>
           </motion.header>
 
-          {/* Article content */}
           <motion.article
-            className="prose prose-lg max-w-none dark:prose-invert"
+            className="max-w-none text-text-main"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            style={{
-              color: 'var(--text-main)'
-            }}
           >
-            <p className="text-xl text-text-secondary mb-8 leading-relaxed">
-              {article.excerpt}
+            <p className="text-xl md:text-2xl text-text-secondary mb-12 leading-relaxed">
+              {article.intro}
             </p>
-            
-            <div className="whitespace-pre-line text-text-main leading-relaxed">
-              {article.content}
+
+            <div className="space-y-12">
+              {article.sections.map((section) => (
+                <section key={section.heading}>
+                  <h2 className="text-2xl md:text-3xl font-bold text-text-main mb-5 leading-tight">
+                    {section.heading}
+                  </h2>
+
+                  {section.paragraphs?.map((paragraph) => (
+                    <p key={paragraph} className="text-lg text-text-secondary leading-8 mb-5">
+                      {paragraph}
+                    </p>
+                  ))}
+
+                  {section.bullets && (
+                    <ul className="space-y-4 text-lg text-text-secondary">
+                      {section.bullets.map((bullet) => (
+                        <li key={bullet} className="flex gap-4 leading-8">
+                          <span className="mt-3 h-2 w-2 shrink-0 rounded-full bg-accent" />
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </section>
+              ))}
+            </div>
+
+            <div className="article-callout mt-14 p-6">
+              <p className="text-lg text-text-main leading-8">
+                {article.conclusion}
+              </p>
             </div>
           </motion.article>
 
-          {/* CTA */}
           <motion.div
-            className="mt-16 p-8 bg-gradient-to-r from-accent/10 to-primary/10 rounded-2xl"
+            className="mt-16 p-8 card-bento"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
@@ -361,18 +318,15 @@ function BlogArticle() {
             <p className="text-text-secondary mb-6">
               Discutons de votre projet et obtenez un devis personnalisé gratuitement.
             </p>
-            <motion.a
-              href="/contact"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-accent text-white rounded-lg font-semibold hover:bg-accent/90 transition-all duration-300 group"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <Link
+              to="/contact"
+              className="btn btn-premium inline-flex items-center gap-3 px-8 py-4 rounded-lg font-semibold transition-all duration-300"
             >
               <span>Me contacter</span>
-            </motion.a>
+            </Link>
           </motion.div>
         </Container>
       </div>
-    </>
   );
 }
 

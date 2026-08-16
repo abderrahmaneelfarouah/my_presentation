@@ -10,7 +10,7 @@ import { useMenu } from '../hooks/useMenu'
 // Composant NotFound pour les erreurs 404
 function NotFound() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen flex items-center justify-center page-shell">
       <div className="text-center">
         <h1 className="text-4xl font-bold text-text-main mb-4">404</h1>
         <p className="text-lg text-text-secondary mb-8">Page non trouvée</p>
@@ -34,9 +34,9 @@ function RootComponent() {
   return (
     <HelmetProvider>
       <SEO />
-      <div className="flex flex-col min-h-screen w-full mx-auto transition-all duration-500 ease-out p-3 sm:p-4 md:p-6 lg:p-8">
+      <div className="page-shell flex flex-col min-h-screen w-full mx-auto transition-all duration-300 ease-out p-3 sm:p-4 md:p-6 lg:p-8">
         <header role="banner">
-          <Navbar activeTab="home" />
+          <Navbar />
         </header>
         <main role="main"
           id="main-content"

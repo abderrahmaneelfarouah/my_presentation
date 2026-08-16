@@ -2,6 +2,7 @@ import { Mail, Phone, MapPin, Calendar } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { useState } from 'react';
+import { CONTACT } from '../utils/constants';
 
 export default function ContactSimple() {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
@@ -33,7 +34,7 @@ export default function ContactSimple() {
     // Send email
     const subject = `Nouveau contact de ${formData.name}`;
     const body = `Nom: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`;
-    window.location.href = `mailto:abde.elfarouah@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:${CONTACT.EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     
     setSent(true);
     setTimeout(() => setSent(false), 3000);
@@ -70,18 +71,32 @@ export default function ContactSimple() {
               </p>
               
               <div className="space-y-4 w-full max-w-sm">
-                <div className="flex items-center gap-3 p-3 bg-accent/10 rounded-lg">
-                  <Mail className="w-5 h-5 text-accent" />
-                  <a href="mailto:abde.elfarouah@gmail.com" className="text-text-secondary hover:text-accent transition-colors">
-                    abde.elfarouah@gmail.com
-                  </a>
-                </div>
-                <div className="flex items-center gap-3 p-3 bg-accent/10 rounded-lg">
-                  <Phone className="w-5 h-5 text-accent" />
-                  <a href="tel:+33760751350" className="text-text-secondary hover:text-accent transition-colors">
-                    07 60 75 13 50
-                  </a>
-                </div>
+                <a
+                  href={`mailto:${CONTACT.EMAIL}`}
+                  aria-label={`Envoyer un email à ${CONTACT.EMAIL}, réponse sous 24 heures`}
+                  className="flex items-center gap-3 p-3 bg-accent/10 rounded-lg touch-area focus-visible hover:bg-accent/15 transition-colors no-underline min-w-0"
+                >
+                  <Mail className="w-5 h-5 text-accent shrink-0" />
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-text-main font-medium text-sm sm:text-base break-words hover:text-accent transition-colors leading-snug">
+                      {CONTACT.EMAIL}
+                    </span>
+                    <span className="text-sm text-text-secondary mt-0.5 block">Réponse sous 24h</span>
+                  </span>
+                </a>
+                <a
+                  href={`tel:${CONTACT.PHONE_TEL}`}
+                  aria-label={`Appeler le ${CONTACT.PHONE_DISPLAY}, disponible 7j sur 7`}
+                  className="flex items-center gap-3 p-3 bg-accent/10 rounded-lg touch-area focus-visible hover:bg-accent/15 transition-colors no-underline min-w-0"
+                >
+                  <Phone className="w-5 h-5 text-accent shrink-0" />
+                  <span className="min-w-0">
+                    <span className="block text-text-main font-medium whitespace-nowrap hover:text-accent transition-colors">
+                      {CONTACT.PHONE_DISPLAY}
+                    </span>
+                    <span className="text-sm text-text-secondary whitespace-nowrap">Disponible 7j/7</span>
+                  </span>
+                </a>
                 <div className="flex items-center gap-3 p-3 bg-accent/10 rounded-lg">
                   <MapPin className="w-5 h-5 text-accent" />
                   <span className="text-text-secondary">

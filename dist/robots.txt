@@ -1,12 +1,18 @@
 User-agent: *
 Allow: /
+Allow: /site-version.txt
+Allow: /site-version.json
 
 # Priorité pour les moteurs de recherche importants
 User-agent: Googlebot
 Allow: /
+Allow: /site-version.txt
+Allow: /site-version.json
 
 User-agent: Bingbot
 Allow: /
+Allow: /site-version.txt
+Allow: /site-version.json
 
 # Bloquer les bots non désirés
 User-agent: AhrefsBot
@@ -20,12 +26,15 @@ Disallow: /
 
 # Fichiers à ne pas indexer
 Disallow: /admin/
-Disallow: /*.json$
-Disallow: /*.xml$
 Disallow: /api/
 
-# Fichiers spéciaux
+# Fichiers SEO (explicitement autorisés)
+Allow: /sitemap.xml
+Allow: /geo-sitemap.xml
+Allow: /robots.txt
+
 Sitemap: https://www.abderrahmane-elfarouahfreelance.com/sitemap.xml
+Sitemap: https://www.abderrahmane-elfarouahfreelance.com/geo-sitemap.xml
 
 # Délai de crawl (crawl-delay)
 Crawl-delay: 1

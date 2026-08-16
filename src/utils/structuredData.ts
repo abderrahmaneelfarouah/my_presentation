@@ -187,6 +187,46 @@ export const pageStructuredData = {
       description: 'Conditions générales de vente pour les services de développement web proposés par Abderrahmane El Farouah, développeur freelance.',
       url: 'https://www.abderrahmane-elfarouahfreelance.com/cgv'
     }
+  }),
+  '/blog': generateStructuredData({
+    type: 'WebPage',
+    data: {
+      title: 'Blog Développement Web | Abderrahmane El Farouah',
+      description: 'Articles sur Angular, Laravel, React, SEO technique et développement web freelance en Île-de-France.',
+      url: 'https://www.abderrahmane-elfarouahfreelance.com/blog'
+    }
+  }),
+  '/developpeur-angular-freelance': generateStructuredData({
+    type: 'WebPage',
+    data: {
+      title: 'Développeur Angular Freelance | Abderrahmane El Farouah',
+      description: 'Développeur Angular freelance pour applications web sur mesure en Île-de-France.',
+      url: 'https://www.abderrahmane-elfarouahfreelance.com/developpeur-angular-freelance'
+    }
+  }),
+  '/developpeur-laravel-freelance': generateStructuredData({
+    type: 'WebPage',
+    data: {
+      title: 'Développeur Laravel Freelance | Abderrahmane El Farouah',
+      description: 'Développeur Laravel freelance pour API, backends et applications web.',
+      url: 'https://www.abderrahmane-elfarouahfreelance.com/developpeur-laravel-freelance'
+    }
+  }),
+  '/creation-site-web-yvelines': generateStructuredData({
+    type: 'WebPage',
+    data: {
+      title: 'Création Site Web Yvelines | Abderrahmane El Farouah',
+      description: 'Création de sites web professionnels dans les Yvelines pour artisans et PME.',
+      url: 'https://www.abderrahmane-elfarouahfreelance.com/creation-site-web-yvelines'
+    }
+  }),
+  '/applications-web-sur-mesure': generateStructuredData({
+    type: 'WebPage',
+    data: {
+      title: 'Applications Web Sur Mesure | Abderrahmane El Farouah',
+      description: 'Développement d\'applications web sur mesure pour automatiser vos processus métier.',
+      url: 'https://www.abderrahmane-elfarouahfreelance.com/applications-web-sur-mesure'
+    }
   })
 };
 
@@ -197,7 +237,7 @@ export const servicesStructuredData = {
     data: {
       name: 'Application Web Sur Mesure',
       description: 'Développement d\'applications web complètes avec Angular et Laravel, adaptées à vos besoins spécifiques. Architecture moderne, design responsive et tests inclus.',
-      url: 'https://www.abderrahmane-elfarouahfreelance.com/services#web-app',
+      url: 'https://www.abderrahmane-elfarouahfreelance.com/services',
       priceRange: '3500-6000€',
       serviceType: 'Développement web sur mesure'
     }
@@ -207,7 +247,7 @@ export const servicesStructuredData = {
     data: {
       name: 'Site E-Commerce',
       description: 'Boutique en ligne complète avec panier, paiement et gestion des produits. Intégration Stripe/PayPal et panel admin.',
-      url: 'https://www.abderrahmane-elfarouahfreelance.com/services#ecommerce',
+      url: 'https://www.abderrahmane-elfarouahfreelance.com/services',
       priceRange: '2800-4500€',
       serviceType: 'Développement e-commerce'
     }
@@ -217,7 +257,7 @@ export const servicesStructuredData = {
     data: {
       name: 'Plateforme SaaS',
       description: 'Solution Software as a Service avec abonnements, multi-utilisateurs et tableau de bord. Architecture multi-tenants et sécurité avancée.',
-      url: 'https://www.abderrahmane-elfarouahfreelance.com/services#saas',
+      url: 'https://www.abderrahmane-elfarouahfreelance.com/services',
       priceRange: '8000-15000€',
       serviceType: 'Développement plateforme SaaS'
     }
@@ -227,7 +267,7 @@ export const servicesStructuredData = {
     data: {
       name: 'Maintenance & Évolution',
       description: 'Suivi technique, mises à jour et évolutions de vos applications existantes. Support 24/7 et sauvegardes automatisées.',
-      url: 'https://www.abderrahmane-elfarouahfreelance.com/services#maintenance',
+      url: 'https://www.abderrahmane-elfarouahfreelance.com/services',
       priceRange: '500-2000€/mois',
       serviceType: 'Maintenance applicative'
     }
@@ -237,7 +277,7 @@ export const servicesStructuredData = {
     data: {
       name: 'Consulting Technique',
       description: 'Conseil technique pour vos projets, audit de code et accompagnement équipe. Audit d\'architecture et formation inclus.',
-      url: 'https://www.abderrahmane-elfarouahfreelance.com/services#consulting',
+      url: 'https://www.abderrahmane-elfarouahfreelance.com/services',
       priceRange: '800€/jour',
       serviceType: 'Conseil en développement web'
     }

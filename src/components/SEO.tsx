@@ -1,7 +1,9 @@
 import { Helmet } from 'react-helmet-async';
 import { useRouterState } from '@tanstack/react-router';
 import { useMemo } from 'react';
+import { getBlogArticleBySlug } from '../data/blog-articles';
 import { pageStructuredData } from '../utils/structuredData';
+import { siteBuildInfo } from '../buildInfo';
 
 // ─── Config ───────────────────────────────────
 
@@ -88,7 +90,50 @@ const pageSEO: Record<string, PageSEOMeta> = {
     description:
       "Conditions générales de vente pour les prestations de développement web freelance d'Abderrahmane El Farouah.",
   },
+  '/developpeur-angular-freelance': {
+    title: 'Développeur Angular Freelance | Abderrahmane El Farouah',
+    description:
+      "Développeur Angular freelance à Mantes-la-Jolie et en Île-de-France pour applications web sur mesure, maintenance et refonte front-end.",
+  },
+  '/developpeur-laravel-freelance': {
+    title: 'Développeur Laravel Freelance | Abderrahmane El Farouah',
+    description:
+      "Développeur Laravel freelance pour API, backends métier, applications web et intégrations sur mesure.",
+  },
+  '/creation-site-web-yvelines': {
+    title: 'Création Site Web Yvelines | Abderrahmane El Farouah',
+    description:
+      "Création de sites web professionnels dans les Yvelines pour artisans, PME, indépendants et entreprises locales.",
+  },
+  '/applications-web-sur-mesure': {
+    title: 'Applications Web Sur Mesure | Abderrahmane El Farouah',
+    description:
+      "Développement d'applications web sur mesure pour automatiser vos processus métier et centraliser vos outils.",
+  },
 };
+
+function resolvePageSEO(pathname: string): PageSEOMeta {
+  const staticPage = pageSEO[pathname];
+  if (staticPage) return staticPage;
+
+  const blogSlugMatch = pathname.match(/^\/blog\/([^/]+)$/);
+  if (blogSlugMatch) {
+    const article = getBlogArticleBySlug(blogSlugMatch[1]);
+    if (article) {
+      return {
+        title: `${article.title} | Blog Développement Web`,
+        description: article.excerpt,
+      };
+    }
+    return {
+      title: 'Article non trouvé | Blog',
+      description: 'Cet article de blog est introuvable ou a été déplacé.',
+      noIndex: true,
+    };
+  }
+
+  return {};
+}
 
 // ─── Helpers ──────────────────────────────────
 
@@ -117,6 +162,26 @@ const breadcrumbMap: Record<string, Array<{ name: string; path: string }>> = {
 };
 
 function buildBreadcrumbStructuredData(pathname: string) {
+  const blogSlugMatch = pathname.match(/^\/blog\/([^/]+)$/);
+  if (blogSlugMatch) {
+    const article = getBlogArticleBySlug(blogSlugMatch[1]);
+    const crumbs = [
+      { name: 'Accueil', path: '/' },
+      { name: 'Blog', path: '/blog' },
+      { name: article?.title ?? 'Article', path: pathname },
+    ];
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: crumbs.map((crumb, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: crumb.name,
+        item: crumb.path === '/' ? BASE_URL : `${BASE_URL}${crumb.path}`,
+      })),
+    };
+  }
+
   const crumbs = breadcrumbMap[pathname] || [{ name: 'Accueil', path: '/' }, { name: 'Page', path: pathname }];
   
   return {
@@ -158,12 +223,14 @@ export default function SEO({
   const { location } = useRouterState();
   const pathname = location.pathname;
 
-  const pageSpecific = pageSEO[pathname] ?? {};
+  const pageSpecific = resolvePageSEO(pathname);
+  const blogSlugMatch = pathname.match(/^\/blog\/([^/]+)$/);
+  const blogArticle = blogSlugMatch ? getBlogArticleBySlug(blogSlugMatch[1]) : undefined;
 
-  const finalTitle       = title       || pageSpecific.title;
-  const finalDescription = description || pageSpecific.description;
+  const finalTitle       = title       || pageSpecific.title || SITE_NAME;
+  const finalDescription = description || pageSpecific.description || "Développeur web freelance Angular, Laravel et React basé à Mantes-la-Jolie.";
   const finalImage       = toAbsoluteImageUrl(image || DEFAULT_IMAGE);
-  const finalType        = type || 'website';
+  const finalType        = type || (blogArticle ? 'article' : 'website');
   const finalNoIndex     = noIndex || pageSpecific.noIndex || false;
 
   const canonicalUrl = buildCanonical(pathname);
@@ -323,11 +390,28 @@ export default function SEO({
       "@context": "https://schema.org",
       "@type": "WebSite",
       url: BASE_URL,
-      name: SITE_NAME
+      name: SITE_NAME,
+      identifier: siteBuildInfo.version,
+      dateModified: siteBuildInfo.builtAt
     };
 
     const breadcrumb = buildBreadcrumbStructuredData(pathname);
     const speakable = buildSpeakableSpecification();
+
+    const blogPosting = blogArticle
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'BlogPosting',
+          headline: blogArticle.title,
+          description: blogArticle.excerpt,
+          datePublished: blogArticle.date,
+          author: {
+            '@type': 'Person',
+            name: 'Abderrahmane El Farouah',
+          },
+          mainEntityOfPage: canonicalUrl,
+        }
+      : null;
 
     return [
       structuredData ?? professionalService,
@@ -335,10 +419,11 @@ export default function SEO({
       website,
       breadcrumb,
       speakable,
-      pageStructuredData[pathname as keyof typeof pageStructuredData]
+      pageStructuredData[pathname as keyof typeof pageStructuredData],
+      blogPosting,
     ].filter(Boolean);
 
-  }, [pathname, structuredData]);
+  }, [pathname, structuredData, blogArticle, canonicalUrl]);
 
   // ─── Render ─────────────────────────────────
 
@@ -351,9 +436,16 @@ export default function SEO({
       <title>{finalTitle}</title>
       <meta name="description" content={finalDescription} />
       <meta name="robots" content={robotsContent} />
+      <meta name="site-version" content={siteBuildInfo.version} />
+      <meta name="site-package-version" content={siteBuildInfo.packageVersion} />
+      <meta name="site-build-commit" content={siteBuildInfo.commit} />
+      <meta name="site-build-branch" content={siteBuildInfo.branch} />
+      <meta name="site-build-date" content={siteBuildInfo.builtAt} />
 
       {/* CANONICAL */}
       <link rel="canonical" href={canonicalUrl} />
+      <link rel="alternate" type="application/json" href="/site-version.json" />
+      <link rel="version-history" href="/site-version.txt" />
 
       {/* OPEN GRAPH */}
       <meta property="og:type" content={finalType} />

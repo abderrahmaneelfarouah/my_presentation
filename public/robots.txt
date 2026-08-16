@@ -1,16 +1,22 @@
 # Priorité pour les moteurs de recherche importants
 User-agent: *
 Allow: /
+Allow: /site-version.txt
+Allow: /site-version.json
 Crawl-delay: 1
 
 # Googlebot - optimisations spécifiques
 User-agent: Googlebot
 Allow: /
+Allow: /site-version.txt
+Allow: /site-version.json
 Crawl-delay: 0.5
 
 # Bingbot - optimisations spécifiques  
 User-agent: Bingbot
 Allow: /
+Allow: /site-version.txt
+Allow: /site-version.json
 Crawl-delay: 1
 
 # Bloquer les bots non désirés
@@ -37,18 +43,16 @@ Disallow: /vite.config.*
 Disallow: /admin/
 Disallow: /.well-known/
 Disallow: /api/
-Disallow: /*.json$
-Disallow: /*.xml$
-Disallow: /*.txt$
 Disallow: /404.html
 
-# Autoriser les fichiers SEO importants
+# Fichiers SEO
 Allow: /sitemap.xml
 Allow: /robots.txt
 Allow: /manifest.json
 Allow: /local-business.json
+Allow: /site-version.txt
+Allow: /site-version.json
 
 # Indiquer le plan du site (sitemap)
 Sitemap: https://www.abderrahmane-elfarouahfreelance.com/sitemap.xml
 Sitemap: https://www.abderrahmane-elfarouahfreelance.com/geo-sitemap.xml
-Sitemap: https://www.abderrahmane-elfarouahfreelance.com/sitemap_index.xml

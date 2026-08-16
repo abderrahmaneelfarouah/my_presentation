@@ -1,11 +1,11 @@
-import { Github, Linkedin, Mail, Calendar, ArrowRight, Sparkles, CheckCircle, MessageCircle } from 'lucide-react';
+import { Github, Linkedin, Mail, Calendar, ArrowRight, Sparkles, MessageCircle, Phone } from 'lucide-react';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { fr } from 'date-fns/locale/fr';
 import { PROFILE_IMAGE } from '../utils/images';
-import { SOCIAL_LINKS } from '../utils/constants';
+import { CONTACT, SOCIAL_LINKS } from '../utils/constants';
 
 const API_BASE = process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:4000/api';
 
@@ -175,23 +175,39 @@ export default function Contact() {
             
             {/* Contact Info */}
             <div className="space-y-3 mb-6">
-              <div className="flex items-center gap-3 p-3 rounded-xl bg-accent/10">
-                <Mail className="w-5 h-5 text-accent" />
-                <a href="mailto:abde.elfarouah@gmail.com" className="text-text-secondary hover:text-accent transition-colors">
-                  abde.elfarouah@gmail.com
-                </a>
-              </div>
-              <div className="flex items-center gap-3 p-3 rounded-xl bg-accent/10">
-                <CheckCircle className="w-5 h-5 text-green-500" />
-                <span className="text-text-secondary">Réponse sous 24h</span>
-              </div>
+              <a
+                href={`tel:${CONTACT.PHONE_TEL}`}
+                aria-label={`Appeler le ${CONTACT.PHONE_DISPLAY}, disponible 7j sur 7`}
+                className="flex items-center gap-3 p-3 rounded-xl bg-accent/10 touch-area focus-visible hover:bg-accent/15 transition-colors no-underline min-w-0"
+              >
+                <Phone className="w-5 h-5 text-accent shrink-0" />
+                <span className="min-w-0">
+                  <span className="block text-text-main font-medium whitespace-nowrap group-hover:text-accent">
+                    {CONTACT.PHONE_DISPLAY}
+                  </span>
+                  <span className="text-sm text-text-secondary whitespace-nowrap">Disponible 7j/7</span>
+                </span>
+              </a>
+              <a
+                href={`mailto:${CONTACT.EMAIL}`}
+                aria-label={`Envoyer un email à ${CONTACT.EMAIL}, réponse sous 24 heures`}
+                className="flex items-center gap-3 p-3 rounded-xl bg-accent/10 touch-area focus-visible hover:bg-accent/15 transition-colors no-underline min-w-0"
+              >
+                <Mail className="w-5 h-5 text-accent shrink-0" />
+                <span className="min-w-0 flex-1">
+                  <span className="block text-text-main font-medium text-sm sm:text-base break-words hover:text-accent transition-colors leading-snug">
+                    {CONTACT.EMAIL}
+                  </span>
+                  <span className="text-sm text-text-secondary mt-0.5 block">Réponse sous 24h</span>
+                </span>
+              </a>
               <div className="flex items-center gap-3 p-3 rounded-xl bg-green-500/10">
-                <MessageCircle className="w-5 h-5 text-green-500" />
-                <a 
-                  href="https://wa.me/33760751350" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="text-text-secondary hover:text-green-500 transition-colors font-medium"
+                <MessageCircle className="w-5 h-5 text-green-500 shrink-0" />
+                <a
+                  href={CONTACT.WHATSAPP}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-text-secondary hover:text-green-500 transition-colors font-medium whitespace-nowrap touch-area focus-visible"
                 >
                   Chat WhatsApp
                 </a>
@@ -219,7 +235,7 @@ export default function Contact() {
                 <Linkedin className="w-6 h-6" />
               </a>
               <a 
-                href="mailto:abde.elfarouah@gmail.com" 
+                href={`mailto:${CONTACT.EMAIL}`}
                 className="touch-area focus-ring w-12 h-12 rounded-2xl btn-primary flex items-center justify-center"
                 aria-label="M'envoyer un email"
               >
