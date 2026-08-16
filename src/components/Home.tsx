@@ -1,44 +1,5 @@
-import { Code, Database, Globe, MapPin, Phone, Mail, ArrowRight, Sparkles, CheckCircle, Calendar } from 'lucide-react';
-import { PROFILE_IMAGE } from '../utils/images';
-import { CONTACT } from '../utils/constants';
+import { ArrowRight, CheckCircle, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
-import type { ReactNode } from 'react';
-
-type LocalContactItem = {
-  icon: ReactNode;
-  label: string;
-  sublabel: string;
-  href?: string;
-  ariaLabel?: string;
-  /** Numéro court : une seule ligne */
-  keepIntact?: boolean;
-  /** Plus de largeur en grille (ex. email) */
-  gridClass?: string;
-};
-
-const localContactItems: LocalContactItem[] = [
-  {
-    icon: <MapPin className="w-6 h-6" />,
-    label: 'Mantes-la-Jolie',
-    sublabel: 'Yvelines (78)',
-  },
-  {
-    icon: <Phone className="w-6 h-6" />,
-    label: CONTACT.PHONE_DISPLAY,
-    sublabel: 'Disponible 7j/7',
-    href: `tel:${CONTACT.PHONE_TEL}`,
-    ariaLabel: `Appeler le ${CONTACT.PHONE_DISPLAY}, disponible 7j sur 7`,
-    keepIntact: true,
-  },
-  {
-    icon: <Mail className="w-6 h-6" />,
-    label: CONTACT.EMAIL,
-    sublabel: 'Réponse sous 24h',
-    href: `mailto:${CONTACT.EMAIL}`,
-    ariaLabel: `Envoyer un email à ${CONTACT.EMAIL}, réponse sous 24 heures`,
-    gridClass: 'sm:col-span-2 lg:col-span-1',
-  },
-];
 
 const fadeInUp = {
   initial: { opacity: 0, y: 30 },
@@ -56,81 +17,54 @@ const staggerContainer = {
 const Home = () => {
   return (
     <div className="min-h-screen selection-accent">
-      {/* Hero Section */}
-      <section id="hero" className="hero-depth section-premium min-h-screen flex items-center justify-center px-4 py-20 relative overflow-hidden">
-        {/* Background gradient orbs */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-accent/25 rounded-full blur-[100px] -z-10 motion-reduce:hidden" aria-hidden="true" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent-secondary/20 rounded-full blur-[120px] -z-10 motion-reduce:hidden" aria-hidden="true" />
-        
+      {/* Hero Section - Editorial composition on cream */}
+      <section id="hero" className="section-premium min-h-screen flex items-center justify-center px-4 py-20">
         <motion.div 
-          className="text-center max-w-4xl"
+          className="text-center max-w-5xl"
           initial="initial"
           animate="animate"
           variants={staggerContainer}
         >
-          <motion.div className="mb-8" variants={fadeInUp}>
-            <div className="relative inline-block">
-              <img 
-                src={PROFILE_IMAGE} 
-                alt="Abderrahmane El Farouah - Développeur Web Freelance Angular Laravel à Mantes-la-Jolie (78)" 
-                className="w-36 h-36 rounded-full object-cover shadow-glow-animated mx-auto mb-6 ring-4 ring-accent/20"
-              />
-              <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-green-500 rounded-full border-4 border-white dark:border-gray-900 flex items-center justify-center">
-                <span className="w-3 h-3 bg-white rounded-full animate-pulse" />
-              </div>
-            </div>
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm font-medium">
-              <Sparkles className="w-4 h-4 text-accent" />
-              <span>Transformation digitale • Résultats mesurables</span>
+          <motion.div className="mb-12" variants={fadeInUp}>
+            <span className="inline-block text-sm font-medium tracking-widest uppercase text-muted-foreground mb-4">
+              Développement web freelance
             </span>
           </motion.div>
           
           <motion.h1 
-            className="ai-speakable-headline text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight"
+            className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 tracking-tight leading-tight"
             variants={fadeInUp}
           >
-            <span className="text-text-main">Développeur Web Angular </span>
-            <span className="text-gradient">Freelance Mantes-la-Jolie</span>
+            <span className="text-text-main">Sites web rapides, </span>
+            <span className="text-gradient">modernes et efficaces</span>
           </motion.h1>
           
-          <motion.h2 
-            className="ai-speakable-headline text-xl md:text-2xl mb-8 text-text-secondary font-medium"
-            variants={fadeInUp}
-          >
-            Spécialiste Angular, Laravel & React • Yvelines (78) • Télétravail France entière
-          </motion.h2>
-          
           <motion.p 
-            className="ai-speakable-summary text-lg mb-12 max-w-2xl mx-auto text-text-secondary leading-relaxed"
+            className="text-xl md:text-2xl mb-12 max-w-3xl mx-auto text-text-secondary leading-relaxed font-light"
             variants={fadeInUp}
           >
-            Je crée des <strong>applications web performantes</strong> avec Angular et Laravel pour les 
-            <strong className="text-accent">entreprises des Yvelines et d'Île-de-France</strong>. 
-            Sites vitrines, applications métier, e-commerce : des solutions digitales sur mesure, 100% télétravail.
+            J'accompagne les entreprises et indépendants dans la création, l'amélioration et l'évolution de leurs applications et sites web.
           </motion.p>
           
           <motion.div 
-            className="flex flex-col sm:flex-row gap-4 justify-center"
+            className="flex flex-col sm:flex-row gap-6 justify-center"
             variants={fadeInUp}
           >
             <motion.a
               href="/contact"
-              className="btn-premium relative inline-flex items-center gap-3 px-12 py-6 text-xl font-bold rounded-2xl shadow-btn-glow transition-all duration-300 group overflow-hidden focus-ring"
-              whileHover={{ scale: 1.08, y: -2 }}
-              whileTap={{ scale: 0.95 }}
+              className="btn-premium inline-flex items-center gap-3 px-10 py-4 text-base font-medium rounded-lg focus-ring"
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
             >
-              {/* Glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-              <Calendar className="w-7 h-7 relative z-10" />
-              <span className="relative z-10">Prendre RDV gratuit</span>
-              <ArrowRight className="w-7 h-7 ml-1 relative z-10 group-hover:translate-x-3 transition-transform duration-300" />
+              <span>Parlons de votre projet</span>
+              <ArrowRight className="w-5 h-5" aria-hidden="true" />
             </motion.a>
             <a 
               href="/services"
-              className="btn btn-secondary px-8 py-4 text-base font-medium group"
+              className="btn btn-secondary px-10 py-4 text-base font-medium inline-flex items-center gap-2"
             >
-              Voir mes services
-              <ArrowRight className="w-5 h-5 ml-2 inline-block group-hover:translate-x-1 transition-transform" />
+              Découvrir mes services
+              <ArrowRight className="w-5 h-5" aria-hidden="true" />
             </a>
           </motion.div>
         </motion.div>
@@ -138,43 +72,44 @@ const Home = () => {
 
       <div className="section-divider mx-4" aria-hidden="true" />
 
-      {/* About Bento Section */}
-      <section id="about" className="section-premium py-24 px-4">
+      {/* Section 2 - Preuve immédiate */}
+      <section id="proof" className="section-premium py-24 px-4" aria-labelledby="proof-heading">
         <div className="max-w-6xl mx-auto">
           <motion.div 
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.4 }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-text-main">
-              Une <span className="text-gradient">Approche</span> Orientée Résultats
+            <h2 id="proof-heading" className="text-4xl md:text-5xl font-bold mb-4 text-text-main">
+              Pourquoi <span className="text-gradient">me choisir</span>
             </h2>
             <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-              Processus éprouvé pour livrer des solutions de qualité
+              Une expertise technique au service de votre réussite professionnelle
             </p>
           </motion.div>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { num: "01", title: "Écoute", desc: "On discute de votre activité, de vos contraintes et de vos objectifs concrets", icon: <Code className="w-6 h-6" /> },
-              { num: "02", title: "Solution", desc: "Je vous propose un outil adapté à votre métier et à votre budget", icon: <Database className="w-6 h-6" /> },
-              { num: "03", title: "Accompagnement", desc: "Mise en place, formation et suivi pour que vous soyez autonome", icon: <Globe className="w-6 h-6" /> }
-            ].map((step, index) => (
+              { icon: <CheckCircle className="w-6 h-6" aria-hidden="true" />, title: "Expertise technique", desc: "Maîtrise d'Angular, Laravel, TypeScript et des technologies web modernes pour créer des solutions performantes et évolutives adaptées aux besoins des entreprises contemporaines." },
+              { icon: <CheckCircle className="w-6 h-6" aria-hidden="true" />, title: "Approche personnalisée", desc: "Chaque projet est unique : j'analyse vos besoins spécifiques pour concevoir des solutions sur mesure qui s'intègrent parfaitement à votre activité et vos processus métier." },
+              { icon: <CheckCircle className="w-6 h-6" aria-hidden="true" />, title: "Travail à distance", desc: "Collaboration fluide et efficace grâce à des outils modernes de communication et de gestion de projet, permettant un accompagnement optimal où que vous soyez en France." },
+              { icon: <CheckCircle className="w-6 h-6" aria-hidden="true" />, title: "Accompagnement complet", desc: "Formation approfondie et suivi personnalisé pour vous rendre autonome sur votre solution digitale, avec une disponibilité continue pour répondre à vos questions." }
+            ].map((item, index) => (
               <motion.div 
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.15 }}
-                className="card-bento text-center group"
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="card text-center"
               >
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent/20 to-primary/10 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-2xl font-bold text-gradient">{step.num}</span>
+                <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center mx-auto mb-4 text-accent">
+                  {item.icon}
                 </div>
-                <h3 className="text-xl font-bold text-text-main mb-3">{step.title}</h3>
-                <p className="text-text-secondary leading-relaxed">{step.desc}</p>
+                <h3 className="text-lg font-bold text-text-main mb-2">{item.title}</h3>
+                <p className="text-text-secondary text-sm leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -183,153 +118,277 @@ const Home = () => {
 
       <div className="section-divider mx-4" aria-hidden="true" />
 
-      {/* Location Bento Section */}
-      <section id="local" className="section-premium py-24 px-4">
+      {/* Section 3 - Services */}
+      <section id="services" className="section-premium py-24 px-4" aria-labelledby="services-heading">
         <div className="max-w-6xl mx-auto">
           <motion.div 
-            className="text-center mb-12"
+            className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.4 }}
           >
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm font-medium mb-6">
-              <MapPin className="w-4 h-4 text-accent" />
-              <span>Localisation</span>
-            </span>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-text-main">
-              Intervention en <span className="text-gradient">Île-de-France</span>
+            <h2 id="services-heading" className="text-4xl md:text-5xl font-bold mb-4 text-text-main">
+              Mes <span className="text-gradient">Services</span>
             </h2>
             <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-              Basé à Mantes-la-Jolie, disponible pour vos projets dans toute la région
+              Des solutions digitales complètes pour transformer votre présence en ligne et optimiser vos processus métier
             </p>
           </motion.div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              { title: "Création de sites web", problem: "Votre entreprise n'a pas de présence en ligne ou votre site actuel ne reflète pas votre professionnalisme", solution: "Conception et développement de sites vitrines modernes, responsives et optimisés pour les moteurs de recherche, avec une attention particulière à l'expérience utilisateur et à la conversion", benefit: "Visibilité accrue auprès de votre clientèle cible, crédibilité renforcée et génération de leads qualifiés grâce à un site professionnel et performant" },
+              { title: "Applications web", problem: "Vos processus métier sont chronophages, manuels et sujets aux erreurs humaines", solution: "Développement d'applications web sur mesure qui automatisent vos tâches répétitives, centralisent vos données et fluidifient vos workflows internes", benefit: "Gain de temps significatif pour votre équipe, réduction des erreurs opérationnelles et amélioration globale de la productivité de votre entreprise" },
+              { title: "Refonte & optimisation", problem: "Votre site web existant est techniquement obsolète, lent ou ne répond plus aux standards actuels du web", solution: "Analyse approfondie de l'existant, modernisation de l'architecture technique, optimisation des performances et mise à jour du design selon les meilleures pratiques actuelles", benefit: "Site plus rapide et moderne, meilleure expérience utilisateur, conformité aux standards web et amélioration du référencement naturel" },
+              { title: "SEO & performance", problem: "Votre site n'apparaît pas dans les premiers résultats des moteurs de recherche ou charge lentement", solution: "Audit technique complet, optimisation du code, amélioration du contenu, structure des données et stratégie de mots-clés pour maximiser votre visibilité en ligne", benefit: "Meilleur positionnement dans les résultats de recherche, augmentation du trafic organique qualifié et amélioration des Core Web Vitals pour une expérience utilisateur optimale" },
+              { title: "Maintenance & évolution", problem: "Votre site nécessite des mises à jour régulières de sécurité et de fonctionnalités pour rester performant", solution: "Suivi proactif de la sécurité, mises à jour régulières des technologies, surveillance des performances et évolution continue des fonctionnalités selon vos besoins", benefit: "Site sécurisé et toujours à jour, tranquillité d'esprit avec un support technique réactif et capacité d'évolution pour accompagner la croissance de votre activité" },
+              { title: "E-commerce", problem: "Vous souhaitez développer votre activité en ligne mais ne disposez pas de plateforme de vente adaptée", solution: "Création de boutiques en ligne sur mesure avec intégration de paiements sécurisés, gestion des stocks et des commandes, et optimisation pour la conversion", benefit: "Nouveau canal de vente 24/7, élargissement de votre clientèle géographique, automatisation des processus de vente et suivi détaillé des performances commerciales" }
+            ].map((service, index) => (
+              <motion.div 
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="card-bento"
+              >
+                <h3 className="text-xl font-bold text-text-main mb-3">{service.title}</h3>
+                <div className="space-y-3 text-sm">
+                  <p className="text-text-secondary"><span className="font-medium text-accent">Problème :</span> {service.problem}</p>
+                  <p className="text-text-secondary"><span className="font-medium text-accent">Solution :</span> {service.solution}</p>
+                  <p className="text-text-secondary"><span className="font-medium text-accent">Bénéfice :</span> {service.benefit}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          
+          <motion.div 
+            className="text-center mt-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.3 }}
+          >
+            <a 
+              href="/services"
+              className="btn btn-secondary px-8 py-4 text-base font-medium inline-flex items-center gap-2"
+            >
+              Voir tous les services
+              <ArrowRight className="w-5 h-5" aria-hidden="true" />
+            </a>
+          </motion.div>
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {localContactItems.map((item, index) => {
-              const cardClassName =
-                'card-bento flex items-center gap-4 group min-w-0 transition-colors duration-200 p-5 sm:p-6';
-              const content = (
-                <>
-                  <div className="w-14 h-14 shrink-0 rounded-xl bg-gradient-to-br from-accent/20 to-primary/10 flex items-center justify-center text-accent group-hover:scale-110 transition-transform duration-300">
-                    {item.icon}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <span
-                      className={`block text-text-main font-semibold group-hover:text-accent transition-colors leading-snug ${
-                        item.keepIntact
-                          ? 'whitespace-nowrap'
-                          : 'text-sm sm:text-base break-words'
-                      }`}
-                    >
-                      {item.label}
-                    </span>
-                    <span className="text-sm text-text-secondary mt-0.5 block">
-                      {item.sublabel}
-                    </span>
-                  </div>
-                </>
-              );
+      <div className="section-divider mx-4" aria-hidden="true" />
 
-              if (item.href) {
-                return (
-                  <motion.a
-                    key={item.href}
-                    href={item.href}
-                    aria-label={item.ariaLabel}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    whileHover={{ y: -4, scale: 1.02 }}
-                    className={`${cardClassName} ${item.gridClass ?? ''} touch-area focus-visible hover:border-accent/40 no-underline`}
-                  >
-                    {content}
-                  </motion.a>
-                );
-              }
-
-              return (
-                <motion.div
-                  key={item.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  whileHover={{ y: -4, scale: 1.02 }}
-                  className={`${cardClassName} ${item.gridClass ?? ''}`}
-                >
-                  {content}
-                </motion.div>
-              );
-            })}
+      {/* Section 4 - Pourquoi travailler avec moi */}
+      <section id="why" className="section-premium py-24 px-4" aria-labelledby="why-heading">
+        <div className="max-w-6xl mx-auto">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+          >
+            <h2 id="why-heading" className="text-4xl md:text-5xl font-bold mb-4 text-text-main">
+              Pourquoi <span className="text-gradient">travailler avec moi</span>
+            </h2>
+            <p className="text-xl text-text-secondary max-w-2xl mx-auto">
+              Des avantages concrets et tangibles pour la réussite de votre projet digital
+            </p>
+          </motion.div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              { title: "Interlocuteur unique et dédié", desc: "Bénéficiez d'un contact direct et unique pour l'ensemble de votre projet, de la phase de conception initiale jusqu'à la livraison finale, garantissant une communication fluide et une compréhension approfondie de vos besoins" },
+              { title: "Développement véritablement sur mesure", desc: "Chaque solution est conçue spécifiquement pour répondre à vos exigences uniques, sans utiliser de templates génériques, assurant une adéquation parfaite entre l'outil digital et vos processus métier existants" },
+              { title: "Approche orientée performance", desc: "Priorité absolue accordée à la vitesse de chargement, à l'optimisation pour les moteurs de recherche et à la conformité avec les standards web actuels, garantissant une expérience utilisateur optimale et une visibilité maximale" },
+              { title: "Code maintenable et évolutif", desc: "Architecture logicielle propre, bien documentée et structurée selon les meilleures pratiques de développement, facilitant les futures évolutions, la maintenance et l'intégration de nouvelles fonctionnalités" },
+              { title: "Accompagnement complet et personnalisé", desc: "Formation approfondie de votre équipe, support technique réactif et disponibilité continue pour vous accompagner dans la prise en main de votre solution et répondre à toutes vos questions" },
+              { title: "Communication transparente et régulière", desc: "Reporting périodique sur l'avancement du projet, réunions de suivi programmées et canaux de communication ouverts pour garantir une collaboration sereine et une confiance mutuelle tout au long du partenariat" }
+            ].map((advantage, index) => (
+              <motion.div 
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="card text-center"
+              >
+                <h3 className="text-lg font-bold text-text-main mb-2">{advantage.title}</h3>
+                <p className="text-text-secondary text-sm leading-relaxed">{advantage.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section - Enhanced Visibility */}
-      <section id="cta" className="py-28 px-4 relative overflow-hidden">
-        {/* Dark gradient background for contrast */}
-        <div className="absolute inset-0 bg-gradient-to-br from-accent/90 via-primary to-accent/90 bg-[length:200%_200%] animate-gradient-shift -z-20" />
-        
-        {/* Dark overlay for better text contrast */}
-        <div className="absolute inset-0 bg-black/30 -z-10" />
-        
-        {/* Subtle glow orbs */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent/30 rounded-full blur-[120px] -z-10" />
-        
-        {/* Card container with dark background */}
+      <div className="section-divider mx-4" aria-hidden="true" />
+
+      {/* Section 5 - Réalisations */}
+      <section id="realisations" className="section-premium py-24 px-4" aria-labelledby="realisations-heading">
+        <div className="max-w-6xl mx-auto">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+          >
+            <h2 id="realisations-heading" className="text-4xl md:text-5xl font-bold mb-4 text-text-main">
+              Mes <span className="text-gradient">Réalisations</span>
+            </h2>
+            <p className="text-xl text-text-secondary max-w-2xl mx-auto">
+              Chaque projet est unique et conçu spécifiquement pour répondre aux besoins de mes clients. Discutons ensemble de votre projet pour créer une solution sur mesure.
+            </p>
+          </motion.div>
+          
+          <motion.div 
+            className="text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+          >
+            <div className="card-bento p-12 max-w-3xl mx-auto">
+              <h3 className="text-2xl font-bold text-text-main mb-4">Votre projet mérite une attention personnalisée</h3>
+              <p className="text-text-secondary mb-8 leading-relaxed">
+                Plutôt que de vous présenter des projets génériques, je préfère consacrer mon temps à comprendre vos besoins spécifiques et à concevoir une solution parfaitement adaptée à votre activité. Chaque client est unique, et chaque projet mérite une approche sur mesure.
+              </p>
+              <a 
+                href="/contact"
+                className="btn-premium inline-flex items-center gap-3 px-8 py-4 text-base font-medium rounded-lg"
+              >
+                Discutons de votre projet
+                <ArrowRight className="w-5 h-5" aria-hidden="true" />
+              </a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      <div className="section-divider mx-4" aria-hidden="true" />
+
+      {/* Section 6 - Méthode */}
+      <section id="methode" className="section-premium py-24 px-4" aria-labelledby="methode-heading">
+        <div className="max-w-6xl mx-auto">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+          >
+            <h2 id="methode-heading" className="text-4xl md:text-5xl font-bold mb-4 text-text-main">
+              Ma <span className="text-gradient">Méthode</span>
+            </h2>
+            <p className="text-xl text-text-secondary max-w-2xl mx-auto">
+              Un processus structuré et éprouvé pour garantir la réussite de votre projet digital, de la conception initiale jusqu'au déploiement en production
+            </p>
+          </motion.div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              { num: "1", title: "Échange et découverte", desc: "Première rencontre approfondie pour comprendre votre activité, vos objectifs commerciaux, vos contraintes techniques et vos attentes spécifiques, avec analyse de votre environnement concurrentiel et identification des opportunités digitales" },
+              { num: "2", title: "Analyse et stratégie", desc: "Étude détaillée de l'existant technique et fonctionnel, définition précise des spécifications et des livrables, élaboration d'une architecture adaptée et proposition d'une stratégie digitale alignée sur vos objectifs business" },
+              { num: "3", title: "Conception et design", desc: "Création des maquettes et prototypes de l'interface utilisateur, définition de l'expérience utilisateur et du parcours client, validation des choix ergonomiques avec votre équipe et finalisation du design system" },
+              { num: "4", title: "Développement itératif", desc: "Réalisation technique en sprints courts avec validations régulières, développement des fonctionnalités selon les meilleures pratiques, tests unitaires et intégration continue pour garantir la qualité du code" },
+              { num: "5", title: "Livraison et formation", desc: "Déploiement en environnement de production, tests finaux de validation, formation approfondie de votre équipe à l'utilisation de la solution, documentation technique et support pendant la période de transition" },
+              { num: "6", title: "Suivi et évolution", desc: "Support technique réactif après la livraison, surveillance des performances et de la sécurité, mise à jour régulière des technologies, et accompagnement pour les futures évolutions et nouvelles fonctionnalités" }
+            ].map((step, index) => (
+              <motion.div 
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="card text-center"
+              >
+                <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center mx-auto mb-4">
+                  <span className="text-xl font-bold text-accent">{step.num}</span>
+                </div>
+                <h3 className="text-lg font-bold text-text-main mb-2">{step.title}</h3>
+                <p className="text-text-secondary text-sm leading-relaxed">{step.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider mx-4" aria-hidden="true" />
+
+      {/* Section 7 - À propos */}
+      <section id="about" className="section-premium py-24 px-4" aria-labelledby="about-heading">
+        <div className="max-w-4xl mx-auto">
+          <motion.div 
+            className="text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+          >
+            <h2 id="about-heading" className="text-4xl md:text-5xl font-bold mb-6 text-text-main">
+              À <span className="text-gradient">propos</span>
+            </h2>
+            <p className="text-xl text-text-secondary leading-relaxed mb-8">
+              Développeur web freelance passionné par la création de solutions digitales performantes et innovantes. Basé en Île-de-France, j'accompagne les entreprises et indépendants dans leur transformation digitale avec une approche orientée résultats et satisfaction client, combinant expertise technique et compréhension approfondie des enjeux business.
+            </p>
+            <a 
+              href="/about"
+              className="btn btn-secondary px-8 py-4 text-base font-medium inline-flex items-center gap-2"
+            >
+              En savoir plus sur mon parcours et mon expertise
+              <ArrowRight className="w-5 h-5" aria-hidden="true" />
+            </a>
+          </motion.div>
+        </div>
+      </section>
+
+      <div className="section-divider mx-4" aria-hidden="true" />
+
+      {/* Section 8 - CTA final */}
+      <section id="cta" className="py-28 px-4" aria-labelledby="cta-heading">
         <motion.div 
           className="max-w-3xl mx-auto"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.4 }}
         >
-          <div className="relative glass-strong rounded-3xl p-10 md:p-14 text-center border border-border-color/40 dark:border-white/20 shadow-card-elevated">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/15 text-accent dark:bg-accent/20 dark:text-white text-sm font-medium mb-6 border border-accent/30">
-              <Sparkles className="w-4 h-4 text-accent dark:text-accent" />
-              <span>Premier rendez-vous gratuit</span>
-            </div>
-            
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 text-text-main dark:text-white tracking-tight leading-tight">
-              Développeur Web Freelance Angular & Laravel<br />à Mantes-la-Jolie
-            </h1>
-            <p className="text-xl md:text-2xl mb-10 text-text-secondary dark:text-gray-200 font-medium max-w-xl mx-auto leading-relaxed">
-              Création d'applications web performantes, sites sur mesure et SEO pour entreprises et startups à Mantes-la-Jolie et dans toute l'Île-de-France.
+          <div className="card-bento p-10 md:p-14 text-center">
+            <h2 id="cta-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-text-main tracking-tight leading-tight">
+              Vous avez un projet web ou une application à faire évoluer ?
+            </h2>
+            <p className="text-xl md:text-2xl mb-10 text-text-secondary font-medium max-w-xl mx-auto leading-relaxed">
+              Discutons-en lors d'un échange gratuit et sans engagement pour explorer ensemble les opportunités de transformation digitale de votre activité
             </p>
             
-            {/* Prominent CTA Button with pulse */}
-            <div className="relative inline-block">
-              {/* Pulse ring animation */}
-              <div className="absolute inset-0 rounded-2xl bg-white/30 animate-ping opacity-20" />
-              
-              <motion.a 
-                href="/contact"
-                className="relative inline-flex items-center gap-3 px-12 py-5 rounded-2xl bg-white text-accent font-bold text-lg shadow-2xl hover:shadow-white/50 hover:scale-105 transition-all duration-300 group"
-                whileHover={{ scale: 1.08 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Mail className="w-6 h-6" />
-                Me contacter maintenant
-                <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
-              </motion.a>
-            </div>
+            <motion.a 
+              href="/contact"
+              className="btn-premium inline-flex items-center gap-3 px-8 py-4 text-lg font-bold rounded-lg focus-ring"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <Mail className="w-6 h-6" aria-hidden="true" />
+              Échanger sur votre projet
+              <ArrowRight className="w-6 h-6" aria-hidden="true" />
+            </motion.a>
             
-            {/* Trust indicators */}
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-text-secondary dark:text-white/80 text-sm">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-text-secondary text-sm">
               <span className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-success shrink-0" />
-                Sans engagement
+                <CheckCircle className="w-4 h-4 text-success shrink-0" aria-hidden="true" />
+                Premier échange sans engagement
               </span>
               <span className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-success shrink-0" />
-                Réponse sous 24h
+                <CheckCircle className="w-4 h-4 text-success shrink-0" aria-hidden="true" />
+                Réponse garantie sous 24 heures
               </span>
               <span className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-success shrink-0" />
-                Disponible Île-de-France
+                <CheckCircle className="w-4 h-4 text-success shrink-0" aria-hidden="true" />
+                Intervention en Île-de-France et à distance
               </span>
             </div>
           </div>

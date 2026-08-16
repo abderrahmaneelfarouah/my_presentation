@@ -22,9 +22,8 @@ export default function Navbar({ activeTab: activeTabProp }: NavbarProps) {
     { id: 'home', label: 'Accueil', path: '/' },
     { id: 'services', label: 'Services', path: '/services' },
     { id: 'realisations', label: 'Réalisations', path: '/projects' },
-    { id: 'blog', label: 'Blog', path: '/blog' },
-    { id: 'faq', label: 'FAQ', path: '/faq' },
-    { id: 'zones', label: 'Zones', path: '/zones-intervention' },
+    { id: 'methode', label: 'Méthode', path: '/#methode' },
+    { id: 'about', label: 'À propos', path: '/about' },
     { id: 'contact', label: 'Contact', path: '/contact' },
   ];
 
@@ -37,9 +36,7 @@ export default function Navbar({ activeTab: activeTabProp }: NavbarProps) {
       home: 'home',
       services: 'services',
       projects: 'realisations',
-      blog: 'blog',
-      faq: 'faq',
-      'zones-intervention': 'zones',
+      about: 'about',
       contact: 'contact',
     };
 
@@ -48,18 +45,18 @@ export default function Navbar({ activeTab: activeTabProp }: NavbarProps) {
 
   return (
     <>
-      <nav role="navigation" aria-label="Navigation principale" className={`glass-strong sticky top-0 z-50 border-b border-border-color/50 shadow-[0_4px_24px_rgb(0_0_0/0.08)] dark:shadow-[0_4px_32px_rgb(0_0_0/0.35)] ${isOpen ? 'z-[1000]' : ''}`}>
+      <nav role="navigation" aria-label="Navigation principale" className={`glass-strong sticky top-0 z-50 border-b border-border-color ${isOpen ? 'z-[1000]' : ''}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo + titre */}
             <div className="flex items-center space-x-4">
-              <Link to="/" className="flex-shrink-0 touch-area focus-visible rounded-lg" aria-label="Retour à l'accueil">
+              <Link to="/" className="flex-shrink-0 touch-area focus-ring rounded-lg" aria-label="Retour à l'accueil">
                 <img 
                   src={NAV_IMAGE} 
                   alt="Abderrahmane El Farouah" 
                   width="48"
                   height="48"
-                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg object-cover shadow-md border border-border-color/20 hover:shadow-lg transition-all duration-200"
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg object-cover border border-border-color"
                 />
               </Link>
               <div className="hidden sm:block">
@@ -79,9 +76,9 @@ export default function Navbar({ activeTab: activeTabProp }: NavbarProps) {
                   <Link
                     key={item.id}
                     to={item.path}
-                    className={`touch-area focus-visible inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
+                    className={`touch-area focus-ring inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200
                       ${activeTab === item.id
-                        ? 'text-accent bg-accent/10 shadow-sm'
+                        ? 'text-accent bg-accent/10'
                         : 'text-text-secondary hover:text-text-main hover:bg-bg-secondary/50'
                       }`}
                     aria-current={activeTab === item.id ? 'page' : undefined}
@@ -99,9 +96,9 @@ export default function Navbar({ activeTab: activeTabProp }: NavbarProps) {
               <button
                 aria-label={isOpen ? "Fermer le menu" : "Ouvrir le menu"}
                 onClick={() => setIsOpen(!isOpen)}
-                className={`lg:hidden touch-area focus-visible inline-flex items-center justify-center p-2 rounded-lg text-text-secondary hover:text-text-main hover:bg-bg-secondary/50 transition-all duration-200 ${isOpen ? 'relative z-[2000]' : ''}`}
+                className={`lg:hidden touch-area focus-ring inline-flex items-center justify-center p-2 rounded-lg text-text-secondary hover:text-text-main hover:bg-bg-secondary/50 transition-colors duration-200 ${isOpen ? 'relative z-[2000]' : ''}`}
               >
-                {isOpen ? <X size={20} /> : <Menu size={20} />}
+                {isOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
               </button>
             </div>
           </div>
@@ -123,15 +120,15 @@ export default function Navbar({ activeTab: activeTabProp }: NavbarProps) {
                 <h2 className="text-lg font-semibold text-text-main">Menu</h2>
               </div>
 
-              <nav className="flex-1 flex flex-col p-4 overflow-hidden space-y-1">
+              <nav className="flex-1 flex flex-col p-4 overflow-hidden space-y-1" aria-label="Menu mobile">
                 {navItems.map((item) => (
                   <Link
                     key={item.id}
                     to={item.path}
                     onClick={() => setIsOpen(false)}
-                    className={`touch-area focus-visible block w-full text-left px-4 py-3 rounded-lg text-base font-medium transition-all duration-200
+                    className={`touch-area focus-ring block w-full text-left px-4 py-3 rounded-lg text-base font-medium transition-colors duration-200
                       ${activeTab === item.id
-                        ? 'text-accent bg-accent/10 shadow-sm'
+                        ? 'text-accent bg-accent/10'
                         : 'text-text-secondary hover:text-text-main hover:bg-bg-secondary/50'
                       }`}
                     aria-current={activeTab === item.id ? 'page' : undefined}
