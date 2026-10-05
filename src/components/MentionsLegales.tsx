@@ -152,7 +152,14 @@ export default function MentionsLegales() {
                   </p>
 
                   <p>
-                    Les données collectées sont utilisées uniquement pour répondre aux demandes de contact.
+                    Les données peuvent également être traitées pour les demandes de rendez-vous et les services publicitaires. Les finalités, destinataires et modalités d'exercice de vos droits sont détaillés dans la{' '}
+                    <a
+                      href="/confidentialite"
+                      className="text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                      politique de confidentialité
+                    </a>
+                    .
                   </p>
 
                   <p>
@@ -175,11 +182,14 @@ export default function MentionsLegales() {
 
                 <div className="text-gray-700 dark:text-gray-300 space-y-2 text-sm sm:text-base">
                   <p>
-                    Ce site peut utiliser des cookies pour améliorer l'expérience utilisateur et mesurer l’audience.
-                  </p>
-
-                  <p>
-                    Vous pouvez configurer votre navigateur pour refuser les cookies.
+                    Le stockage local du navigateur mémorise le thème choisi. Des cookies ou technologies similaires peuvent aussi être utilisés par les services publicitaires Google. Les informations sur les choix de consentement et leur modification sont présentées dans la{' '}
+                    <a
+                      href="/confidentialite"
+                      className="text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                      politique de confidentialité
+                    </a>
+                    .
                   </p>
                 </div>
               </div>

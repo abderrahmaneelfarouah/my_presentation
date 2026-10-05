@@ -11,21 +11,21 @@ export interface BlogArticle {
 export const BLOG_ARTICLES: BlogArticle[] = [
   {
     id: 1,
-    title: 'Pourquoi choisir Angular pour votre application métier ?',
+    title: 'Pourquoi choisir Angular pour une application métier ?',
     excerpt:
-      "Découvrez les avantages d'Angular pour le développement d'applications web robustes et maintenables pour les entreprises.",
+      "Les critères qui rendent Angular adapté à certaines applications métier, ses limites et un exemple d’architecture avec une API Laravel.",
     date: '2026-04-15',
-    readTime: '5 min',
+    readTime: '12 min',
     slug: 'pourquoi-angular-application-metier',
     category: 'Angular',
   },
   {
     id: 2,
-    title: 'Laravel vs Node.js : quel framework choisir en 2026 ?',
+    title: 'Laravel ou Node.js : choisir une solution backend en 2026',
     excerpt:
-      'Comparatif technique et stratégique entre Laravel et Node.js pour vos projets web backend.',
+      'Laravel est un framework PHP et Node.js un runtime JavaScript : comparez les usages, le coût d’exploitation et la maintenance avec un test concret.',
     date: '2026-04-22',
-    readTime: '7 min',
+    readTime: '6 min',
     slug: 'laravel-vs-nodejs-quel-choisir',
     category: 'Backend',
   },
@@ -33,9 +33,9 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     id: 3,
     title: 'Combien coûte un développeur freelance à Mantes-la-Jolie ?',
     excerpt:
-      'Guide des tarifs 2026 pour les prestations de développement web freelance dans les Yvelines et Île-de-France.',
+      'Comprendre les facteurs qui influencent un budget web, comparer les éléments d’un devis et préparer une demande de chiffrage claire.',
     date: '2026-03-28',
-    readTime: '4 min',
+    readTime: '6 min',
     slug: 'combien-coute-developpeur-freelance',
     category: 'Tarifs',
   },
@@ -43,9 +43,9 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     id: 4,
     title: 'Créer une application web sur mesure : le guide complet',
     excerpt:
-      'Tout ce que vous devez savoir pour développer une application web personnalisée pour votre entreprise.',
+      'Du processus métier au MVP : cadrer les parcours, la sécurité des données, la recette, l’adoption et la maintenance.',
     date: '2026-03-10',
-    readTime: '8 min',
+    readTime: '7 min',
     slug: 'creer-application-web-sur-mesure',
     category: 'Guide',
   },
@@ -53,9 +53,9 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     id: 5,
     title: 'SEO technique : optimiser la performance de votre site React',
     excerpt:
-      'Les bonnes pratiques pour améliorer le référencement et la vitesse de votre application React ou Angular.',
+      'Vérifier le HTML livré, choisir entre CSR, SSR et SSG, contrôler les métadonnées et mesurer les performances d’un site React.',
     date: '2026-02-20',
-    readTime: '6 min',
+    readTime: '7 min',
     slug: 'seo-technique-optimiser-react',
     category: 'SEO',
   },

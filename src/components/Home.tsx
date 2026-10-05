@@ -239,10 +239,10 @@ const Home = () => {
             transition={{ duration: 0.4 }}
           >
             <h2 id="realisations-heading" className="text-4xl md:text-5xl font-bold mb-4 text-text-main">
-              Mes <span className="text-gradient">Réalisations</span>
+              Mes <span className="text-gradient">projets personnels</span>
             </h2>
             <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-              Chaque projet est unique et conçu spécifiquement pour répondre aux besoins de mes clients. Discutons ensemble de votre projet pour créer une solution sur mesure.
+              Jeux web et application Pokédex réalisés comme projets de démonstration. Consultez les descriptions, essayez les démos et explorez leur code source.
             </p>
           </motion.div>
           
@@ -254,15 +254,15 @@ const Home = () => {
             transition={{ duration: 0.4 }}
           >
             <div className="card-bento p-12 max-w-3xl mx-auto">
-              <h3 className="text-2xl font-bold text-text-main mb-4">Votre projet mérite une attention personnalisée</h3>
+              <h3 className="text-2xl font-bold text-text-main mb-4">Voir les démos et le code source</h3>
               <p className="text-text-secondary mb-8 leading-relaxed">
-                Plutôt que de vous présenter des projets génériques, je préfère consacrer mon temps à comprendre vos besoins spécifiques et à concevoir une solution parfaitement adaptée à votre activité. Chaque client est unique, et chaque projet mérite une approche sur mesure.
+                Ces projets personnels illustrent des réalisations concrètes. La page projets rassemble une présentation de chacun, un lien vers sa démo en ligne et un lien vers son dépôt public.
               </p>
               <a 
-                href="/contact"
+                href="/projects"
                 className="btn-premium inline-flex items-center gap-3 px-8 py-4 text-base font-medium rounded-lg"
               >
-                Discutons de votre projet
+                Découvrir les projets
                 <ArrowRight className="w-5 h-5" aria-hidden="true" />
               </a>
             </div>

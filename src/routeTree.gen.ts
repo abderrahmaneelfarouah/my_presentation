@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ZonesInterventionRouteImport } from './routes/zones-intervention'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ExperienceRouteImport } from './routes/experience'
@@ -19,6 +20,7 @@ import { Route as DeveloppeurLaravelFreelanceRouteImport } from './routes/develo
 import { Route as DeveloppeurAngularFreelanceRouteImport } from './routes/developpeur-angular-freelance'
 import { Route as CreationSiteWebYvelinesRouteImport } from './routes/creation-site-web-yvelines'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ConfidentialiteRouteImport } from './routes/confidentialite'
 import { Route as CgvRouteImport } from './routes/cgv'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as ApplicationsWebSurMesureRouteImport } from './routes/applications-web-sur-mesure'
@@ -39,6 +41,11 @@ const ServicesRoute = ServicesRouteImport.update({
 const ProjectsRoute = ProjectsRouteImport.update({
   id: '/projects',
   path: '/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MentionsLegalesRoute = MentionsLegalesRouteImport.update({
@@ -76,6 +83,11 @@ const CreationSiteWebYvelinesRoute = CreationSiteWebYvelinesRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfidentialiteRoute = ConfidentialiteRouteImport.update({
+  id: '/confidentialite',
+  path: '/confidentialite',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CgvRoute = CgvRouteImport.update({
@@ -116,6 +128,7 @@ export interface FileRoutesByFullPath {
   '/applications-web-sur-mesure': typeof ApplicationsWebSurMesureRoute
   '/blog': typeof BlogRouteWithChildren
   '/cgv': typeof CgvRoute
+  '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/creation-site-web-yvelines': typeof CreationSiteWebYvelinesRoute
   '/developpeur-angular-freelance': typeof DeveloppeurAngularFreelanceRoute
@@ -123,6 +136,7 @@ export interface FileRoutesByFullPath {
   '/experience': typeof ExperienceRoute
   '/faq': typeof FaqRoute
   '/mentions-legales': typeof MentionsLegalesRoute
+  '/privacy': typeof PrivacyRoute
   '/projects': typeof ProjectsRoute
   '/services': typeof ServicesRoute
   '/zones-intervention': typeof ZonesInterventionRoute
@@ -134,6 +148,7 @@ export interface FileRoutesByTo {
   '/applications-web-sur-mesure': typeof ApplicationsWebSurMesureRoute
   '/blog': typeof BlogRouteWithChildren
   '/cgv': typeof CgvRoute
+  '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/creation-site-web-yvelines': typeof CreationSiteWebYvelinesRoute
   '/developpeur-angular-freelance': typeof DeveloppeurAngularFreelanceRoute
@@ -141,6 +156,7 @@ export interface FileRoutesByTo {
   '/experience': typeof ExperienceRoute
   '/faq': typeof FaqRoute
   '/mentions-legales': typeof MentionsLegalesRoute
+  '/privacy': typeof PrivacyRoute
   '/projects': typeof ProjectsRoute
   '/services': typeof ServicesRoute
   '/zones-intervention': typeof ZonesInterventionRoute
@@ -153,6 +169,7 @@ export interface FileRoutesById {
   '/applications-web-sur-mesure': typeof ApplicationsWebSurMesureRoute
   '/blog': typeof BlogRouteWithChildren
   '/cgv': typeof CgvRoute
+  '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/creation-site-web-yvelines': typeof CreationSiteWebYvelinesRoute
   '/developpeur-angular-freelance': typeof DeveloppeurAngularFreelanceRoute
@@ -160,6 +177,7 @@ export interface FileRoutesById {
   '/experience': typeof ExperienceRoute
   '/faq': typeof FaqRoute
   '/mentions-legales': typeof MentionsLegalesRoute
+  '/privacy': typeof PrivacyRoute
   '/projects': typeof ProjectsRoute
   '/services': typeof ServicesRoute
   '/zones-intervention': typeof ZonesInterventionRoute
@@ -173,6 +191,7 @@ export interface FileRouteTypes {
     | '/applications-web-sur-mesure'
     | '/blog'
     | '/cgv'
+    | '/confidentialite'
     | '/contact'
     | '/creation-site-web-yvelines'
     | '/developpeur-angular-freelance'
@@ -180,6 +199,7 @@ export interface FileRouteTypes {
     | '/experience'
     | '/faq'
     | '/mentions-legales'
+    | '/privacy'
     | '/projects'
     | '/services'
     | '/zones-intervention'
@@ -191,6 +211,7 @@ export interface FileRouteTypes {
     | '/applications-web-sur-mesure'
     | '/blog'
     | '/cgv'
+    | '/confidentialite'
     | '/contact'
     | '/creation-site-web-yvelines'
     | '/developpeur-angular-freelance'
@@ -198,6 +219,7 @@ export interface FileRouteTypes {
     | '/experience'
     | '/faq'
     | '/mentions-legales'
+    | '/privacy'
     | '/projects'
     | '/services'
     | '/zones-intervention'
@@ -209,6 +231,7 @@ export interface FileRouteTypes {
     | '/applications-web-sur-mesure'
     | '/blog'
     | '/cgv'
+    | '/confidentialite'
     | '/contact'
     | '/creation-site-web-yvelines'
     | '/developpeur-angular-freelance'
@@ -216,6 +239,7 @@ export interface FileRouteTypes {
     | '/experience'
     | '/faq'
     | '/mentions-legales'
+    | '/privacy'
     | '/projects'
     | '/services'
     | '/zones-intervention'
@@ -228,6 +252,7 @@ export interface RootRouteChildren {
   ApplicationsWebSurMesureRoute: typeof ApplicationsWebSurMesureRoute
   BlogRoute: typeof BlogRouteWithChildren
   CgvRoute: typeof CgvRoute
+  ConfidentialiteRoute: typeof ConfidentialiteRoute
   ContactRoute: typeof ContactRoute
   CreationSiteWebYvelinesRoute: typeof CreationSiteWebYvelinesRoute
   DeveloppeurAngularFreelanceRoute: typeof DeveloppeurAngularFreelanceRoute
@@ -235,6 +260,7 @@ export interface RootRouteChildren {
   ExperienceRoute: typeof ExperienceRoute
   FaqRoute: typeof FaqRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
+  PrivacyRoute: typeof PrivacyRoute
   ProjectsRoute: typeof ProjectsRoute
   ServicesRoute: typeof ServicesRoute
   ZonesInterventionRoute: typeof ZonesInterventionRoute
@@ -261,6 +287,13 @@ declare module '@tanstack/react-router' {
       path: '/projects'
       fullPath: '/projects'
       preLoaderRoute: typeof ProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mentions-legales': {
@@ -310,6 +343,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/confidentialite': {
+      id: '/confidentialite'
+      path: '/confidentialite'
+      fullPath: '/confidentialite'
+      preLoaderRoute: typeof ConfidentialiteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cgv': {
@@ -373,6 +413,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApplicationsWebSurMesureRoute: ApplicationsWebSurMesureRoute,
   BlogRoute: BlogRouteWithChildren,
   CgvRoute: CgvRoute,
+  ConfidentialiteRoute: ConfidentialiteRoute,
   ContactRoute: ContactRoute,
   CreationSiteWebYvelinesRoute: CreationSiteWebYvelinesRoute,
   DeveloppeurAngularFreelanceRoute: DeveloppeurAngularFreelanceRoute,
@@ -380,6 +421,7 @@ const rootRouteChildren: RootRouteChildren = {
   ExperienceRoute: ExperienceRoute,
   FaqRoute: FaqRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
+  PrivacyRoute: PrivacyRoute,
   ProjectsRoute: ProjectsRoute,
   ServicesRoute: ServicesRoute,
   ZonesInterventionRoute: ZonesInterventionRoute,

@@ -67,6 +67,13 @@ function RootComponent() {
               </Link>
               <span className="text-text-muted">•</span>
               <Link
+                to="/confidentialite"
+                className="text-accent hover:text-accent-foreground transition-colors font-medium hover:underline underline-offset-4"
+              >
+                Confidentialité
+              </Link>
+              <span className="text-text-muted">•</span>
+              <Link
                 to="/cgv"
                 className="text-accent hover:text-accent-foreground transition-colors font-medium hover:underline underline-offset-4"
               >

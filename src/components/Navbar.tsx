@@ -20,10 +20,10 @@ export default function Navbar({ activeTab: activeTabProp }: NavbarProps) {
 
   const navItems = [
     { id: 'home', label: 'Accueil', path: '/' },
+    { id: 'about', label: 'À propos', path: '/about' },
     { id: 'services', label: 'Services', path: '/services' },
     { id: 'realisations', label: 'Réalisations', path: '/projects' },
     { id: 'methode', label: 'Méthode', path: '/#methode' },
-    { id: 'about', label: 'À propos', path: '/about' },
     { id: 'contact', label: 'Contact', path: '/contact' },
   ];
 

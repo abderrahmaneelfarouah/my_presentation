@@ -43,6 +43,9 @@ export default function ProjectCard({ title, description, link, github, image }:
       </div>
 
       <div className="flex-1 p-6">
+        <p className="text-xs font-semibold uppercase tracking-wider text-accent mb-2">
+          Projet personnel
+        </p>
         <h3 className="text-xl font-display font-semibold text-text-main mb-2">{title}</h3>
         <p className="text-text-secondary font-body">{description}</p>
       </div>
@@ -53,8 +56,9 @@ export default function ProjectCard({ title, description, link, github, image }:
           target="_blank"
           rel="noopener noreferrer"
           className="touch-area focus-visible text-accent hover:text-accent-hover flex items-center font-body transition-all"
+          aria-label={`Essayer la démo de ${title}`}
         >
-          <span className="mr-2">Demo</span>
+          <span className="mr-2">Essayer la démo</span>
           <ExternalLink size={16} />
         </a>
         <a
@@ -62,8 +66,9 @@ export default function ProjectCard({ title, description, link, github, image }:
           target="_blank"
           rel="noopener noreferrer"
           className="touch-area focus-visible text-text-secondary hover:text-accent flex items-center font-body transition-all"
+          aria-label={`Consulter le code source de ${title}`}
         >
-          <span className="mr-2">Code</span>
+          <span className="mr-2">Code source</span>
           <Github size={16} />
         </a>
       </div>

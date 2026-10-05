@@ -13,6 +13,7 @@ import type { Plugin } from 'vite'
 import fs from 'fs-extra'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { buildCanonical, resolvePageSEO } from '../src/utils/page-seo'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -30,6 +31,8 @@ const PRERENDER_ROUTES = [
   '/faq',
   '/zones-intervention',
   '/mentions-legales',
+  '/confidentialite',
+  '/privacy',
   '/cgv',
   '/developpeur-angular-freelance',
   '/developpeur-laravel-freelance',
@@ -44,14 +47,8 @@ const PRERENDER_ROUTES = [
 ]
 
 export default function prerenderPlugin(): Plugin {
-  let viteConfig: any
-
   return {
     name: 'vite-plugin-prerender-seo',
-
-    configResolved(config) {
-      viteConfig = config
-    },
 
     async writeBundle(outputOptions) {
       const outDir = outputOptions.dir || path.join(__dirname, '../dist')
@@ -86,7 +83,7 @@ export default function prerenderPlugin(): Plugin {
           //
           // This is a placeholder that ensures each route has a unique file
           // but the SPA hydration will handle route-specific rendering
-          await fs.writeFile(routeFile, template, 'utf8')
+          await fs.writeFile(routeFile, applyRouteMetadata(template, route), 'utf8')
 
           console.log(`  ✓ ${route} → ${path.relative(outDir, routeFile)}`)
         }
@@ -101,3 +98,39 @@ export default function prerenderPlugin(): Plugin {
 }
 
 export { PRERENDER_ROUTES }
+
+function escapeAttribute(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+}
+
+function replaceMeta(html: string, attribute: 'name' | 'property', key: string, value: string): string {
+  const tag = new RegExp(`<meta\\s+${attribute}=["']${key}["'][^>]*>`, 'i')
+  return html.replace(tag, `<meta ${attribute}="${key}" content="${escapeAttribute(value)}" />`)
+}
+
+function applyRouteMetadata(html: string, route: string): string {
+  const metadata = resolvePageSEO(route)
+  const canonical = buildCanonical(route)
+  const robots = metadata.noIndex ? 'noindex, nofollow' : 'index, follow'
+  const type = route.startsWith('/blog/') ? 'article' : 'website'
+
+  let result = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeAttribute(metadata.title)}</title>`)
+  result = replaceMeta(result, 'name', 'description', metadata.description)
+  result = replaceMeta(result, 'name', 'robots', robots)
+  result = replaceMeta(result, 'property', 'og:type', type)
+  result = replaceMeta(result, 'property', 'og:url', canonical)
+  result = replaceMeta(result, 'property', 'og:title', metadata.title)
+  result = replaceMeta(result, 'property', 'og:description', metadata.description)
+  result = replaceMeta(result, 'name', 'twitter:title', metadata.title)
+  result = replaceMeta(result, 'name', 'twitter:description', metadata.description)
+  result = result.replace(
+    /<link\s+rel=["']canonical["'][^>]*>/i,
+    `<link rel="canonical" href="${escapeAttribute(canonical)}" />`,
+  )
+
+  return result
+}

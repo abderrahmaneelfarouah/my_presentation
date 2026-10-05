@@ -6,28 +6,28 @@ import ProjectCard from './projects/ProjectCard';
 const projects = [
 	{
 		title: 'Snake game legacy',
-		description: 'jeu regressif du serpent.',
+		description: 'Jeu web de Snake au style rétro, publié avec une démo jouable et son code source consultable.',
 		link: 'https://snakegamelegacy.netlify.app',
 		github: 'https://github.com/abderrahmaneelfarouah/retro-snake-game',
 		image: PROJECT_IMAGES.SNAKE,
 	},
 	{
 		title: 'Chi Fu Mi',
-		description: 'Un jeu classique de pierre-papier-ciseaux développé avec JavaScript.',
+		description: 'Jeu pierre-papier-ciseaux développé en JavaScript. Essayez la démo ou consultez son implémentation dans le dépôt.',
 		link: 'https://abderrahmaneelfarouah.github.io/chifoumi/',
 		github: 'https://github.com/abderrahmaneelfarouah/chifoumi',
 		image: PROJECT_IMAGES.CHIFOUMI,
 	},
 	{
 		title: 'Neo Puzzle',
-		description: 'Un jeu simple revisité du puzzle.',
+		description: 'Démo web d’un jeu de puzzle revisité, accompagnée de son dépôt de code source.',
 		link: 'https://abderrahmaneelfarouah.github.io/puzzle/',
 		github: 'https://github.com/abderrahmaneelfarouah/puzzle',
 		image: PROJECT_IMAGES.PUZZLE,
 	},
 	{
 		title: 'Pokédex',
-		description: 'Une application web présentant les 151 premiers Pokémon avec leurs caractéristiques.',
+		description: 'Application web consacrée aux 151 premiers Pokémon et à leurs caractéristiques, consultable en ligne avec son code source.',
 		link: 'https://abderrahmaneelfarouah.github.io/pokemon-discovery/',
 		github: 'https://github.com/abderrahmaneelfarouah/pokemon-discovery',
 		image: PROJECT_IMAGES.POKEDEX,
@@ -103,9 +103,14 @@ export default function Projects() {
 				flex flex-col items-center
 			"
 		>
-			<h1 className="text-2xl sm:text-3xl font-display font-bold text-center text-text-main mb-4 sm:mb-8">
-				Mes <span className="text-accent">Projets</span>
-			</h1>
+			<header className="mb-6 max-w-3xl text-center">
+				<h1 className="text-2xl sm:text-3xl font-display font-bold text-text-main mb-3">
+					Mes <span className="text-accent">projets personnels</span>
+				</h1>
+				<p className="text-text-secondary leading-relaxed">
+					Quatre projets de démonstration : jeux web et application Pokédex. Chaque fiche présente le sujet du projet et donne accès à la démo ainsi qu’au dépôt de code source. Ce sont des projets personnels, pas des références de missions clients.
+				</p>
+			</header>
 			<div className="relative w-full">
 				<button
 					className="absolute left-0 top-1/2 -translate-y-1/2 z-10 glass rounded-full p-2 shadow-glow-orange hover:shadow-glow-orange-hover transition-all disabled:opacity-30 border border-border-color hover:border-accent"
@@ -154,6 +159,7 @@ export default function Projects() {
 							type="button"
 							onClick={() => scrollToIndex(idx)}
 							aria-current={idx === scrollIndex ? 'true' : 'false'}
+							aria-label={`Afficher les projets à partir du projet ${idx + 1}`}
 							className={`w-2 h-2 rounded-full focus:outline-none transition-all${idx === scrollIndex ? ' bg-accent shadow-glow-orange' : ' bg-border-color hover:bg-accent/50'}`}
 						/>
 					))}

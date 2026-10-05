@@ -1,4 +1,4 @@
-import { BLOG_ARTICLES } from '../data/blog-articles';
+import { BLOG_ARTICLES } from '../data/blog-articles.ts';
 
 const baseUrl = 'https://www.abderrahmane-elfarouahfreelance.com';
 
@@ -13,6 +13,7 @@ export const SITEMAP_ROUTES = [
   { path: '/about', priority: '0.6', changeFreq: 'monthly' },
   { path: '/experience', priority: '0.5', changeFreq: 'monthly' },
   { path: '/mentions-legales', priority: '0.3', changeFreq: 'yearly' },
+  { path: '/confidentialite', priority: '0.3', changeFreq: 'yearly' },
   { path: '/cgv', priority: '0.3', changeFreq: 'yearly' },
   { path: '/developpeur-angular-freelance', priority: '0.8', changeFreq: 'monthly' },
   { path: '/developpeur-laravel-freelance', priority: '0.8', changeFreq: 'monthly' },
