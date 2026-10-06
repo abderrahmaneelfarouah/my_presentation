@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 
 const ADSENSE_CLIENT = 'ca-pub-5921232882242644';
 const ADSENSE_SLOT = '8561894521';
+const ADSENSE_APPROVED = import.meta.env.VITE_ADSENSE_APPROVED === 'true';
 
 /**
  * Hook pour charger le script AdSense une seule fois au niveau global
@@ -10,6 +11,11 @@ const ADSENSE_SLOT = '8561894521';
  */
 export function useAdSenseScript() {
   useEffect(() => {
+    // Ne charger que si approuvé
+    if (!ADSENSE_APPROVED) {
+      return;
+    }
+
     // Vérifier si le script est déjà chargé
     const scriptId = 'adsense-script';
     if (document.getElementById(scriptId)) {
@@ -34,12 +40,18 @@ export function useAdSenseScript() {
 /**
  * Composant AdSenseBlock - Affiche une annonce Google AdSense
  * Le script doit être chargé en amont (via useAdSenseScript)
+ * N'est rendu que si VITE_ADSENSE_APPROVED=true
  */
 interface AdSenseBlockProps {
   slot?: string;
 }
 
 export function AdSenseBlock({ slot = ADSENSE_SLOT }: AdSenseBlockProps) {
+  // Ne pas rendre le composant si AdSense n'est pas approuvé
+  if (!ADSENSE_APPROVED) {
+    return null;
+  }
+
   useEffect(() => {
     // Attendre que adsbygoogle soit disponible, puis pusher l'annonce
     const checkAndPush = () => {
@@ -77,7 +89,7 @@ export function AdSenseBlock({ slot = ADSENSE_SLOT }: AdSenseBlockProps) {
         style={{
           display: 'block',
           width: '100%',
-          minHeight: '250px',
+          minHeight: 'auto',
         }}
         data-ad-client={ADSENSE_CLIENT}
         data-ad-slot={slot}
