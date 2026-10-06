@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const ADSENSE_CLIENT = 'ca-pub-5921232882242644';
 const ADSENSE_SLOT = '8561894521';
-const ADSENSE_APPROVED = import.meta.env.VITE_ADSENSE_APPROVED === 'true';
+const ADSENSE_APPROVED = import.meta.env.ADSENSE_APPROVED === 'true';
 
 /**
  * Hook pour charger le script AdSense une seule fois au niveau global
@@ -40,7 +40,7 @@ export function useAdSenseScript() {
 /**
  * Composant AdSenseBlock - Affiche une annonce Google AdSense
  * Le script doit être chargé en amont (via useAdSenseScript)
- * N'est rendu que si VITE_ADSENSE_APPROVED=true
+ * N'est rendu que si ADSENSE_APPROVED=true
  */
 interface AdSenseBlockProps {
   slot?: string;
@@ -57,7 +57,7 @@ export function AdSenseBlock({ slot = ADSENSE_SLOT }: AdSenseBlockProps) {
     const checkAndPush = () => {
       try {
         const win = window as typeof window & { adsbygoogle?: unknown[] };
-        
+
         if (win.adsbygoogle && Array.isArray(win.adsbygoogle)) {
           win.adsbygoogle.push({});
         } else {
