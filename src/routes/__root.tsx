@@ -6,6 +6,8 @@ import WhatsAppFloat from '../components/WhatsAppFloat'
 import { ThemeProvider } from '../contexts/ThemeContext'
 import { MenuProvider } from '../contexts/MenuContext'
 import { useMenu } from '../hooks/useMenu'
+import { useAdSenseScript } from '../utils/adsense'
+import { AdSenseDebug } from '../components/AdSenseDebug'
 
 // Composant NotFound pour les erreurs 404
 function NotFound() {
@@ -30,6 +32,9 @@ function NotFound() {
 
 function RootComponent() {
   const { isMenuOpen } = useMenu()
+  
+  // Charger le script AdSense une seule fois au niveau racine
+  useAdSenseScript()
 
   return (
     <HelmetProvider>
@@ -37,6 +42,10 @@ function RootComponent() {
       <a href="#main-content" className="skip-link">
         Aller au contenu principal
       </a>
+      
+      {/* Debug AdSense - visible en dev ou avec ?debug=adsense */}
+      <AdSenseDebug />
+      
       <div className="page-shell flex flex-col min-h-screen w-full mx-auto transition-all duration-300 ease-out p-3 sm:p-4 md:p-6 lg:p-8">
         <header role="banner">
           <Navbar />
