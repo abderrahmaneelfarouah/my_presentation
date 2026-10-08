@@ -9,15 +9,6 @@ import { CONTACT, SOCIAL_LINKS } from '../utils/constants';
 
 const API_BASE = process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:4000/api';
 
-interface Appointment {
-  id: number;
-  name: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  date: string;
-}
-
 export default function Contact() {
   registerLocale('fr', fr);
 
@@ -35,13 +26,8 @@ export default function Contact() {
   const [selectedHour, setSelectedHour] = useState<number | null>(null);
   const HOURS = Array.from({ length: 9 }).map((_, i) => 10 + i);
   const [sent, setSent] = useState(false);
-
-  // Admin states
-  const [showAdminLogin, setShowAdminLogin] = useState(false);
-  const [adminCode, setAdminCode] = useState('');
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [appointments, setAppointments] = useState<Appointment[]>([]);
-  const [adminError, setAdminError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -71,11 +57,13 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formState.firstName || !formState.lastName || !formState.email || !formState.date) {
-      alert('Veuillez remplir tous les champs');
+    if (!formState.firstName.trim() || !formState.lastName.trim() || !formState.email.trim() || !formState.date || selectedHour === null) {
+      setSubmitError('Renseignez vos coordonnées, choisissez une date et sélectionnez une heure.');
       return;
     }
-    
+
+    setIsSubmitting(true);
+    setSubmitError('');
     try {
       const res = await fetch(`${API_BASE}/appointments`, {
         method: 'POST',
@@ -88,36 +76,25 @@ export default function Contact() {
           date: formState.date?.toISOString(),
         }),
       });
-      if (res.ok) {
-        setSent(true);
-        setTimeout(() => setSent(false), 4000);
-        setFormState({ firstName: '', lastName: '', email: '', date: null });
-        alert('Rendez-vous enregistré !');
-      }
-    } catch {
-      alert("Erreur lors de l'enregistrement");
-    }
-  };
 
-  const handleAdminLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setAdminError('');
-    
-    try {
-      const res = await fetch(`${API_BASE}/appointments`, {
-        headers: { 'x-digicode': adminCode }
-      });
-      
-      if (res.status === 200) {
-        const data = await res.json();
-        setAppointments(data);
-        setIsAdmin(true);
-        setShowAdminLogin(false);
-      } else {
-        setAdminError('Code incorrect');
+      const result = await res.json().catch(() => null) as {
+        success?: boolean;
+        error?: string;
+        emailSent?: boolean;
+      } | null;
+
+      if (!res.ok || result?.success !== true || result.emailSent !== true) {
+        throw new Error(result?.error || 'La demande n’a pas été envoyée. Réessayez ou contactez-nous par e-mail.');
       }
-    } catch {
-      setAdminError('Erreur de connexion');
+
+      setSent(true);
+      window.setTimeout(() => setSent(false), 4000);
+      setFormState({ firstName: '', lastName: '', email: '', date: null });
+      setSelectedHour(null);
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'Erreur lors de l’envoi de la demande.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -258,10 +235,21 @@ export default function Contact() {
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Mail className="w-8 h-8 text-green-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Rendez-vous enregistré !</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Demande envoyée</h3>
+                <p className="text-text-secondary">
+                  Votre demande a bien été transmise par e-mail. Le créneau sera confirmé après échange.
+                </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
+                {submitError && (
+                  <p className="text-red-600 text-sm" role="alert">
+                    {submitError}{' '}
+                    <a className="underline" href={`mailto:${CONTACT.EMAIL}`}>
+                      Contacter par e-mail
+                    </a>
+                  </p>
+                )}
                 <div>
                   <label htmlFor="firstName" className="block text-text-secondary text-sm font-medium mb-2">Prénom</label>
                   <input
@@ -333,6 +321,7 @@ export default function Contact() {
                     name="hour"
                     value={selectedHour || ''}
                     onChange={handleHourChange}
+                    required
                     className="w-full px-4 py-3 rounded-xl bg-white/50 border border-border-color focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all"
                   >
                     <option value="">Sélectionnez une heure</option>
@@ -344,105 +333,20 @@ export default function Contact() {
 
                 <motion.button
                   type="submit"
-                  className="w-full btn btn-primary py-4 text-lg font-bold group"
+                  disabled={isSubmitting}
+                  aria-busy={isSubmitting}
+                  className="w-full btn btn-primary py-4 text-lg font-bold group disabled:opacity-60 disabled:cursor-not-allowed"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   <Calendar className="w-6 h-6 mr-2" />
-                  Confirmer le rendez-vous
+                  {isSubmitting ? 'Envoi en cours…' : 'Envoyer la demande'}
                   <ArrowRight className="w-6 h-6 ml-2 group-hover:translate-x-2 transition-transform" />
                 </motion.button>
               </form>
             )}
           </div>
         </motion.div>
-
-        {/* Admin access - hidden */}
-        <div className="flex flex-col items-center mt-16">
-          <p className="text-sm text-gray-400 mb-2">Accès réservé</p>
-          <button
-            onClick={() => setShowAdminLogin(!showAdminLogin)}
-            className="touch-area focus-ring opacity-20 hover:opacity-100 transition-opacity duration-300"
-            aria-label="Ouvrir l'accès administrateur"
-          >
-            <img 
-              src="/images/pic-icon.png" 
-              alt="" 
-              className="w-10 h-10"
-              onError={(e) => { e.currentTarget.style.display = 'none'; }}
-              aria-hidden="true"
-            />
-          </button>
-        </div>
-
-        {/* Admin modal */}
-        {showAdminLogin && !isAdmin && (
-          <div 
-            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" 
-            onClick={() => setShowAdminLogin(false)}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="admin-dialog-title"
-          >
-            <div className="card-bento p-6 w-full max-w-md" onClick={(e) => e.stopPropagation()}>
-              <h3 id="admin-dialog-title" className="text-xl font-semibold mb-4">Accès Admin</h3>
-              <form onSubmit={handleAdminLogin} className="space-y-4">
-                <div>
-                  <label htmlFor="admin-code" className="sr-only">Code administrateur</label>
-                  <input
-                    type="password"
-                    id="admin-code"
-                    value={adminCode}
-                    onChange={(e) => setAdminCode(e.target.value)}
-                    placeholder="Code admin"
-                    className="w-full px-4 py-3 rounded-xl bg-white/50 border border-border-color focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all"
-                    required
-                    aria-required="true"
-                  />
-                </div>
-                {adminError && <p className="text-red-500 text-sm" role="alert">{adminError}</p>}
-                <div className="flex gap-3">
-                  <button type="submit" className="flex-1 btn btn-primary py-3 touch-area focus-ring">Connexion</button>
-                  <button type="button" onClick={() => setShowAdminLogin(false)} className="flex-1 btn btn-secondary py-3 touch-area focus-ring">Annuler</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
-
-        {/* Admin panel */}
-        {isAdmin && (
-          <div className="card-bento mt-8 p-6" role="region" aria-label="Panneau d'administration">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-bold text-text-main">Rendez-vous ({appointments.length})</h3>
-              <button 
-                onClick={() => setIsAdmin(false)} 
-                className="touch-area focus-ring text-text-secondary hover:text-accent transition-colors"
-                aria-label="Fermer le panneau d'administration"
-              >
-                Fermer
-              </button>
-            </div>
-            {appointments.length === 0 ? (
-              <p className="text-text-secondary text-center py-4">Aucun rendez-vous</p>
-            ) : (
-              <ul className="space-y-2">
-                {appointments.map((apt) => (
-                  <li key={apt.id} className="p-4 bg-accent/5 rounded-xl flex justify-between border border-accent/10">
-                    <div>
-                      <p className="font-semibold text-text-main">{apt.name}</p>
-                      <p className="text-sm text-text-secondary">
-                        <time dateTime={apt.date}>
-                          {new Date(apt.date).toLocaleString('fr-FR')}
-                        </time>
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        )}
 
       </div>
     </main>

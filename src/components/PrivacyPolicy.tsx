@@ -69,10 +69,8 @@ export default function PrivacyPolicy() {
                 e-mail via Resend.
               </li>
               <li>
-                Le serveur conserve temporairement les demandes de rendez-vous
-                dans sa mémoire d’exécution ; cette mémoire n’est pas un stockage
-                persistant et peut être réinitialisée entre les invocations. La
-                notification e-mail peut toutefois rester dans les boîtes
+                Le site ne conserve pas d’historique des demandes de rendez-vous.
+                La notification peut toutefois rester dans les boîtes e-mail
                 concernées.
               </li>
               <li>
@@ -165,11 +163,10 @@ export default function PrivacyPolicy() {
               Durée de conservation
             </h2>
             <p>
-              Le formulaire ne définit pas de durée automatique de conservation
-              des e-mails reçus. Les demandes doivent être supprimées lorsqu’elles
-              ne sont plus nécessaires au suivi, sous réserve des obligations
-              légales applicables. Les données de rendez-vous présentes en
-              mémoire serveur ne constituent pas une archive durable.
+              Le site ne définit pas de durée automatique de conservation pour
+              les messages reçus dans les boîtes e-mail. Ils doivent être
+              supprimés lorsqu’ils ne sont plus nécessaires au suivi, sous
+              réserve des obligations légales applicables.
             </p>
           </section>
 
@@ -198,7 +195,7 @@ export default function PrivacyPolicy() {
           </section>
 
           <p className="border-t border-black/10 pt-4 text-sm dark:border-white/10">
-            Dernière mise à jour : 5 octobre 2026
+            Dernière mise à jour : 8 octobre 2026
           </p>
         </article>
       </Container>

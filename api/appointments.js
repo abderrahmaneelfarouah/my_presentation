@@ -1,24 +1,15 @@
 import { sendEmailWithRetry, getSecureFromEmail, getNotifyTo } from './utils/email.js';
 
-// ⚠️ ATTENTION: Dans un environnement serverless (Vercel), ce tableau est réinitialisé à chaque invocation
-// Les rendez-vous ne sont PAS persistés entre les requêtes. Pour la production, utilisez une base de données
-// (ex: Vercel KV, MongoDB, PostgreSQL, etc.)
-// En développement local avec le serveur Express, les données persistent pendant l'exécution du serveur
-let appointments = [];
-
-async function sendNotificationEmail(appointment) {
+async function sendNotificationEmail(appointment, notifyTo) {
   const when = new Date(appointment.date).toLocaleString('fr-FR', {
     dateStyle: 'full',
     timeStyle: 'short'
   });
 
   const fromEmail = getSecureFromEmail('RDV Bot');
-  const notifyTo = getNotifyTo();
-
   console.log('[Appointment] Envoi notification:', {
     from: fromEmail,
-    to: notifyTo,
-    appointmentId: appointment.id
+    to: notifyTo
   });
 
   const data = await sendEmailWithRetry({
@@ -43,71 +34,62 @@ async function sendNotificationEmail(appointment) {
 }
 
 export default async function handler(req, res) {
-  if (req.method === 'GET') {
-    // 🔒 Vérification du digicode pour protéger les données
-    const authCode = req.headers['x-digicode'];
-    const expectedCode = process.env.DIGICODE;
-    
-    if (!expectedCode) {
-      console.error('DIGICODE is not set in environment variables');
-      return res.status(500).json({ 
-        error: 'Configuration serveur incorrecte' 
-      });
-    }
-    
-    if (authCode !== expectedCode) {
-      console.warn('Tentative d\'accès non autorisée aux rendez-vous');
-      return res.status(401).json({ 
-        error: 'Non autorisé' 
-      });
-    }
-    
-    return res.status(200).json(appointments);
-  }
-
   if (req.method === 'POST') {
-    const { name, email, date } = req.body;
-    if (!name || !email || !date) {
-      return res.status(400).json({ error: 'Données manquantes' });
+    const { name, email, date } = req.body || {};
+    const normalizedName = typeof name === 'string' ? name.trim() : '';
+    const normalizedEmail = typeof email === 'string' ? email.trim() : '';
+    const parsedDate = typeof date === 'string' ? new Date(date) : null;
+
+    if (
+      !normalizedName ||
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail) ||
+      !parsedDate ||
+      Number.isNaN(parsedDate.getTime())
+    ) {
+      return res.status(400).json({ success: false, error: 'Vérifiez le nom, l’adresse e-mail et la date demandée.' });
     }
 
-    const appointment = { id: appointments.length + 1, name, email, date };
-    appointments.push(appointment);
+    const notifyTo = getNotifyTo();
+    if (!notifyTo) {
+      console.error('[Appointment] NOTIFY_TO is not configured');
+      return res.status(503).json({
+        success: false,
+        error: 'Le service de rendez-vous est momentanément indisponible. Veuillez nous contacter par e-mail.',
+      });
+    }
+
+    const appointment = {
+      name: normalizedName,
+      email: normalizedEmail,
+      date: parsedDate.toISOString(),
+    };
 
     try {
-      const info = await sendNotificationEmail(appointment);
-      const notifyTo = getNotifyTo();
+      const info = await sendNotificationEmail(appointment, notifyTo);
       
       console.log('[Appointment] Rendez-vous créé et notification envoyée:', {
-        appointmentId: appointment.id,
         emailId: info?.id,
         to: notifyTo
       });
 
-      return res.status(200).json({
+      return res.status(201).json({
         success: true,
-        appointment,
         notification: info?.id || null,
         emailSent: true,
-        emailTo: notifyTo
       });
     } catch (e) {
       console.error('[Appointment] Erreur lors de l\'envoi de l\'email:', {
         error: e?.message,
-        stack: e?.stack,
-        appointmentId: appointment.id
+        stack: e?.stack
       });
 
-      return res.status(200).json({
-        success: true,
-        appointment,
-        notification: null,
-        emailSent: false,
-        emailError: e?.message || 'Erreur API'
+      return res.status(502).json({
+        success: false,
+        error: 'La demande n’a pas pu être envoyée. Réessayez ou contactez-nous par e-mail.',
       });
     }
   }
 
-  res.setHeader('Allow', ['GET', 'POST']);
+  res.setHeader('Allow', ['POST']);
   res.status(405).end(`Méthode ${req.method} non autorisée`);
 }

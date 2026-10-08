@@ -43,53 +43,62 @@ app.post('/api/check-digicode', (req, res) => {
   return res.status(401).json({ success: false });
 });
 
-// Rendez-vous
-let appointments = [];
-
-app.get('/api/appointments', (req, res) => {
-  res.json(appointments);
-});
-
 app.post('/api/appointments', async (req, res) => {
-  const { name, email, date } = req.body;
-  if (!name || !email || !date) {
-    return res.status(400).json({ error: 'Données manquantes' });
+  const { name, email, date } = req.body || {};
+  const normalizedName = typeof name === 'string' ? name.trim() : '';
+  const normalizedEmail = typeof email === 'string' ? email.trim() : '';
+  const parsedDate = typeof date === 'string' ? new Date(date) : null;
+
+  if (
+    !normalizedName ||
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail) ||
+    !parsedDate ||
+    Number.isNaN(parsedDate.getTime())
+  ) {
+    return res.status(400).json({ success: false, error: 'Vérifiez le nom, l’adresse e-mail et la date demandée.' });
   }
 
-  const appointment = { id: appointments.length + 1, name, email, date };
-  appointments.push(appointment);
+  const appointment = {
+    name: normalizedName,
+    email: normalizedEmail,
+    date: parsedDate.toISOString(),
+  };
 
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, NOTIFY_TO } = process.env;
 
-  let emailSent = false;
-  let emailError = null;
+  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS || !NOTIFY_TO) {
+    console.error('[Appointment] SMTP notification is not configured');
+    return res.status(503).json({
+      success: false,
+      error: 'Le service de rendez-vous est momentanément indisponible. Veuillez nous contacter par e-mail.',
+    });
+  }
+
   let emailId = null;
 
-  // Aligné avec le comportement de l'API Vercel : attendre l'envoi de l'email
-  if (SMTP_HOST && SMTP_PORT && SMTP_USER && SMTP_PASS && NOTIFY_TO) {
-    try {
-      const transporter = nodemailer.createTransport({
-        host: SMTP_HOST,
-        port: parseInt(SMTP_PORT, 10),
-        secure: parseInt(SMTP_PORT, 10) === 465,
-        auth: {
-          user: SMTP_USER,
-          pass: SMTP_PASS,
-        },
-      });
+  try {
+    const transporter = nodemailer.createTransport({
+      host: SMTP_HOST,
+      port: parseInt(SMTP_PORT, 10),
+      secure: parseInt(SMTP_PORT, 10) === 465,
+      auth: {
+        user: SMTP_USER,
+        pass: SMTP_PASS,
+      },
+    });
 
-      const when = new Date(appointment.date).toLocaleString('fr-FR', {
-        dateStyle: 'full',
-        timeStyle: 'short',
-      });
+    const when = new Date(appointment.date).toLocaleString('fr-FR', {
+      dateStyle: 'full',
+      timeStyle: 'short',
+    });
 
-      await transporter.verify();
-      const info = await transporter.sendMail({
-        from: `${appointment.name} <${SMTP_USER}>`,
-        to: NOTIFY_TO,
-        subject: 'Vous avez une demande de rendez-vous',
-        text: `Nom: ${appointment.name}\nEmail: ${appointment.email}\nDate: ${when}`,
-        html: `
+    await transporter.verify();
+    const info = await transporter.sendMail({
+      from: `${appointment.name} <${SMTP_USER}>`,
+      to: NOTIFY_TO,
+      subject: 'Vous avez une demande de rendez-vous',
+      text: `Nom: ${appointment.name}\nEmail: ${appointment.email}\nDate: ${when}`,
+      html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
             <h2 style="color: #F26B2E;">Vous avez une demande de rendez-vous</h2>
             <p><strong>Nom:</strong> ${appointment.name}</p>
@@ -101,25 +110,22 @@ app.post('/api/appointments', async (req, res) => {
             </p>
           </div>
         `,
-      });
-      
-      emailSent = true;
-      emailId = info?.messageId || null;
-      console.log('[Appointment] Notification email envoyée:', emailId);
-    } catch (err) {
-      emailError = err?.message || 'Erreur SMTP';
-      console.error('[Appointment] Erreur SMTP:', err?.message);
-    }
+    });
+
+    emailId = info?.messageId || null;
+    console.log('[Appointment] Notification email envoyée:', emailId);
+  } catch (err) {
+    console.error('[Appointment] Erreur SMTP:', err?.message);
+    return res.status(502).json({
+      success: false,
+      error: 'La demande n’a pas pu être envoyée. Réessayez ou contactez-nous par e-mail.',
+    });
   }
 
-  // Réponse alignée avec l'API Vercel
-  return res.status(200).json({
+  return res.status(201).json({
     success: true,
-    appointment,
     notification: emailId,
-    emailSent,
-    emailError,
-    emailTo: NOTIFY_TO || null
+    emailSent: true,
   });
 });
 

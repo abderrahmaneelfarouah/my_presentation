@@ -147,7 +147,7 @@ export function updateRateLimit(res, type, rateLimitInfo) {
  * En mode non-prod, les emails vont au compte de dev
  */
 export function getNotifyTo() {
-  if (EMAIL_MODE !== 'prod') {
+  if (EMAIL_MODE === 'test') {
     return 'a.elfarouahdev@outlook.fr';
   }
   return NOTIFY_TO;

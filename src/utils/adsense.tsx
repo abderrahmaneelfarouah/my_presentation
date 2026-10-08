@@ -6,24 +6,23 @@ const ADSENSE_SLOT = '8561894521';
 const ADSENSE_APPROVED = import.meta.env.ADSENSE_APPROVED === 'true';
 
 /**
- * Hook pour charger le script AdSense une seule fois au niveau global
- * Doit être appelé depuis le composant racine de l'app
+ * Hook pour charger le script AdSense une seule fois au niveau global.
+ * Doit être appelé depuis le composant racine de l'application.
  */
 export function useAdSenseScript() {
   useEffect(() => {
-    // Ne charger que si approuvé
     if (!ADSENSE_APPROVED) {
       return;
     }
 
-    // Vérifier si le script est déjà chargé
     const scriptId = 'adsense-script';
+
     if (document.getElementById(scriptId)) {
       return;
     }
 
-    // Créer et injecter le script AdSense
     const script = document.createElement('script');
+
     script.id = scriptId;
     script.async = true;
     script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`;
@@ -38,39 +37,55 @@ export function useAdSenseScript() {
 }
 
 /**
- * Composant AdSenseBlock - Affiche une annonce Google AdSense
- * Le script doit être chargé en amont (via useAdSenseScript)
- * N'est rendu que si ADSENSE_APPROVED=true
+ * Composant AdSenseBlock - Affiche une annonce Google AdSense.
+ * Le script doit être chargé en amont via useAdSenseScript().
  */
 interface AdSenseBlockProps {
   slot?: string;
 }
 
-export function AdSenseBlock({ slot = ADSENSE_SLOT }: AdSenseBlockProps) {
-  // Ne pas rendre le composant si AdSense n'est pas approuvé
-  if (!ADSENSE_APPROVED) {
-    return null;
-  }
-
+export function AdSenseBlock({
+  slot = ADSENSE_SLOT,
+}: AdSenseBlockProps) {
   useEffect(() => {
-    // Attendre que adsbygoogle soit disponible, puis pusher l'annonce
+    if (!ADSENSE_APPROVED) {
+      return;
+    }
+
+    let timeoutId: number | undefined;
+
     const checkAndPush = () => {
       try {
-        const win = window as typeof window & { adsbygoogle?: unknown[] };
+        const win = window as typeof window & {
+          adsbygoogle?: unknown[];
+        };
 
         if (win.adsbygoogle && Array.isArray(win.adsbygoogle)) {
           win.adsbygoogle.push({});
-        } else {
-          // Si adsbygoogle n'est pas prêt, réessayer dans 500ms
-          setTimeout(checkAndPush, 500);
+          return;
         }
+
+        timeoutId = window.setTimeout(checkAndPush, 500);
       } catch (error) {
-        console.error('[AdSense] Erreur lors du push de l\'annonce:', error);
+        console.error(
+          "[AdSense] Erreur lors du push de l'annonce:",
+          error,
+        );
       }
     };
 
     checkAndPush();
+
+    return () => {
+      if (timeoutId !== undefined) {
+        window.clearTimeout(timeoutId);
+      }
+    };
   }, []);
+
+  if (!ADSENSE_APPROVED) {
+    return null;
+  }
 
   return (
     <motion.aside
