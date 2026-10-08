@@ -43,6 +43,23 @@ app.post('/api/check-digicode', (req, res) => {
   return res.status(401).json({ success: false });
 });
 
+// This in-memory list is temporary and can reset when the server restarts.
+let appointments = [];
+
+app.get('/api/appointments', (req, res) => {
+  const expectedCode = process.env.DIGICODE;
+  if (!expectedCode) {
+    console.error('[Appointment] DIGICODE is not configured');
+    return res.status(503).json({ success: false, error: 'Le panneau admin est indisponible.' });
+  }
+
+  if (req.headers['x-digicode'] !== expectedCode) {
+    return res.status(401).json({ success: false, error: 'Code administrateur incorrect.' });
+  }
+
+  return res.json(appointments);
+});
+
 app.post('/api/appointments', async (req, res) => {
   const { name, email, date } = req.body || {};
   const normalizedName = typeof name === 'string' ? name.trim() : '';
@@ -59,6 +76,7 @@ app.post('/api/appointments', async (req, res) => {
   }
 
   const appointment = {
+    id: appointments.length + 1,
     name: normalizedName,
     email: normalizedEmail,
     date: parsedDate.toISOString(),
@@ -113,6 +131,7 @@ app.post('/api/appointments', async (req, res) => {
     });
 
     emailId = info?.messageId || null;
+    appointments.push(appointment);
     console.log('[Appointment] Notification email envoyée:', emailId);
   } catch (err) {
     console.error('[Appointment] Erreur SMTP:', err?.message);
@@ -124,6 +143,7 @@ app.post('/api/appointments', async (req, res) => {
 
   return res.status(201).json({
     success: true,
+    appointment,
     notification: emailId,
     emailSent: true,
   });

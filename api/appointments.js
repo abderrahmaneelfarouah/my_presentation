@@ -1,5 +1,8 @@
 import { sendEmailWithRetry, getSecureFromEmail, getNotifyTo } from './utils/email.js';
 
+// Serverless memory is temporary; it is not a durable appointment store.
+let appointments = [];
+
 async function sendNotificationEmail(appointment, notifyTo) {
   const when = new Date(appointment.date).toLocaleString('fr-FR', {
     dateStyle: 'full',
@@ -34,6 +37,20 @@ async function sendNotificationEmail(appointment, notifyTo) {
 }
 
 export default async function handler(req, res) {
+  if (req.method === 'GET') {
+    const expectedCode = process.env.DIGICODE;
+    if (!expectedCode) {
+      console.error('[Appointment] DIGICODE is not configured');
+      return res.status(503).json({ success: false, error: 'Le panneau admin est indisponible.' });
+    }
+
+    if (req.headers['x-digicode'] !== expectedCode) {
+      return res.status(401).json({ success: false, error: 'Code administrateur incorrect.' });
+    }
+
+    return res.status(200).json(appointments);
+  }
+
   if (req.method === 'POST') {
     const { name, email, date } = req.body || {};
     const normalizedName = typeof name === 'string' ? name.trim() : '';
@@ -58,7 +75,16 @@ export default async function handler(req, res) {
       });
     }
 
+    if (!process.env.RESEND_API_KEY) {
+      console.error('[Appointment] RESEND_API_KEY is not configured');
+      return res.status(503).json({
+        success: false,
+        error: 'Le service de rendez-vous est momentanément indisponible. Veuillez nous contacter par e-mail.',
+      });
+    }
+
     const appointment = {
+      id: appointments.length + 1,
       name: normalizedName,
       email: normalizedEmail,
       date: parsedDate.toISOString(),
@@ -66,21 +92,25 @@ export default async function handler(req, res) {
 
     try {
       const info = await sendNotificationEmail(appointment, notifyTo);
+      appointments.push(appointment);
       
       console.log('[Appointment] Rendez-vous créé et notification envoyée:', {
+        appointmentId: appointment.id,
         emailId: info?.id,
         to: notifyTo
       });
 
       return res.status(201).json({
         success: true,
+        appointment,
         notification: info?.id || null,
         emailSent: true,
       });
     } catch (e) {
       console.error('[Appointment] Erreur lors de l\'envoi de l\'email:', {
         error: e?.message,
-        stack: e?.stack
+        stack: e?.stack,
+        appointmentId: appointment.id
       });
 
       return res.status(502).json({
@@ -90,6 +120,6 @@ export default async function handler(req, res) {
     }
   }
 
-  res.setHeader('Allow', ['POST']);
+  res.setHeader('Allow', ['GET', 'POST']);
   res.status(405).end(`Méthode ${req.method} non autorisée`);
 }

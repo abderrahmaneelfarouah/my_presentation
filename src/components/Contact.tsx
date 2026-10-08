@@ -9,6 +9,13 @@ import { CONTACT, SOCIAL_LINKS } from '../utils/constants';
 
 const API_BASE = process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:4000/api';
 
+interface Appointment {
+  id: number;
+  name: string;
+  email: string;
+  date: string;
+}
+
 export default function Contact() {
   registerLocale('fr', fr);
 
@@ -28,6 +35,11 @@ export default function Contact() {
   const [sent, setSent] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
+  const [showAdminLogin, setShowAdminLogin] = useState(false);
+  const [adminCode, setAdminCode] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [adminError, setAdminError] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -95,6 +107,30 @@ export default function Contact() {
       setSubmitError(error instanceof Error ? error.message : 'Erreur lors de l’envoi de la demande.');
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleAdminLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAdminError('');
+
+    try {
+      const res = await fetch(`${API_BASE}/appointments`, {
+        headers: { 'x-digicode': adminCode },
+      });
+
+      if (!res.ok) {
+        setAdminError(res.status === 401 ? 'Code incorrect' : 'Le panneau admin est indisponible.');
+        return;
+      }
+
+      const data = await res.json() as Appointment[];
+      setAppointments(data);
+      setIsAdmin(true);
+      setShowAdminLogin(false);
+      setAdminCode('');
+    } catch {
+      setAdminError('Impossible de joindre le serveur.');
     }
   };
 
@@ -347,6 +383,95 @@ export default function Contact() {
             )}
           </div>
         </motion.div>
+
+        <div className="flex flex-col items-center mt-16">
+          <p className="text-sm text-gray-400 mb-2">Accès réservé</p>
+          <button
+            type="button"
+            onClick={() => setShowAdminLogin((open) => !open)}
+            className="touch-area focus-ring opacity-20 hover:opacity-100 transition-opacity duration-300"
+            aria-label="Ouvrir l'accès administrateur"
+          >
+            <img
+              src="/images/pic-icon.png"
+              alt=""
+              className="w-10 h-10"
+              onError={(e) => { e.currentTarget.style.display = 'none'; }}
+              aria-hidden="true"
+            />
+          </button>
+        </div>
+
+        {showAdminLogin && !isAdmin && (
+          <div
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+            onClick={() => setShowAdminLogin(false)}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="admin-dialog-title"
+          >
+            <div className="card-bento p-6 w-full max-w-md" onClick={(e) => e.stopPropagation()}>
+              <h3 id="admin-dialog-title" className="text-xl font-semibold mb-4">Accès Admin</h3>
+              <form onSubmit={handleAdminLogin} className="space-y-4">
+                <div>
+                  <label htmlFor="admin-code" className="sr-only">Code administrateur</label>
+                  <input
+                    type="password"
+                    id="admin-code"
+                    value={adminCode}
+                    onChange={(e) => setAdminCode(e.target.value)}
+                    placeholder="Code admin"
+                    className="w-full px-4 py-3 rounded-xl bg-white/50 border border-border-color focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition-all"
+                    required
+                  />
+                </div>
+                {adminError && <p className="text-red-500 text-sm" role="alert">{adminError}</p>}
+                <div className="flex gap-3">
+                  <button type="submit" className="flex-1 btn btn-primary py-3 touch-area focus-ring">Connexion</button>
+                  <button type="button" onClick={() => setShowAdminLogin(false)} className="flex-1 btn btn-secondary py-3 touch-area focus-ring">Annuler</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {isAdmin && (
+          <div className="card-bento mt-8 p-6" role="region" aria-label="Panneau d'administration">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold text-text-main">Demandes reçues ({appointments.length})</h3>
+              <button
+                type="button"
+                onClick={() => setIsAdmin(false)}
+                className="touch-area focus-ring text-text-secondary hover:text-accent transition-colors"
+                aria-label="Fermer le panneau d'administration"
+              >
+                Fermer
+              </button>
+            </div>
+            <p className="text-sm text-text-muted mb-4">
+              Historique temporaire : il peut être réinitialisé par le serveur.
+            </p>
+            {appointments.length === 0 ? (
+              <p className="text-text-secondary text-center py-4">Aucune demande en mémoire</p>
+            ) : (
+              <ul className="space-y-2">
+                {appointments.map((appointment) => (
+                  <li key={appointment.id} className="p-4 bg-accent/5 rounded-xl border border-accent/10">
+                    <p className="font-semibold text-text-main">{appointment.name}</p>
+                    <a className="text-sm text-accent hover:underline" href={`mailto:${appointment.email}`}>
+                      {appointment.email}
+                    </a>
+                    <p className="text-sm text-text-secondary">
+                      <time dateTime={appointment.date}>
+                        {new Date(appointment.date).toLocaleString('fr-FR')}
+                      </time>
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
 
       </div>
     </main>

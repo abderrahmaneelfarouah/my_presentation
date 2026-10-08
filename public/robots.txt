@@ -12,7 +12,7 @@ Allow: /site-version.txt
 Allow: /site-version.json
 Crawl-delay: 0.5
 
-# Bingbot - optimisations spécifiques  
+# Bingbot - optimisations spécifiques
 User-agent: Bingbot
 Allow: /
 Allow: /site-version.txt
@@ -47,6 +47,7 @@ Disallow: /404.html
 
 # Fichiers SEO
 Allow: /sitemap.xml
+Allow: /geo-sitemap.xml
 Allow: /robots.txt
 Allow: /manifest.json
 Allow: /local-business.json
