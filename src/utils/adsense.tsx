@@ -16,8 +16,11 @@ export function useAdSenseScript() {
     }
 
     const scriptId = 'adsense-script';
+    const existingScript = document.querySelector(
+      'script[src^="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"]',
+    );
 
-    if (document.getElementById(scriptId)) {
+    if (document.getElementById(scriptId) || existingScript) {
       return;
     }
 

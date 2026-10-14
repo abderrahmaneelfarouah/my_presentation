@@ -10,8 +10,11 @@ export function useAdSense() {
     // Le script doit être chargé une seule fois pour tout le site
     const scriptId = 'adsense-script';
     
-    // Vérifier si le script est déjà chargé
-    if (document.getElementById(scriptId)) {
+    const existingScript = document.querySelector(
+      'script[src^="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"]',
+    );
+
+    if (document.getElementById(scriptId) || existingScript) {
       return;
     }
 

@@ -49,6 +49,7 @@ Disallow: /404.html
 Allow: /sitemap.xml
 Allow: /geo-sitemap.xml
 Allow: /robots.txt
+Allow: /ads.txt
 Allow: /manifest.json
 Allow: /local-business.json
 Allow: /site-version.txt
