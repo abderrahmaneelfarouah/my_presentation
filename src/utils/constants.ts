@@ -5,11 +5,16 @@ export const CONTACT = {
   WHATSAPP: 'https://wa.me/33760751350',
 } as const;
 
+// Public profiles use the shared ABDEDEVLAB handle requested for the brand.
 export const SOCIAL_LINKS = {
   GITHUB: 'https://github.com/abderrahmaneelfarouah/',
-  LINKEDIN: 'https://fr.linkedin.com/in/abderrahmaneelfarouah',
+  LINKEDIN: 'https://www.linkedin.com/in/ABDEDEVLAB/',
+  TWITTER: 'https://x.com/ABDEDEVLAB',
+  YOUTUBE: 'https://www.youtube.com/@ABDEDEVLAB',
+  TIKTOK: 'https://www.tiktok.com/@ABDEDEVLAB',
   EMAIL: CONTACT.EMAIL,
-};
+} as const;
+
 export const NAV_ITEMS = [
   { href: '#home', label: 'Accueil' },
   { href: '#about', label: 'À propos' },

@@ -9,6 +9,15 @@ type NavbarProps = {
   activeTab?: string;
 };
 
+const navItems = [
+  { id: 'home', label: 'Accueil', path: '/' },
+  { id: 'about', label: 'À propos', path: '/about' },
+  { id: 'services', label: 'Services', path: '/services' },
+  { id: 'realisations', label: 'Réalisations', path: '/projects' },
+  { id: 'methode', label: 'Méthode', path: '/#methode' },
+  { id: 'contact', label: 'Contact', path: '/contact' },
+] as const;
+
 export default function Navbar({ activeTab: activeTabProp }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const { location } = useRouterState();
@@ -18,86 +27,43 @@ export default function Navbar({ activeTab: activeTabProp }: NavbarProps) {
     setIsMenuOpen(isOpen);
   }, [isOpen, setIsMenuOpen]);
 
-  const navItems = [
-    { id: 'home', label: 'Accueil', path: '/' },
-    { id: 'about', label: 'À propos', path: '/about' },
-    { id: 'services', label: 'Services', path: '/services' },
-    { id: 'realisations', label: 'Réalisations', path: '/projects' },
-    { id: 'methode', label: 'Méthode', path: '/#methode' },
-    { id: 'contact', label: 'Contact', path: '/contact' },
-  ];
-
   const activeTab = useMemo(() => {
     if (activeTabProp) return activeTabProp;
-    const segments = location.pathname.split('/').filter(Boolean);
-    const first = segments[0] || 'home';
-
+    const first = location.pathname.split('/').filter(Boolean)[0] || 'home';
     const pathToNavId: Record<string, string> = {
-      home: 'home',
-      services: 'services',
-      projects: 'realisations',
-      about: 'about',
-      contact: 'contact',
+      home: 'home', services: 'services', projects: 'realisations', about: 'about', contact: 'contact',
     };
-
     return pathToNavId[first] ?? '';
   }, [activeTabProp, location.pathname]);
+
+  const closeMenu = () => setIsOpen(false);
 
   return (
     <>
       <nav role="navigation" aria-label="Navigation principale" className={`glass-strong sticky top-0 z-50 border-b border-border-color ${isOpen ? 'z-[1000]' : ''}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo + titre */}
-            <div className="flex items-center space-x-4">
-              <Link to="/" className="flex-shrink-0 touch-area focus-ring rounded-lg" aria-label="Retour à l'accueil">
-                <img 
-                  src={NAV_IMAGE} 
-                  alt="Abderrahmane El Farouah" 
-                  width="48"
-                  height="48"
-                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg object-cover border border-border-color"
-                />
-              </Link>
-              <div className="hidden sm:block">
-                <div className="text-sm md:text-base lg:text-lg font-semibold text-text-main leading-tight">
-                  Abderrahmane <span className="text-text-secondary">El Farouah</span>
-                </div>
-                <p className="text-xs md:text-sm text-text-secondary font-medium">
-                  Votre Partenaire Digital
-                </p>
-              </div>
-            </div>
+          <div className="flex items-center justify-between min-h-16 py-2">
+            <Link to="/" onClick={closeMenu} className="flex items-center gap-3 rounded-lg focus-ring" aria-label="Accueil — Abderrahmane El Farouah, ABDEDEVLAB">
+              <img src={NAV_IMAGE} alt="Portrait d'Abderrahmane El Farouah" width="48" height="48" className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg object-cover border border-border-color" />
+              <span className="flex flex-col leading-tight">
+                <span className="text-sm sm:text-base font-semibold text-text-main">Abderrahmane <span className="text-text-secondary">El Farouah</span></span>
+                <span className="text-xs sm:text-sm font-bold tracking-[0.12em] text-sky-500">ABDEDEVLAB</span>
+              </span>
+            </Link>
 
-            {/* Navigation desktop */}
-            <div className="hidden lg:flex items-center justify-center flex-1 px-8">
+            <div className="hidden lg:flex items-center justify-center flex-1 px-5">
               <div className="flex items-center gap-1">
                 {navItems.map((item) => (
-                  <Link
-                    key={item.id}
-                    to={item.path}
-                    className={`touch-area focus-ring inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200
-                      ${activeTab === item.id
-                        ? 'text-accent bg-accent/10'
-                        : 'text-text-secondary hover:text-text-main hover:bg-bg-secondary/50'
-                      }`}
-                    aria-current={activeTab === item.id ? 'page' : undefined}
-                  >
+                  <Link key={item.id} to={item.path} className={`touch-area focus-ring inline-flex items-center justify-center px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${activeTab === item.id ? 'text-accent bg-accent/10' : 'text-text-secondary hover:text-text-main hover:bg-bg-secondary/50'}`} aria-current={activeTab === item.id ? 'page' : undefined}>
                     {item.label}
                   </Link>
                 ))}
               </div>
             </div>
 
-
-            {/* Toggle + Theme */}
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center gap-3">
               <ThemeToggle />
-              <button
-                aria-label={isOpen ? "Fermer le menu" : "Ouvrir le menu"}
-                onClick={() => setIsOpen(!isOpen)}
-                className={`lg:hidden touch-area focus-ring inline-flex items-center justify-center p-2 rounded-lg text-text-secondary hover:text-text-main hover:bg-bg-secondary/50 transition-colors duration-200 ${isOpen ? 'relative z-[2000]' : ''}`}
-              >
+              <button aria-label={isOpen ? 'Fermer le menu' : 'Ouvrir le menu'} aria-expanded={isOpen} onClick={() => setIsOpen(!isOpen)} className="lg:hidden touch-area focus-ring inline-flex items-center justify-center p-2 rounded-lg text-text-secondary hover:text-text-main hover:bg-bg-secondary/50 transition-colors">
                 {isOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
               </button>
             </div>
@@ -105,37 +71,22 @@ export default function Navbar({ activeTab: activeTabProp }: NavbarProps) {
         </div>
       </nav>
 
-
-      {/* Sidebar menu */}
       {isOpen && (
         <>
-          <div
-            className="fixed inset-0 z-[999] bg-black/40 backdrop-blur-sm"
-            onClick={() => setIsOpen(false)}
-            aria-hidden="true"
-          />
-          <div className="fixed top-0 right-0 h-screen w-72 glass z-[1000] transform transition-transform duration-300 ease-in-out translate-x-0 border-l border-border-color/50">
-            <div className="flex flex-col h-screen">
-              <div className="flex items-center justify-between p-4 border-b border-border-color/50 flex-shrink-0">
-                <h2 className="text-lg font-semibold text-text-main">Menu</h2>
+          <button className="fixed inset-0 z-[999] bg-black/40 backdrop-blur-sm cursor-default" onClick={closeMenu} aria-label="Fermer le menu" />
+          <div className="fixed top-0 right-0 h-screen w-72 glass z-[1000] border-l border-border-color/50">
+            <div className="flex flex-col h-full">
+              <div className="flex items-center justify-between p-4 border-b border-border-color/50">
+                <span className="text-lg font-semibold text-text-main">Menu</span>
+                <button onClick={closeMenu} className="touch-area rounded-lg text-text-secondary" aria-label="Fermer le menu"><X size={20} /></button>
               </div>
-
-              <nav className="flex-1 flex flex-col p-4 overflow-hidden space-y-1" aria-label="Menu mobile">
+              <nav className="flex-1 flex flex-col p-4 space-y-1" aria-label="Menu mobile">
                 {navItems.map((item) => (
-                  <Link
-                    key={item.id}
-                    to={item.path}
-                    onClick={() => setIsOpen(false)}
-                    className={`touch-area focus-ring block w-full text-left px-4 py-3 rounded-lg text-base font-medium transition-colors duration-200
-                      ${activeTab === item.id
-                        ? 'text-accent bg-accent/10'
-                        : 'text-text-secondary hover:text-text-main hover:bg-bg-secondary/50'
-                      }`}
-                    aria-current={activeTab === item.id ? 'page' : undefined}
-                  >
+                  <Link key={item.id} to={item.path} onClick={closeMenu} className={`touch-area focus-ring block w-full px-4 py-3 rounded-lg text-base font-medium transition-colors ${activeTab === item.id ? 'text-accent bg-accent/10' : 'text-text-secondary hover:text-text-main hover:bg-bg-secondary/50'}`} aria-current={activeTab === item.id ? 'page' : undefined}>
                     {item.label}
                   </Link>
                 ))}
+                <div className="mt-4 border-t border-border-color/50 pt-4 px-4 text-xs font-bold tracking-[0.12em] text-sky-500">ABDEDEVLAB</div>
               </nav>
             </div>
           </div>
