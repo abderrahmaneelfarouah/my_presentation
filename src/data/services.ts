@@ -3,7 +3,7 @@ import { Code, Database, Globe, MapPin, type LucideIcon } from 'lucide-react';
 export const SERVICES_HEADING = {
   prefix: 'Mes',
   highlight: 'Services',
-  subtitle: 'Des solutions sur mesure pour votre transformation digitale',
+  subtitle: 'Ce sur quoi je peux intervenir',
 } as const;
 
 export const SERVICE_TECHNOLOGIES = [
@@ -21,40 +21,35 @@ export interface ServiceOffering {
   title: string;
   description: string;
   icon: LucideIcon;
-  gradient: string;
 }
 
 export const SERVICE_OFFERINGS: ServiceOffering[] = [
   {
     id: 'outils-metier',
-    title: 'Outils Métiers sur Mesure',
+    title: 'Outils métier sur mesure',
     description:
-      'Applications web personnalisées pour automatiser vos tâches et gagner du temps au quotidien',
+      'Une application web qui remplace vos tableurs et vos tâches manuelles.',
     icon: Code,
-    gradient: 'from-accent/25 to-primary/15',
   },
   {
     id: 'gestion-stock',
-    title: 'Gestion & Stock',
+    title: 'Gestion et stock',
     description:
-      'Systèmes de gestion clients, stocks, devis et facturation adaptés à votre activité',
+      'Suivi des clients, des stocks, des devis et de la facturation, adapté à votre façon de travailler.',
     icon: Database,
-    gradient: 'from-accent/25 to-primary/15',
   },
   {
     id: 'site-boutique',
-    title: 'Site Web & Boutique',
+    title: 'Site web et boutique',
     description:
-      'Site vitrine professionnel ou boutique en ligne pour vendre sur internet 24h/24',
+      'Un site vitrine ou une boutique en ligne avec paiement sécurisé.',
     icon: Globe,
-    gradient: 'from-accent/25 to-primary/15',
   },
   {
     id: 'referencement-local',
-    title: 'Référencement Local',
+    title: 'Référencement local',
     description:
-      'Apparaître sur Google dans votre région et attirer plus de clients près de chez vous',
+      'Être visible sur Google dans votre zone géographique.',
     icon: MapPin,
-    gradient: 'from-accent/25 to-primary/15',
   },
 ];
