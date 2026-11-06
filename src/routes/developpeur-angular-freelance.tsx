@@ -4,7 +4,7 @@ import LandingPage from '../components/shared/LandingPage';
 
 const page = {
   title: "Développeur Angular freelance",
-  intro: "Applications web en Angular et TypeScript pour des entreprises et des startups. Je suis à Mantes-la-Jolie et je travaille surtout à distance.",
+  intro: "Applications web en Angular et TypeScript pour des entreprises et des startups. Je suis à Mantes-la-Jolie et je travaille 100 % à distance, partout en France.",
   cards: [
     {
       title: "Applications métier",

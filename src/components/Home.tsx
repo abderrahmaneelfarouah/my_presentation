@@ -80,7 +80,7 @@ const Home = () => {
 
           <p className="text-xl md:text-2xl mb-12 max-w-3xl mx-auto text-text-secondary leading-relaxed font-light">
             Je crée des sites, des boutiques en ligne et des outils de gestion sur mesure pour les petites
-            entreprises, les indépendants et les startups. Basé à Mantes-la-Jolie, je travaille surtout à distance.
+            entreprises, les indépendants et les startups. Basé à Mantes-la-Jolie, je travaille 100 % à distance, partout en France.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
@@ -236,7 +236,7 @@ const Home = () => {
             </a>
 
             <p className="mt-8 text-text-secondary text-sm">
-              Réponse sous 24 h · Île-de-France et à distance
+              Réponse sous 24 h · 100 % à distance, partout en France
             </p>
           </div>
         </div>

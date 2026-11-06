@@ -4,7 +4,7 @@ import LandingPage from '../components/shared/LandingPage';
 
 const page = {
   title: "Développeur Laravel freelance",
-  intro: "Back-end Laravel pour des applications web et des API : authentification, base de données, intégration avec vos outils. Je suis à Mantes-la-Jolie et je travaille surtout à distance.",
+  intro: "Back-end Laravel pour des applications web et des API : authentification, base de données, intégration avec vos outils. Je suis à Mantes-la-Jolie et je travaille 100 % à distance, partout en France.",
   cards: [
     {
       title: "Applications web",

@@ -65,8 +65,8 @@ export default function About() {
           <div className="mb-16">
             <h2 className="text-2xl font-bold text-text-main mb-6 tracking-tight">Pour qui</h2>
             <p className="text-lg text-text-secondary leading-relaxed">
-              Des PME, des startups, des indépendants et des e-commerçants. Je travaille surtout à distance, avec des
-              clients en Île-de-France et dans le reste de la France.
+              Des PME, des startups, des indépendants et des e-commerçants. Je travaille 100 % à distance, avec des
+              clients partout en France.
             </p>
           </div>
 

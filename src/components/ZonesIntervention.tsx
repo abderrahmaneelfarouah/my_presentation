@@ -13,12 +13,12 @@ const modesCollaboration = [
   {
     title: 'À distance',
     description:
-      "Les projets se déroulent à distance. Les échanges passent par Teams, Zoom ou Google Meet, avec partage d'écran et démonstrations.",
+      "Les projets se déroulent 100 % à distance. Les échanges passent par Teams, Zoom ou Google Meet, avec partage d'écran et démonstrations.",
   },
   {
     title: 'Partout en France',
     description:
-      "Le lieu du client n'est pas un obstacle : je travaille avec des clients en Île-de-France comme dans le reste de la France.",
+      "Pas de limite géographique : je travaille avec des clients à Paris, en Île-de-France comme dans toutes les régions.",
   },
   {
     title: 'Pas de bureau ouvert au public',
@@ -32,11 +32,12 @@ export default function ZonesIntervention() {
     <section className="w-full py-8 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
       <div className="text-center mb-12">
         <h1 className="text-3xl sm:text-4xl font-display font-bold text-text-main mb-4">
-          Développeur web freelance à <span className="text-accent">Mantes-la-Jolie</span> et en Île-de-France
+          Développeur web freelance à <span className="text-accent">Mantes-la-Jolie</span>, disponible partout en
+          France en full remote
         </h1>
         <p className="text-text-secondary font-body max-w-3xl mx-auto">
-          Je suis développeur Angular et Laravel, basé à Mantes-la-Jolie (78). Je travaille surtout à distance, avec
-          des entreprises d'Île-de-France et d'ailleurs.
+          Je suis développeur Angular et Laravel, basé à Mantes-la-Jolie (78). Je travaille 100 % à distance, pour
+          des entreprises de toute la France, par visioconférence.
         </p>
       </div>
 
@@ -59,7 +60,7 @@ export default function ZonesIntervention() {
           Zone couverte
         </h2>
         <p className="text-text-secondary font-body">
-          Je travaille avec des entreprises de toute l'Île-de-France, en particulier autour de {villes.join(', ')}.
+          Toute la France, en full remote : en Île-de-France ({villes.join(', ')}) comme dans les autres régions.
           Votre ville n'a pas besoin de figurer dans cette liste.
         </p>
       </div>

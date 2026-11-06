@@ -4,7 +4,7 @@ import LandingPage from '../components/shared/LandingPage';
 
 const page = {
   title: "Création de site web dans les Yvelines",
-  intro: "Sites vitrines et boutiques en ligne pour les entreprises et artisans des Yvelines (Versailles, Saint-Germain-en-Laye, Poissy, Montigny-le-Bretonneux…). Je suis à Mantes-la-Jolie et je travaille surtout à distance.",
+  intro: "Sites vitrines et boutiques en ligne pour les entreprises et artisans des Yvelines (Versailles, Saint-Germain-en-Laye, Poissy, Montigny-le-Bretonneux…). Je suis à Mantes-la-Jolie et je travaille 100 % à distance, partout en France.",
   cards: [
     {
       title: "Site vitrine",

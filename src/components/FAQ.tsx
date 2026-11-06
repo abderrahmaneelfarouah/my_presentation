@@ -24,9 +24,9 @@ const faqData: FAQItem[] = [
       "Angular convient bien aux applications métier : beaucoup d'écrans, des formulaires complexes, une équipe qui évolue. Il impose une structure, ce qui aide à maintenir le code sur la durée. Pour un site simple, il est en revanche souvent trop lourd.",
   },
   {
-    question: "Intervenez-vous uniquement à Mantes-la-Jolie ou dans toute l'Île-de-France ?",
+    question: "Intervenez-vous uniquement à Mantes-la-Jolie ou partout en France ?",
     answer:
-      "Je suis basé à Mantes-la-Jolie (78). Je travaille surtout à distance, avec des clients en Île-de-France et dans le reste de la France, par visioconférence.",
+      "Je suis basé à Mantes-la-Jolie (78) et je travaille 100 % à distance, pour des clients partout en France, par visioconférence.",
   },
   {
     question: "Quelle est la différence entre Angular et React ?",
