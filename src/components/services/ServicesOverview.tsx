@@ -82,7 +82,7 @@ export default function ServicesOverview({
                   aria-label={`${service.title} — ${service.description}`}
                 >
                   <div
-                    className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${service.gradient} flex items-center justify-center text-accent mb-6 border border-border-color/40 group-hover:scale-105 transition-transform duration-300`}
+                    className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center text-accent mb-6"
                     aria-hidden="true"
                   >
                     <Icon className="w-7 h-7" strokeWidth={1.75} />
@@ -97,7 +97,7 @@ export default function ServicesOverview({
                   </p>
 
                   <span className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-text-muted group-hover:text-accent transition-colors">
-                    En savoir plus
+                    Demander un devis
                     <ArrowRight className="w-4 h-4 opacity-70 group-hover:translate-x-0.5 transition-transform" />
                   </span>
                 </Link>
@@ -115,8 +115,7 @@ export default function ServicesOverview({
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <p className="text-text-secondary mb-6 max-w-xl mx-auto">
-              Un besoin précis ou plusieurs services combinés ? Parlons-en lors d&apos;un premier
-              échange gratuit.
+              Un besoin précis, ou plusieurs services à combiner ? Le premier échange est gratuit.
             </p>
             <Link
               to="/contact"

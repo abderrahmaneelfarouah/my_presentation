@@ -120,7 +120,7 @@ export const pageStructuredData = {
     type: 'WebPage',
     data: {
       title: 'À propos | Abderrahmane El Farouah – Développeur Fullstack',
-      description: 'Découvrez le parcours d\'Abderrahmane El Farouah, développeur fullstack passionné par les technologies web modernes et les solutions innovantes.',
+      description: 'Parcours et compétences d\'Abderrahmane El Farouah, développeur web freelance à Mantes-la-Jolie : Angular, Laravel et TypeScript.',
       url: 'https://www.abderrahmane-elfarouahfreelance.com/about'
     }
   }),
@@ -266,7 +266,7 @@ export const servicesStructuredData = {
     type: 'Service',
     data: {
       name: 'Maintenance & Évolution',
-      description: 'Suivi technique, mises à jour et évolutions de vos applications existantes. Support 24/7 et sauvegardes automatisées.',
+      description: 'Suivi technique, mises à jour de sécurité, sauvegardes et évolutions de vos applications existantes.',
       url: 'https://www.abderrahmane-elfarouahfreelance.com/services',
       priceRange: '500-2000€/mois',
       serviceType: 'Maintenance applicative'

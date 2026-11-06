@@ -96,7 +96,7 @@ export default function Contact() {
       } | null;
 
       if (!res.ok || result?.success !== true || result.emailSent !== true) {
-        throw new Error(result?.error || 'La demande n’a pas été envoyée. Réessayez ou contactez-nous par e-mail.');
+        throw new Error(result?.error || 'La demande n’a pas été envoyée. Réessayez ou écrivez-moi par e-mail.');
       }
 
       setSent(true);

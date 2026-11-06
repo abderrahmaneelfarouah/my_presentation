@@ -1,8 +1,41 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Helmet } from 'react-helmet-async';
-import { motion } from 'framer-motion';
-import { ArrowRight, Globe, Zap } from 'lucide-react';
-import Container from '../components/shared/Container';
+import LandingPage from '../components/shared/LandingPage';
+
+const page = {
+  title: "Création de site web dans les Yvelines",
+  intro: "Sites vitrines et boutiques en ligne pour les entreprises et artisans des Yvelines (Versailles, Saint-Germain-en-Laye, Poissy, Montigny-le-Bretonneux…). Je suis à Mantes-la-Jolie et je travaille surtout à distance.",
+  cards: [
+    {
+      title: "Site vitrine",
+      text: "Un site pour présenter votre activité, pensé pour les commerçants, les artisans et les professions libérales.",
+      points: [
+        "Affichage soigné sur mobile et ordinateur",
+        "Référencement local",
+      ],
+    },
+    {
+      title: "Boutique en ligne",
+      text: "Paiement sécurisé, gestion des stocks et des commandes, espace d'administration.",
+      points: [
+        "Paiement par carte bancaire",
+        "Suivi des stocks",
+        "Tableau de bord d'administration",
+      ],
+    },
+    {
+      title: "Maintenance",
+      text: "Mises à jour de sécurité et sauvegardes après la mise en ligne.",
+      points: [
+        "Sauvegardes",
+        "Mises à jour de sécurité",
+      ],
+    },
+  ],
+  ctaTitle: "Un site à lancer dans les Yvelines ?",
+  ctaText: "Parlez-moi de votre activité. Je vous réponds avec un devis gratuit.",
+  ctaLabel: "Demander un devis",
+};
 
 function CreationSiteWebYvelines() {
   return (
@@ -26,139 +59,7 @@ function CreationSiteWebYvelines() {
         <meta name="twitter:image" content="https://www.abderrahmane-elfarouahfreelance.com/og-image.png" />
       </Helmet>
 
-      <div className="min-h-screen page-shell">
-        <Container className="py-12">
-          {/* Header */}
-          <header className="text-center mb-12">
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-4xl md:text-5xl font-bold text-text-main mb-4"
-            >
-              Création <span className="text-accent">Site Web</span> dans les Yvelines
-            </motion.h1>
-            
-            <motion.p 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed"
-            >
-              Développeur freelance spécialisé dans la création de sites web professionnels pour entreprises et artisans des Yvelines (78) : Versailles, Saint-Germain-en-Laye, Le Vésinet, Poissy, Montigny-le-Bretonneux.
-            </motion.p>
-          </header>
-
-          {/* Main Content */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-            {/* Service Card 1 */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="card-bento p-6"
-            >
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500/10 to-blue-600/10 rounded-xl flex items-center justify-center mb-4">
-                <Globe className="w-6 h-6 text-blue-500" />
-              </div>
-              <h3 className="text-xl font-bold text-text-main mb-3">Site Vitrine Professionnel</h3>
-              <p className="text-text-secondary mb-4">Site web moderne, responsive et optimisé SEO pour présenter votre activité. Idéal pour commerçants, artisans et professions libérales.</p>
-              <ul className="space-y-2 text-text-secondary">
-                <li className="flex items-start gap-2">
-                  <ArrowRight className="w-4 h-4 text-accent mt-1 flex-shrink-0" />
-                  <span>Design moderne et attractif</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <ArrowRight className="w-4 h-4 text-accent mt-1 flex-shrink-0" />
-                  <span>Optimisé pour mobile et desktop</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <ArrowRight className="w-4 h-4 text-accent mt-1 flex-shrink-0" />
-                  <span>Référencement local SEO</span>
-                </li>
-              </ul>
-            </motion.div>
-
-            {/* Service Card 2 */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="card-bento p-6"
-            >
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-500/10 to-purple-600/10 rounded-xl flex items-center justify-center mb-4">
-                <Zap className="w-6 h-6 text-purple-500" />
-              </div>
-              <h3 className="text-xl font-bold text-text-main mb-3">Boutique en Ligne</h3>
-              <p className="text-text-secondary mb-4">E-commerce complet avec paiement sécurisé, gestion des stocks et des commandes. Solution parfaite pour vendre vos produits 24h/24.</p>
-              <ul className="space-y-2 text-text-secondary">
-                <li className="flex items-start gap-2">
-                  <ArrowRight className="w-4 h-4 text-accent mt-1 flex-shrink-0" />
-                  <span>Paiement carte bancaire</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <ArrowRight className="w-4 h-4 text-accent mt-1 flex-shrink-0" />
-                  <span>Gestion stocks automatisée</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <ArrowRight className="w-4 h-4 text-accent mt-1 flex-shrink-0" />
-                  <span>Dashboard administratif</span>
-                </li>
-              </ul>
-            </motion.div>
-
-            {/* Service Card 3 */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="card-bento p-6"
-            >
-              <div className="w-12 h-12 bg-gradient-to-br from-green-500/10 to-green-600/10 rounded-xl flex items-center justify-center mb-4">
-                <Globe className="w-6 h-6 text-green-500" />
-              </div>
-              <h3 className="text-xl font-bold text-text-main mb-3">Maintenance & Support</h3>
-              <p className="text-text-secondary mb-4">Maintenance technique, mises à jour de sécurité et support prioritaire pour garantir la performance de votre site.</p>
-              <ul className="space-y-2 text-text-secondary">
-                <li className="flex items-start gap-2">
-                  <ArrowRight className="w-4 h-4 text-accent mt-1 flex-shrink-0" />
-                  <span>Sauvegardes automatiques</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <ArrowRight className="w-4 h-4 text-accent mt-1 flex-shrink-0" />
-                  <span>Mises à jour de sécurité</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <ArrowRight className="w-4 h-4 text-accent mt-1 flex-shrink-0" />
-                  <span>Support 7j/7</span>
-                </li>
-              </ul>
-            </motion.div>
-          </div>
-
-          {/* CTA Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-center"
-          >
-            <h2 className="text-2xl font-bold text-text-main mb-4">Prêt à lancer votre projet web dans les Yvelines ?</h2>
-            <p className="text-text-secondary mb-6 max-w-2xl mx-auto">
-              Contactez-moi pour discuter de votre projet et obtenir un devis personnalisé pour votre site web professionnel.
-            </p>
-            <motion.a
-              href="/contact"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-all duration-300 group"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              <span>Demander un devis gratuit</span>
-            </motion.a>
-          </motion.div>
-        </Container>
-      </div>
+      <LandingPage {...page} />
     </>
   );
 }
